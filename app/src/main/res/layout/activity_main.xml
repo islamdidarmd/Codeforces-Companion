@@ -31,16 +31,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="16sp"
                     android:textColor="@color/colorAccent"
+                    android:textSize="16sp"
                     tools:text="@string/app_name" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvList"
-                    android:paddingTop="4dp"
-                    android:scrollbars="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:paddingTop="4dp"
+                    android:scrollbars="vertical" />
 
                 <TextView
                     android:id="@+id/tvNoContestFound"
@@ -67,5 +67,6 @@
         android:id="@+id/side_nav"
         android:layout_width="220dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start" />
+        android:layout_gravity="start"
+        app:menu="@menu/menu_nav_drawer" />
 </android.support.v4.widget.DrawerLayout>

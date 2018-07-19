@@ -16,4 +16,5 @@
     <string name="new_data_available">New data available</string>
     <string name="reload">Reload</string>
     <string name="colon">:</string>
+    <string name="search">Search</string>
 </resources>

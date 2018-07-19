@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
 import com.codeforcesvisualizer.Application
@@ -18,6 +19,7 @@ import com.codeforcesvisualizer.util.hide
 import com.codeforcesvisualizer.util.show
 import com.codeforcesvisualizer.viewmodel.ContestList
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar.*
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener,
         BottomNavigationView.OnNavigationItemSelectedListener {
@@ -73,6 +75,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(R.layout.activity_main)
 
         bottom_nav.setOnNavigationItemSelectedListener(this)
+        setSupportActionBar(toolbar)
 
         processContests()
         setUpListObservable()
@@ -85,6 +88,20 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         adapter = ContestListAdapter(this, upComingContest)
         rvList.adapter = adapter
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_search -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setUpListObservable() {
