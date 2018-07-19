@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">CodeForces Visualizer</string>
+    <string name="no_contest_found">No contest found</string>
+    <string name="initiating">Initializing…</string>
+    <string name="retry">Retry</string>
+    <string name="failed_to_init">Failed to initialize</string>
+    <string name="name">Name</string>
+    <string name="type">Type</string>
+    <string name="phase">Phase</string>
+    <string name="frozen">Frozen</string>
+    <string name="duration">Duration</string>
+    <string name="start">Start</string>
+    <string name="starting_in">Starting in -</string>
+    <string name="upcomming_contests">Upcoming Contests</string>
+    <string name="past_contests">Past Contests</string>
+    <string name="new_data_available">New data available</string>
+    <string name="reload">Reload</string>
+    <string name="colon">:</string>
+</resources>

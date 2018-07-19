@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_menu_upcoming"
+        android:icon="@drawable/ic_group_work_black_24dp"
+        android:title="Upcomming" />
+    <item
+        android:id="@+id/bottom_nav_past_contest"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="Previous" />
+    <item
+        android:id="@+id/bottom_nav_more"
+        android:icon="@drawable/ic_menu_black_24dp"
+        android:title="More" />
+</menu>
