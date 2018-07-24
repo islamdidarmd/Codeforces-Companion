@@ -66,6 +66,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 return true
             }
 
+            R.id.nav_drawer__search -> {
+                goToSearch()
+            }
+
         }
         return false
     }
@@ -75,6 +79,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(R.layout.activity_main)
 
         bottom_nav.setOnNavigationItemSelectedListener(this)
+        side_nav.setNavigationItemSelectedListener(this)
         setSupportActionBar(toolbar)
 
         processContests()
@@ -98,7 +103,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.menu_search -> {
-
+                goToSearch()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -128,5 +133,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
         }.run()
 
+        upComingContest = upComingContest.reversed().toMutableList()
     }
 }

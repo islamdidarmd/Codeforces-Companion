@@ -13,4 +13,8 @@ open class BaseActivity : AppCompatActivity() {
     public fun goToHome() {
         startActivity(Intent(this, MainActivity::class.java))
     }
+
+    public fun goToSearch() {
+        startActivity(Intent(this, SearchActivity::class.java))
+    }
 }

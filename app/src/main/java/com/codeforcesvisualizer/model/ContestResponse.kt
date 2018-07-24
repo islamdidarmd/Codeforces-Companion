@@ -13,9 +13,4 @@ data class ContestResponse(val status: STATUS = STATUS.FAILED,
     fun toJson(): String {
         return Gson().toJson(this)
     }
-
-    enum class STATUS {
-        OK,
-        FAILED
-    }
 }

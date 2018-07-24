@@ -10,6 +10,7 @@ import com.codeforcesvisualizer.api.ApiClient
 import com.codeforcesvisualizer.api.ApiService
 import com.codeforcesvisualizer.model.Contest
 import com.codeforcesvisualizer.model.ContestResponse
+import com.codeforcesvisualizer.model.STATUS
 import com.codeforcesvisualizer.util.CONTEST_LIST_URL
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,7 +42,7 @@ class ContestList : ViewModel() {
         val call = apiClient.getContests(CONTEST_LIST_URL)
         call.enqueue(object : Callback<ContestResponse> {
             override fun onResponse(call: Call<ContestResponse>?, response: Response<ContestResponse>?) {
-                if (response?.body()?.status == ContestResponse.STATUS.OK
+                if (response?.body()?.status == STATUS.OK
                         && response.body()?.result != null) {
 
                     // New contest list available. Save it to Application for later use and update the value to notify observers
@@ -51,6 +52,8 @@ class ContestList : ViewModel() {
                     Application.saveData(response.body()!!.toJson(), "contests")
 
                     Log.d(TAG, "On response value")
+                }else{
+                    contestData.value = null
                 }
             }
 

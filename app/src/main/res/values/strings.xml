@@ -17,4 +17,22 @@
     <string name="reload">Reload</string>
     <string name="colon">:</string>
     <string name="search">Search</string>
+    <string name="search_user">Search User</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="organization">Organization</string>
+    <string name="friends_of">Friends of</string>
+    <string name="registered">Registered</string>
+    <string name="profile">Profile</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="searching">Searching...</string>
+    <string name="enter_handle">Enter Handle</string>
+    <string name="rating">Rating</string>
+    <string name="rank">Rank</string>
+    <string name="contests">Contests</string>
+    <string name="languages">Languages</string>
+    <string name="verdicts">Verdicts</string>
+    <string name="tags">Tags</string>
+    <string name="levels">Levels</string>
 </resources>
