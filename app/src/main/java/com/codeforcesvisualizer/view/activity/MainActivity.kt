@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
@@ -115,6 +116,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             if (contestList?.result != null && !contestList.result.isEmpty()) {
                 processContests()
                 bottom_nav.menu.getItem(0).isChecked = true
+                adapter.updateDataset(upComingContest)
             }
         })
     }

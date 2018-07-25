@@ -35,4 +35,5 @@
     <string name="verdicts">Verdicts</string>
     <string name="tags">Tags</string>
     <string name="levels">Levels</string>
+    <string name="data_updated">Data updated</string>
 </resources>

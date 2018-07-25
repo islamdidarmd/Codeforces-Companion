@@ -3,6 +3,7 @@ package com.codeforcesvisualizer.view.activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
+import android.content.res.Configuration
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -21,21 +22,23 @@ import com.codeforcesvisualizer.model.User
 import com.codeforcesvisualizer.model.UserResponse
 import com.codeforcesvisualizer.model.UserStatus
 import com.codeforcesvisualizer.model.UserStatusResponse
-import com.codeforcesvisualizer.util.getDateFromTimeStamp
-import com.codeforcesvisualizer.util.hide
-import com.codeforcesvisualizer.util.minifyVerdicts
-import com.codeforcesvisualizer.util.show
+import com.codeforcesvisualizer.util.*
 import com.codeforcesvisualizer.view.widgets.GlideApp
 import com.codeforcesvisualizer.viewmodel.UserViewModel
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.ObjectPool
+import com.github.mikephil.charting.utils.ViewPortHandler
+import com.wefika.flowlayout.FlowLayout
 import kotlinx.android.synthetic.main.activity_search.view.*
+import java.util.*
 
 
 class SearchActivity : AppCompatActivity() {
@@ -73,6 +76,7 @@ class SearchActivity : AppCompatActivity() {
         hide(pbLanguage)
         hide(pbVerdict)
         hide(pbLevels)
+        hide(pbtags)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -123,13 +127,7 @@ class SearchActivity : AppCompatActivity() {
 
         userViewModel?.loadData(handle, "")
 
-        show(pbLanguage)
-        show(pbVerdict)
-        show(pbLevels)
-
-        hide(langChart)
-        hide(verdictChart)
-        hide(levelsChart)
+        hideCharts()
 
         userViewModel?.loadStatus(handle)
     }
@@ -155,15 +153,7 @@ class SearchActivity : AppCompatActivity() {
         if (status == null) {
             langChart.data = null
             verdictChart.data = null
-
-            show(langChart)
-            show(verdictChart)
-            show(pbLevels)
-
-            hide(pbLanguage)
-            hide(pbVerdict)
-            hide(pbLevels)
-
+            showCharts()
             return
         }
 
@@ -171,6 +161,7 @@ class SearchActivity : AppCompatActivity() {
         val languages: MutableSet<String> = HashSet()
         val verdicts: MutableSet<String> = HashSet()
         val levels: MutableSet<String> = HashSet()
+        val tags: MutableSet<String> = HashSet()
 
         val languageMap: MutableMap<String, Float> = HashMap()
         val verdictsMap: MutableMap<String, Float> = HashMap()
@@ -185,7 +176,15 @@ class SearchActivity : AppCompatActivity() {
 
             languages.add(it.programmingLanguage)
             verdicts.add(it.verdict)
-            levels.add(it.problem.index)
+
+            if (isValidProblem(it.problem) && it.verdict == "AC") {
+                levels.add(it.problem.index)
+
+                if (levelsMap[it.problem.index] == null) {
+                    levelsMap[it.problem.index] = 0f
+                }
+                levelsMap[it.problem.index] = (levelsMap[it.problem.index]!! + 1)
+            }
 
             if (languageMap[it.programmingLanguage] == null) {
                 languageMap[it.programmingLanguage] = 0f
@@ -195,13 +194,12 @@ class SearchActivity : AppCompatActivity() {
                 verdictsMap[it.verdict] = 0f
             }
 
-            if (levelsMap[it.problem.index] == null) {
-                levelsMap[it.problem.index] = 0f
-            }
-
             languageMap[it.programmingLanguage] = (languageMap[it.programmingLanguage]!! + 1)
             verdictsMap[it.verdict] = (verdictsMap[it.verdict]!! + 1)
-            levelsMap[it.problem.index] = (levelsMap[it.problem.index]!! + 1)
+
+            it.problem.tags.forEach {
+                tags.add(it)
+            }
 
             //  Log.d(TAG,it.programmingLanguage+" "+ map[it.programmingLanguage])
         }
@@ -217,11 +215,20 @@ class SearchActivity : AppCompatActivity() {
         }
 
         var index = 0f
-        levels.forEach {
+
+        levels.sorted().forEach {
             val count: Float = levelsMap[it]!!
             levelsEntries.add(BarEntry(++index, count))
 
             Log.d(TAG, it + " " + levelsMap[it]!!)
+        }
+
+        tagsLayout.removeAllViews()
+
+        tags.forEach {
+            val rb = setUpChipsLayout(layoutInflater.inflate(R.layout.radio_button_tag, null)) as RadioButton
+            rb.text = it
+            tagsLayout.addView(rb)
         }
 
 
@@ -229,11 +236,7 @@ class SearchActivity : AppCompatActivity() {
         val verdictsDataSet = PieDataSet(verdictsEntries, "")
         val levelsDataSet = BarDataSet(levelsEntries, "")
 
-        val colorList: MutableList<Int> = ArrayList()
-        colorList.addAll(ColorTemplate.COLORFUL_COLORS.toList())
-        colorList.addAll(ColorTemplate.MATERIAL_COLORS.toList())
-        colorList.addAll(ColorTemplate.PASTEL_COLORS.toList())
-        colorList.addAll(ColorTemplate.LIBERTY_COLORS.toList())
+        val colorList = getColorList()
 
         languageDataSet.colors = colorList
         verdictsDataSet.colors = colorList
@@ -260,37 +263,26 @@ class SearchActivity : AppCompatActivity() {
         val languageData = PieData(languageDataSet)
         val verdictsData = PieData(verdictsDataSet)
         val levelsData = BarData(levelsDataSet)
+        levelsData.barWidth = 0.5f
+        levelsData.setValueFormatter { value, entry, dataSetIndex, viewPortHandler ->
+            return@setValueFormatter value.toInt().toString()
+        }
 
         languageData.setValueTextSize(14f)
         verdictsData.setValueTextSize(14f)
+        levelsChart.xAxis.labelCount = levels.size
+        setUpCharts()
 
-        langChart.animateY(2000)
-        verdictChart.animateY(2000)
-        levelsChart.animateY(2000)
+        val levelList = levelsMap.keys.toList().sorted()
 
-        langChart.description.isEnabled = false
-        verdictChart.description.isEnabled = false
-        levelsChart.description.isEnabled = false
-
-        langChart.isDrawHoleEnabled = false
-        verdictChart.isDrawHoleEnabled = false
-
-        langChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        verdictChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-
-        langChart.legend.orientation = Legend.LegendOrientation.VERTICAL
-        verdictChart.legend.orientation = Legend.LegendOrientation.VERTICAL
-
-        langChart.legend.xEntrySpace = 7f
-        verdictChart.legend.xEntrySpace = 7f
-
-        langChart.legend.yEntrySpace = 5f
-        verdictChart.legend.yEntrySpace = 5f
-
-        levelsChart.legend.isEnabled = false
-        levelsChart.axisRight.isEnabled = false
-        levelsChart.xAxis.setDrawGridLines(false)
-        levelsChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        levelsChart.xAxis.setValueFormatter { value, axis ->
+            try {
+                return@setValueFormatter levelList[getIndexOfChartLabel(value)]
+            } catch (e: IndexOutOfBoundsException) {
+                e.printStackTrace()
+                return@setValueFormatter ""
+            }
+        }
 
         langChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(e: Entry?, h: Highlight?) {
@@ -318,12 +310,73 @@ class SearchActivity : AppCompatActivity() {
         verdictChart.data = verdictsData
         levelsChart.data = levelsData
 
+        langChart.invalidate()
+        verdictChart.invalidate()
+        levelsChart.invalidate()
+
+        langChart.animateY(2000)
+        verdictChart.animateY(2000)
+        levelsChart.animateXY(2000, 2000)
+
+        showCharts()
+    }
+
+    private fun showCharts() {
         show(langChart)
         show(verdictChart)
         show(levelsChart)
+        show(tagsLayout)
+
         hide(pbLanguage)
         hide(pbVerdict)
         hide(pbLevels)
+        hide(pbtags)
+    }
+
+    private fun hideCharts() {
+        show(pbLanguage)
+        show(pbVerdict)
+        show(pbLevels)
+        show(pbtags)
+
+        hide(langChart)
+        hide(verdictChart)
+        hide(levelsChart)
+        hide(tagsLayout)
+    }
+
+    private fun setUpCharts() {
+
+        langChart.description.isEnabled = false
+        verdictChart.description.isEnabled = false
+        levelsChart.description.isEnabled = false
+
+        langChart.isDrawHoleEnabled = false
+        verdictChart.isDrawHoleEnabled = false
+
+        langChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        verdictChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+
+        langChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+        verdictChart.legend.orientation = Legend.LegendOrientation.VERTICAL
+
+        langChart.legend.xEntrySpace = 7f
+        verdictChart.legend.xEntrySpace = 7f
+
+        langChart.legend.yEntrySpace = 5f
+        verdictChart.legend.yEntrySpace = 5f
+
+        levelsChart.legend.isEnabled = false
+        levelsChart.axisRight.isEnabled = false
+        levelsChart.xAxis.setDrawGridLines(false)
+        levelsChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        levelsChart.xAxis.granularity = 1f
+        levelsChart.xAxis.isGranularityEnabled = true
+        levelsChart.setVisibleXRangeMaximum(5f)
+        levelsChart.setPinchZoom(true)
+        levelsChart.isDoubleTapToZoomEnabled = false
+        levelsChart.axisLeft.axisMinimum = 0f
+
     }
 
     private fun updateUi(userResponse: UserResponse?) {

@@ -381,8 +381,8 @@
                             android:id="@+id/langChart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="300dp"
                             android:layout_gravity="center"
+                            android:minHeight="300dp"
                             android:visibility="gone" />
 
                     </FrameLayout>
@@ -426,8 +426,8 @@
                             android:id="@+id/verdictChart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="300dp"
                             android:layout_gravity="center"
+                            android:minHeight="300dp"
                             android:visibility="gone" />
 
                     </FrameLayout>
@@ -471,8 +471,8 @@
                             android:id="@+id/levelsChart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="300dp"
                             android:layout_gravity="center"
+                            android:minHeight="300dp"
                             android:visibility="gone" />
 
                     </FrameLayout>
@@ -512,11 +512,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center" />
 
-                        <com.github.mikephil.charting.charts.PieChart
-                            android:id="@+id/tagsChart"
+                        <com.wefika.flowlayout.FlowLayout
+                            android:id="@+id/tagsLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="300dp"
                             android:layout_gravity="center"
                             android:visibility="gone" />
 
