@@ -77,6 +77,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        title = getString(R.string.home)
         setContentView(R.layout.activity_main)
 
         bottom_nav.setOnNavigationItemSelectedListener(this)

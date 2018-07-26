@@ -2,43 +2,43 @@ package com.codeforcesvisualizer.view.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.ActivityNotFoundException
 import android.content.DialogInterface
-import android.content.res.Configuration
-import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import com.codeforcesvisualizer.R
-import kotlinx.android.synthetic.main.activity_search.*
-import android.support.design.widget.CollapsingToolbarLayout
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.os.Bundle
+import android.support.design.widget.CollapsingToolbarLayout
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
-import android.view.*
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.WindowManager
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.Toast
+import com.codeforcesvisualizer.R
 import com.codeforcesvisualizer.model.User
+import com.codeforcesvisualizer.model.UserExtraResponse
 import com.codeforcesvisualizer.model.UserResponse
-import com.codeforcesvisualizer.model.UserStatus
 import com.codeforcesvisualizer.model.UserStatusResponse
 import com.codeforcesvisualizer.util.*
 import com.codeforcesvisualizer.view.widgets.GlideApp
 import com.codeforcesvisualizer.viewmodel.UserViewModel
-import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.IValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import com.github.mikephil.charting.utils.ColorTemplate
-import com.github.mikephil.charting.utils.ObjectPool
-import com.github.mikephil.charting.utils.ViewPortHandler
-import com.wefika.flowlayout.FlowLayout
-import kotlinx.android.synthetic.main.activity_search.view.*
+import kotlinx.android.synthetic.main.activity_search.*
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 
 class SearchActivity : AppCompatActivity() {
@@ -62,6 +62,7 @@ class SearchActivity : AppCompatActivity() {
         toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back_white_24dp)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.title = getString(R.string.search_user)
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             val w = window // in Activity's onCreate() for instance
@@ -71,12 +72,10 @@ class SearchActivity : AppCompatActivity() {
             toolbar.layoutParams = lp
         }
         toolbar.setNavigationOnClickListener { finish() }
-        updateUi(null)
+        hide(profileContent)
 
-        hide(pbLanguage)
-        hide(pbVerdict)
-        hide(pbLevels)
-        hide(pbtags)
+        hideLoaders()
+        hide(pbExtra)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -103,7 +102,7 @@ class SearchActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
                 .setTitle(getString(R.string.enter_handle))
                 .setView(view)
-                .setPositiveButton(R.string.search, DialogInterface.OnClickListener { dialog, which ->
+                .setPositiveButton(R.string.search, { dialog, which ->
                     search(etInput.text.toString().trim())
                     dialog.dismiss()
                 }).setNegativeButton(R.string.cancel, null)
@@ -126,8 +125,10 @@ class SearchActivity : AppCompatActivity() {
         loader?.show()
 
         userViewModel?.loadData(handle, "")
+        userViewModel?.loadExtra(handle)
 
         hideCharts()
+        show(pbExtra)
 
         userViewModel?.loadStatus(handle)
     }
@@ -147,6 +148,41 @@ class SearchActivity : AppCompatActivity() {
         userViewModel?.getStatus()?.observe(this, Observer {
             updateStatus(it)
         })
+
+        userViewModel?.getExtra()?.observe(this, Observer {
+            updateExtra(it)
+        })
+    }
+
+    private fun updateExtra(userExtraResponse: UserExtraResponse?) {
+        hide(pbExtra)
+
+        if (userExtraResponse == null) {
+            hide(extraLayout)
+            return
+        }
+
+        var bestRank = Int.MAX_VALUE
+        var worstRank = -1
+        var maxUp = -1
+        var maxDown = Int.MAX_VALUE
+
+        tvTotalContest.text = userExtraResponse.result?.size.toString()
+
+        userExtraResponse.result?.forEach {
+            bestRank = min(bestRank, it.rank)
+            worstRank = max(worstRank, it.rank)
+
+            maxUp = max(maxUp, (it.newRating - it.oldRating))
+            maxDown = min(maxDown, it.newRating - it.oldRating)
+        }
+
+        tvBestRank.text = bestRank.toString()
+        tvWorstRank.text = worstRank.toString()
+        tvMaxUp.text = maxUp.toString()
+        tvMaxDown.text = maxDown.toString()
+
+        show(extraLayout)
     }
 
     private fun updateStatus(status: UserStatusResponse?) {
@@ -162,10 +198,13 @@ class SearchActivity : AppCompatActivity() {
         val verdicts: MutableSet<String> = HashSet()
         val levels: MutableSet<String> = HashSet()
         val tags: MutableSet<String> = HashSet()
+        val uniqueProblems: MutableSet<String> = HashSet()
 
         val languageMap: MutableMap<String, Float> = HashMap()
         val verdictsMap: MutableMap<String, Float> = HashMap()
         val levelsMap: MutableMap<String, Float> = HashMap()
+        val problemsMap: MutableMap<String, Boolean> = HashMap()
+        var solvedProblem = 0
 
         val languageEntries: MutableList<PieEntry> = ArrayList()
         val verdictsEntries: MutableList<PieEntry> = ArrayList()
@@ -185,6 +224,21 @@ class SearchActivity : AppCompatActivity() {
                 }
                 levelsMap[it.problem.index] = (levelsMap[it.problem.index]!! + 1)
             }
+
+            //We are saving problem id with contest id and saved status in a map
+            if (((problemsMap["${it.problem.contestId}-${it.problem.index}"] == null ||
+                            !problemsMap["${it.problem.contestId}-${it.problem.index}"]!!)
+                            && it.verdict == "AC")) {
+                problemsMap["${it.problem.contestId}-${it.problem.index}"] = true
+                solvedProblem++
+
+            } else if ((problemsMap["${it.problem.contestId}-${it.problem.index}"] == null
+                            && it.verdict != "AC")) {
+                problemsMap["${it.problem.contestId}-${it.problem.index}"] = false
+            }
+
+            //creating problem id appending with contest id and saving it to a HashSet
+            uniqueProblems.add("${it.problem.contestId}-${it.problem.index}")
 
             if (languageMap[it.programmingLanguage] == null) {
                 languageMap[it.programmingLanguage] = 0f
@@ -220,15 +274,37 @@ class SearchActivity : AppCompatActivity() {
             val count: Float = levelsMap[it]!!
             levelsEntries.add(BarEntry(++index, count))
 
-            Log.d(TAG, it + " " + levelsMap[it]!!)
+            //  Log.d(TAG, it + " " + levelsMap[it]!!)
         }
 
+        //Creating tags layout
         tagsLayout.removeAllViews()
-
         tags.forEach {
             val rb = setUpChipsLayout(layoutInflater.inflate(R.layout.radio_button_tag, null)) as RadioButton
             rb.text = it
             tagsLayout.addView(rb)
+        }
+
+        //creating unresolved layout
+        unsolvedLayout.removeAllViews()
+        problemsMap.forEach { mapEntry ->
+            if (!mapEntry.value) {
+                val rb = setUpCircleChipsLayout(layoutInflater.inflate(R.layout.radio_button_tag, null)) as RadioButton
+                rb.text = mapEntry.key
+                rb.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse(getProblemLinkFromProblem(mapEntry.key))
+                    Log.d(TAG, intent.data.path)
+                    try {
+                        startActivity(intent)
+                    } catch (e: ActivityNotFoundException) {
+                        e.printStackTrace()
+                        Toast.makeText(this@SearchActivity,
+                                getString(R.string.no_browser_found), Toast.LENGTH_SHORT).show()
+                    }
+                }
+                unsolvedLayout.addView(rb)
+            }
         }
 
 
@@ -318,6 +394,9 @@ class SearchActivity : AppCompatActivity() {
         verdictChart.animateY(2000)
         levelsChart.animateXY(2000, 2000)
 
+        tvTriedProblems.text = uniqueProblems.size.toString()
+        tvSolvedProblems.text = solvedProblem.toString()
+
         showCharts()
     }
 
@@ -326,23 +405,36 @@ class SearchActivity : AppCompatActivity() {
         show(verdictChart)
         show(levelsChart)
         show(tagsLayout)
+        show(unsolvedLayout)
 
+        hideLoaders()
+    }
+
+    private fun hideLoaders() {
         hide(pbLanguage)
         hide(pbVerdict)
         hide(pbLevels)
         hide(pbtags)
+        hide(pbUnsolved)
     }
 
-    private fun hideCharts() {
+    private fun showLoaders() {
         show(pbLanguage)
         show(pbVerdict)
         show(pbLevels)
         show(pbtags)
+        show(pbUnsolved)
+    }
+
+
+    private fun hideCharts() {
+        showLoaders()
 
         hide(langChart)
         hide(verdictChart)
         hide(levelsChart)
         hide(tagsLayout)
+        hide(unsolvedLayout)
     }
 
     private fun setUpCharts() {
@@ -372,10 +464,11 @@ class SearchActivity : AppCompatActivity() {
         levelsChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         levelsChart.xAxis.granularity = 1f
         levelsChart.xAxis.isGranularityEnabled = true
-        levelsChart.setVisibleXRangeMaximum(5f)
+        levelsChart.setFitBars(true)
         levelsChart.setPinchZoom(true)
         levelsChart.isDoubleTapToZoomEnabled = false
         levelsChart.axisLeft.axisMinimum = 0f
+
 
     }
 
@@ -405,10 +498,13 @@ class SearchActivity : AppCompatActivity() {
             tvReg.text = getDateFromTimeStamp(user.registrationTimeSeconds, "EEE MMM dd,yyyy hh:mm:ss a")
             tvRank.text = user.rank
             tvRating.text = user.rating.toString()
+
             show(profileContent)
 
-
         } else {
+            Snackbar.make(coordinator,
+                    getString(R.string.unable_to_fetch_user_info),
+                    Snackbar.LENGTH_SHORT).show()
             hide(profileContent)
         }
     }

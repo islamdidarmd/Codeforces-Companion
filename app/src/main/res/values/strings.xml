@@ -36,4 +36,16 @@
     <string name="tags">Tags</string>
     <string name="levels">Levels</string>
     <string name="data_updated">Data updated</string>
+    <string name="unsolved">Unsolved</string>
+    <string name="no_browser_found">No browser found</string>
+    <string name="unable_to_fetch_user_info">Unable to fetch User information</string>
+    <string name="infos">Extras</string>
+    <string name="tried_problems">Tried problems</string>
+    <string name="solved_problems">Solved problems</string>
+    <string name="number_of_contests">Number of contests</string>
+    <string name="best_rank">Best rank</string>
+    <string name="worst_rank">Worst rank</string>
+    <string name="max_up">Max up</string>
+    <string name="max_down">Max down</string>
+    <string name="home">Home</string>
 </resources>

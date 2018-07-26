@@ -6,8 +6,8 @@ data class UserResponse(val status: STATUS = STATUS.FAILED,
                         val result: List<User>? = null) {
 
     companion object {
-        fun fromJson(src: String): User? {
-            return Gson().fromJson(src, User::class.java)
+        fun fromJson(src: String): UserResponse? {
+            return Gson().fromJson(src, UserResponse::class.java)
         }
     }
 
