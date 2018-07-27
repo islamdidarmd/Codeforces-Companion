@@ -11,7 +11,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.codeforcesvisualizer.Application
 import com.codeforcesvisualizer.R
 import com.codeforcesvisualizer.adapter.ContestListAdapter
@@ -30,6 +32,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     lateinit var pastContest: MutableList<Contest>
 
     lateinit var contestList: ContestList
+    var contestDataInitiated = false
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
@@ -67,7 +70,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 return true
             }
 
-            R.id.nav_drawer__search -> {
+            R.id.nav_drawer_search -> {
                 goToSearch()
             }
 
@@ -77,12 +80,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = getString(R.string.home)
         setContentView(R.layout.activity_main)
 
         bottom_nav.setOnNavigationItemSelectedListener(this)
         side_nav.setNavigationItemSelectedListener(this)
         setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.home)
 
         processContests()
         setUpListObservable()
@@ -95,6 +98,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         adapter = ContestListAdapter(this, upComingContest)
         rvList.adapter = adapter
 
+        //If contest list is loaded from cache then try reloading from server
+        if (Application.contestResponseLoadedFromCache) {
+            contestList.loadData()
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -104,6 +112,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
+            R.id.menu_reload -> {
+                Toast.makeText(this,
+                        getString(R.string.fetching_data_from_server),
+                        Toast.LENGTH_SHORT)
+                        .show()
+                contestList.loadData()
+            }
+
             R.id.menu_search -> {
                 goToSearch()
             }
@@ -113,11 +129,24 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     private fun setUpListObservable() {
         contestList = ViewModelProviders.of(this).get(ContestList::class.java)
+
         contestList.getContests().observe(this, Observer { contestList ->
-            if (contestList?.result != null && !contestList.result.isEmpty()) {
-                processContests()
-                bottom_nav.menu.getItem(0).isChecked = true
-                adapter.updateDataset(upComingContest)
+
+            //If we ge notified from observable and data initialized, then new data is available
+            if ((contestList?.result != null && !contestList.result.isEmpty()) && contestDataInitiated) {
+
+                //Notify user about new data
+                Snackbar.make(coordinator,
+                        R.string.data_updated, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.reload, View.OnClickListener {
+                            processContests()
+                            bottom_nav.menu.getItem(0).isChecked = true
+                            adapter.updateDataset(upComingContest)
+                        }).show()
+            }
+
+            if (!contestDataInitiated) {
+                contestDataInitiated = true
             }
         })
     }

@@ -48,4 +48,5 @@
     <string name="max_up">Max up</string>
     <string name="max_down">Max down</string>
     <string name="home">Home</string>
+    <string name="fetching_data_from_server">Fetching data from server</string>
 </resources>
