@@ -60,9 +60,9 @@ class UserViewModel : ViewModel() {
         })
     }
 
-    fun loadData(handle: String, handle2: String) {
+    fun loadData(handle: String) {
 
-        val call = apiClient.getUSers(getProfileUrl(handle, handle2))
+        val call = apiClient.getUSers(getProfileUrl(handle))
 
         call.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>?, response: Response<UserResponse>?) {

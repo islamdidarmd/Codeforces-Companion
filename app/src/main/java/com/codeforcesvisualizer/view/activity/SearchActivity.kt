@@ -18,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
@@ -94,12 +95,11 @@ class SearchActivity : AppCompatActivity() {
 
     private fun showSearchDialog() {
 
-        val view = LayoutInflater.from(this)
-                .inflate(R.layout.input_single, null, false)
+        val view = layoutInflater.inflate(R.layout.input_single, null)
 
         val etInput = view.findViewById<EditText>(R.id.etInput)
 
-        AlertDialog.Builder(this)
+        val alertDialog = AlertDialog.Builder(this)
                 .setTitle(getString(R.string.enter_handle))
                 .setView(view)
                 .setPositiveButton(R.string.search, { dialog, which ->
@@ -108,6 +108,16 @@ class SearchActivity : AppCompatActivity() {
                 }).setNegativeButton(R.string.cancel, null)
                 .setCancelable(true)
                 .show()
+
+        etInput.setOnEditorActionListener { textView, i, keyEvent ->
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+                alertDialog.dismiss()
+                search(etInput.text.toString().trim())
+                return@setOnEditorActionListener true
+            }
+
+            return@setOnEditorActionListener false
+        }
     }
 
     private fun search(handle: String) {
@@ -124,7 +134,7 @@ class SearchActivity : AppCompatActivity() {
 
         loader?.show()
 
-        userViewModel?.loadData(handle, "")
+        userViewModel?.loadData(handle)
         userViewModel?.loadExtra(handle)
 
         hideCharts()
