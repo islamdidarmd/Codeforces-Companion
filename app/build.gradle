@@ -8,7 +8,7 @@ apply plugin: 'kotlin-kapt'
 
 configurations {
     cleanedAnnotations
-    compile.exclude group: 'org.jetbrains' , module:'annotations'
+    compile.exclude group: 'org.jetbrains', module: 'annotations'
 }
 
 android {

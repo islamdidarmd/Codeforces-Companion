@@ -74,6 +74,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 goToSearch()
             }
 
+            R.id.nav_drawer_compare -> {
+                goToCompare()
+            }
+
         }
         return false
     }

@@ -49,4 +49,11 @@
     <string name="max_down">Max down</string>
     <string name="home">Home</string>
     <string name="fetching_data_from_server">Fetching data from server</string>
+    <string name="compare">Compare</string>
+    <string name="enter_first_handle">Enter first handle</string>
+    <string name="enter_second_handle">Enter second handle</string>
+    <string name="required">Required</string>
+    <string name="compare_users">Compare Users</string>
+    <string name="Handle1">Handle1</string>
+    <string name="Handle2">Handle2</string>
 </resources>

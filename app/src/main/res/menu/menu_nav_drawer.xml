@@ -6,4 +6,8 @@
         android:id="@+id/nav_drawer_search"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/search_user"/>
+    <item
+        android:id="@+id/nav_drawer_compare"
+        android:icon="@drawable/ic_compare_black_24dp"
+        android:title="@string/compare"/>
 </menu>

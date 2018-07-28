@@ -72,6 +72,7 @@ class SearchActivity : AppCompatActivity() {
             lp.setMargins(0, 24, 0, 0)
             toolbar.layoutParams = lp
         }
+
         toolbar.setNavigationOnClickListener { finish() }
         hide(profileContent)
 
@@ -111,6 +112,12 @@ class SearchActivity : AppCompatActivity() {
 
         etInput.setOnEditorActionListener { textView, i, keyEvent ->
             if (i == EditorInfo.IME_ACTION_SEARCH) {
+
+                if (TextUtils.isEmpty(textView.text)) {
+                    etInput.error = getString(R.string.required)
+                    return@setOnEditorActionListener true
+                }
+
                 alertDialog.dismiss()
                 search(etInput.text.toString().trim())
                 return@setOnEditorActionListener true
@@ -144,9 +151,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setUpObservable() {
-        if (userViewModel == null) {
-            userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
-        }
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
 
         userViewModel?.getData()?.observe(this, Observer {
             if (loader != null && loader!!.isShowing) {
@@ -478,8 +483,6 @@ class SearchActivity : AppCompatActivity() {
         levelsChart.setPinchZoom(true)
         levelsChart.isDoubleTapToZoomEnabled = false
         levelsChart.axisLeft.axisMinimum = 0f
-
-
     }
 
     private fun updateUi(userResponse: UserResponse?) {

@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio3/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_notifications_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio3/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_compare_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,7 +29,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="5a5a5a" />
-                            <entry key="outputName" value="ic_notifications_black_24dp" />
+                            <entry key="outputName" value="ic_compare_black_24dp" />
                             <entry key="sourceFile" value="C:\Users\Didar" />
                           </map>
                         </option>
