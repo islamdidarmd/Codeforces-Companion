@@ -71,8 +71,6 @@ class CompareActivity : BaseActivity() {
             return
         }
 
-        setUpCharts()
-
         //setting rating chart values
         val user1 = users[0]
         val user2 = users[1]
@@ -132,7 +130,9 @@ class CompareActivity : BaseActivity() {
         }
 
         ratingChart.data = ratingData
-        ratingChart.groupBars(-0.5f,0.06f,0.02f)
+        setUpCharts()
+
+        ratingChart.groupBars(-0.5f, 0.4f, 0.02f)
         ratingChart.invalidate()
         ratingChart.animateXY(2000, 2000)
 
@@ -155,8 +155,9 @@ class CompareActivity : BaseActivity() {
         ratingChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
         ratingChart.xAxis.granularity = 1f
+        ratingChart.xAxis.setCenterAxisLabels(false)
         ratingChart.xAxis.isGranularityEnabled = true
-        ratingChart.setFitBars(true)
+        ratingChart.setFitBars(false)
         ratingChart.setPinchZoom(true)
         ratingChart.isDoubleTapToZoomEnabled = false
         ratingChart.axisLeft.axisMinimum = 0f

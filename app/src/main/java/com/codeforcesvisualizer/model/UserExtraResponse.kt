@@ -4,7 +4,7 @@ import com.google.gson.Gson
 
 data class UserExtraResponse(val status: STATUS = STATUS.FAILED,
                              val result: List<UserExtra>? = null,
-                             val handle: String) {
+                             var handle: String) {
 
     companion object {
         fun fromJson(src: String): UserExtraResponse? {

@@ -128,6 +128,7 @@ class UserViewModel : ViewModel() {
             override fun onResponse(call: Call<UserExtraResponse>?, response: Response<UserExtraResponse>?) {
                 if (response?.body()?.status == STATUS.OK
                         && response.body()?.result != null) {
+                    response.body()?.handle = handle1
 
                     if (count < 2) {
                         extras.add(response.body()!!)
@@ -155,6 +156,7 @@ class UserViewModel : ViewModel() {
             override fun onResponse(call: Call<UserExtraResponse>?, response: Response<UserExtraResponse>?) {
                 if (response?.body()?.status == STATUS.OK
                         && response.body()?.result != null) {
+                    response.body()?.handle = handle2
 
                     if (count < 2) {
                         extras.add(response.body()!!)
