@@ -18,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
@@ -71,6 +72,7 @@ class SearchActivity : AppCompatActivity() {
             lp.setMargins(0, 24, 0, 0)
             toolbar.layoutParams = lp
         }
+
         toolbar.setNavigationOnClickListener { finish() }
         hide(profileContent)
 
@@ -94,12 +96,11 @@ class SearchActivity : AppCompatActivity() {
 
     private fun showSearchDialog() {
 
-        val view = LayoutInflater.from(this)
-                .inflate(R.layout.input_single, null, false)
+        val view = layoutInflater.inflate(R.layout.input_single, null)
 
         val etInput = view.findViewById<EditText>(R.id.etInput)
 
-        AlertDialog.Builder(this)
+        val alertDialog = AlertDialog.Builder(this)
                 .setTitle(getString(R.string.enter_handle))
                 .setView(view)
                 .setPositiveButton(R.string.search, { dialog, which ->
@@ -108,6 +109,22 @@ class SearchActivity : AppCompatActivity() {
                 }).setNegativeButton(R.string.cancel, null)
                 .setCancelable(true)
                 .show()
+
+        etInput.setOnEditorActionListener { textView, i, keyEvent ->
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+
+                if (TextUtils.isEmpty(textView.text)) {
+                    etInput.error = getString(R.string.required)
+                    return@setOnEditorActionListener true
+                }
+
+                alertDialog.dismiss()
+                search(etInput.text.toString().trim())
+                return@setOnEditorActionListener true
+            }
+
+            return@setOnEditorActionListener false
+        }
     }
 
     private fun search(handle: String) {
@@ -124,7 +141,7 @@ class SearchActivity : AppCompatActivity() {
 
         loader?.show()
 
-        userViewModel?.loadData(handle, "")
+        userViewModel?.loadData(handle)
         userViewModel?.loadExtra(handle)
 
         hideCharts()
@@ -134,9 +151,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setUpObservable() {
-        if (userViewModel == null) {
-            userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
-        }
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
 
         userViewModel?.getData()?.observe(this, Observer {
             if (loader != null && loader!!.isShowing) {
@@ -468,8 +483,6 @@ class SearchActivity : AppCompatActivity() {
         levelsChart.setPinchZoom(true)
         levelsChart.isDoubleTapToZoomEnabled = false
         levelsChart.axisLeft.axisMinimum = 0f
-
-
     }
 
     private fun updateUi(userResponse: UserResponse?) {

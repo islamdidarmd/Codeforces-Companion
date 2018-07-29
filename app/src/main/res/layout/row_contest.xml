@@ -15,212 +15,228 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="8dp">
 
         <LinearLayout
-            android:id="@+id/layoutStarting"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layoutStarting"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/starting_in"
-                android:textSize="12sp" />
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/tvTimer"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/starting_in"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:textSize="18sp"
+                    tools:text="00:00:00" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
-                android:textSize="18sp"
-                tools:text="00:00:00" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="@string/name" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/type"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    tools:text="@string/type" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPhase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phase"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvPhase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    tools:text="@string/phase" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/frozen"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvFrozen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    tools:text="@string/frozen" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/duration"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    tools:text="@string/duration" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    tools:text="@string/start" />
+
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="@string/name"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/colon"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                tools:text="@string/name" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="@string/type"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/colon"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                tools:text="@string/type" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layoutPhase"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="@string/phase"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/colon"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvPhase"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                tools:text="@string/phase" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="@string/frozen"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/colon"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvFrozen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                tools:text="@string/frozen" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="@string/duration"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/colon"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                tools:text="@string/duration" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="@string/start"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/colon"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="4dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                tools:text="@string/start" />
-
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/ivAlarm"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:padding="4dp"
+            android:src="@drawable/ic_notifications_black_24dp"
+            android:visibility="gone" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -22,6 +22,11 @@ class UserViewModel : ViewModel() {
     private var userStatus: MutableLiveData<UserStatusResponse> = MutableLiveData()
     private var userExtra: MutableLiveData<UserExtraResponse> = MutableLiveData()
 
+    //These are using for comparing multiple user
+    private var userExtras: MutableLiveData<List<UserExtraResponse>> = MutableLiveData()
+    private var userStatuses: MutableLiveData<List<UserStatusResponse>> = MutableLiveData()
+
+
     //creating api client for network call
     private val apiClient = ApiClient.getClient()
             .create(ApiService::class.java)
@@ -38,6 +43,10 @@ class UserViewModel : ViewModel() {
         return userExtra
     }
 
+    fun getExtras(): LiveData<List<UserExtraResponse>> {
+        return userExtras
+    }
+
     fun loadStatus(handle: String) {
         val call = apiClient.getUserStatus("$USER_STATUS_URL$handle")
 
@@ -46,6 +55,7 @@ class UserViewModel : ViewModel() {
                 if (response?.body()?.status == STATUS.OK
                         && response.body()?.result != null) {
 
+                    response.body()?.handle = handle
                     userStatus.value = response.body()
                 } else {
                     userStatus.value = null
@@ -60,9 +70,9 @@ class UserViewModel : ViewModel() {
         })
     }
 
-    fun loadData(handle: String, handle2: String) {
+    fun loadData(handle: String) {
 
-        val call = apiClient.getUSers(getProfileUrl(handle, handle2))
+        val call = apiClient.getUSers(getProfileUrl(handle))
 
         call.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>?, response: Response<UserResponse>?) {
@@ -101,6 +111,69 @@ class UserViewModel : ViewModel() {
             override fun onFailure(call: Call<UserExtraResponse>?, t: Throwable?) {
                 userExtra.value = null
 
+                Log.d(TAG, t?.message.toString())
+            }
+        })
+    }
+
+    fun loadExtra(handle1: String, handle2: String) {
+        var failed = false
+        var count = 0
+        val extras: MutableList<UserExtraResponse> = ArrayList()
+
+        val call1 = apiClient.getUserExtra("$USER_EXTRA_URL$handle1")
+        val call2 = apiClient.getUserExtra("$USER_EXTRA_URL$handle2")
+
+        call1.enqueue(object : Callback<UserExtraResponse> {
+            override fun onResponse(call: Call<UserExtraResponse>?, response: Response<UserExtraResponse>?) {
+                if (response?.body()?.status == STATUS.OK
+                        && response.body()?.result != null) {
+
+                    if (count < 2) {
+                        extras.add(response.body()!!)
+                        count++
+                    }
+
+                    if (!failed && count == 2) {
+                        userExtras.value = extras
+                    }
+
+                } else {
+                    failed = true
+                    userExtra.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<UserExtraResponse>?, t: Throwable?) {
+                failed = true
+                userExtra.value = null
+                Log.d(TAG, t?.message.toString())
+            }
+        })
+
+        call2.enqueue(object : Callback<UserExtraResponse> {
+            override fun onResponse(call: Call<UserExtraResponse>?, response: Response<UserExtraResponse>?) {
+                if (response?.body()?.status == STATUS.OK
+                        && response.body()?.result != null) {
+
+                    if (count < 2) {
+                        extras.add(response.body()!!)
+                        count++
+                    }
+
+                    if (!failed && count == 2) {
+                        userExtras.value = extras
+                    }
+
+                } else {
+                    failed = true
+                    userExtra.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<UserExtraResponse>?, t: Throwable?) {
+                failed = true
+                userExtra.value = null
                 Log.d(TAG, t?.message.toString())
             }
         })

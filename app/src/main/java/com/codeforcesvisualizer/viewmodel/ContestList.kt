@@ -26,10 +26,15 @@ class ContestList : ViewModel() {
             contestData.value = Application.contestResponse
         }
 
-        //if contest data is still null try retrieving from shared prefs
+        //if contest data is not in Runtime memory try retrieving from shared prefs
         if (contestData.value == null) {
             Application.contestResponse = ContestResponse.fromJson(Application.getData("contests", ""))
             contestData.value = Application.contestResponse
+        }
+
+        //if contest data is not cached and not in shared prefs then we try loading from server
+        if (contestData.value == null) {
+            loadData()
         }
 
         return contestData
@@ -51,8 +56,8 @@ class ContestList : ViewModel() {
 
                     Application.saveData(response.body()!!.toJson(), "contests")
 
-                    Log.d(TAG, "On response value")
-                }else{
+                    Log.d(TAG, "OnResponse value")
+                } else {
                     contestData.value = null
                 }
             }
@@ -61,9 +66,8 @@ class ContestList : ViewModel() {
                 if (Application.contestResponse == null) {
                     contestData.value = null
 
-                    Log.d(TAG, "On onFailure value")
+                    Log.d(TAG, "OnFailure")
                 }
-
                 Log.d(TAG, t?.message.toString())
             }
         })

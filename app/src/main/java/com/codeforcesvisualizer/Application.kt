@@ -7,6 +7,7 @@ import com.codeforcesvisualizer.model.ContestResponse
 class Application : android.app.Application() {
     companion object {
         var contestResponse: ContestResponse? = null
+        var contestResponseLoadedFromCache = false
         lateinit var sharedPreferences: SharedPreferences
 
         fun saveData(data: String, name: String) {
