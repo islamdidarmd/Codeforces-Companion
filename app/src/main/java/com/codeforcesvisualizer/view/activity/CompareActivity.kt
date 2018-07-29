@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.text.TextUtils
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import com.codeforcesvisualizer.R
@@ -96,6 +98,8 @@ class CompareActivity : BaseActivity() {
         val ratingChartEntries1: MutableList<BarEntry> = ArrayList()
         val ratingChartEntries2: MutableList<BarEntry> = ArrayList()
 
+        val contestChartEntries: MutableList<BarEntry> = ArrayList()
+
         ratingChartEntries1.add(BarEntry(0f, currentRating1.toFloat()))
         ratingChartEntries1.add(BarEntry(1f, maxRating1.toFloat()))
         ratingChartEntries1.add(BarEntry(2f, minRating1.toFloat()))
@@ -104,19 +108,37 @@ class CompareActivity : BaseActivity() {
         ratingChartEntries2.add(BarEntry(1f, maxRating2.toFloat()))
         ratingChartEntries2.add(BarEntry(2f, minRating2.toFloat()))
 
+
+        contestChartEntries.add(BarEntry(0f, user1.result.size.toFloat()))
+        contestChartEntries.add(BarEntry(1f, user2.result.size.toFloat()))
+
         val ratingDataSet1 = BarDataSet(ratingChartEntries1, user1.handle)
         val ratingDataSet2 = BarDataSet(ratingChartEntries2, user2.handle)
+
+        val contestDataSet = BarDataSet(contestChartEntries, "")
 
         ratingDataSet1.color = Color.GREEN
         ratingDataSet2.color = Color.BLUE
 
-        val ratingData = BarData(ratingDataSet1,ratingDataSet2)
+        contestDataSet.color = Color.BLUE
+
+        val ratingData = BarData(ratingDataSet1, ratingDataSet2)
+        val contestData = BarData(contestDataSet)
+
         ratingData.barWidth = 0.3f
+        contestData.barWidth = 0.5f
+
         ratingData.setValueFormatter { value, entry, dataSetIndex, viewPortHandler ->
             return@setValueFormatter value.toInt().toString()
         }
 
+        contestData.setValueFormatter { value, entry, dataSetIndex, viewPortHandler ->
+            return@setValueFormatter value.toInt().toString()
+        }
+
         ratingChart.xAxis.labelCount = 3
+        contestChart.xAxis.labelCount = 2
+
         ratingChart.xAxis.setValueFormatter { value, axis ->
             if (value >= 0f && value < 1f) {
                 return@setValueFormatter "Current Rating"
@@ -129,12 +151,26 @@ class CompareActivity : BaseActivity() {
             }
         }
 
+        contestChart.xAxis.setValueFormatter { value, axis ->
+            if (value >= 0f && value < 1f) {
+                return@setValueFormatter user1.handle
+            } else if (value >= 1f && value < 2f) {
+                return@setValueFormatter user2.handle
+            } else {
+                return@setValueFormatter ""
+            }
+        }
+
         ratingChart.data = ratingData
+        contestChart.data = contestData
         setUpCharts()
 
         ratingChart.groupBars(-0.5f, 0.4f, 0.02f)
         ratingChart.invalidate()
+        contestChart.invalidate()
+
         ratingChart.animateXY(2000, 2000)
+        contestChart.animateXY(2000, 2000)
 
         hideExtraInfoLoaders()
         showExtraInfoCharts()
@@ -144,23 +180,43 @@ class CompareActivity : BaseActivity() {
     private fun setUpCharts() {
 
         ratingChart.description.isEnabled = false
+        contestChart.description.isEnabled = false
 
         ratingChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
 
         ratingChart.legend.isEnabled = true
+        contestChart.legend.isEnabled = false
+
         ratingChart.legend.textColor = Color.BLACK
 
         ratingChart.axisRight.isEnabled = false
+        contestChart.axisRight.isEnabled = false
+
         ratingChart.xAxis.setDrawGridLines(false)
+        contestChart.xAxis.setDrawGridLines(false)
+
         ratingChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        contestChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
         ratingChart.xAxis.granularity = 1f
+        contestChart.xAxis.granularity = 1f
+
         ratingChart.xAxis.setCenterAxisLabels(false)
+
         ratingChart.xAxis.isGranularityEnabled = true
+        contestChart.xAxis.isGranularityEnabled = true
+
         ratingChart.setFitBars(false)
+        contestChart.setFitBars(false)
+
         ratingChart.setPinchZoom(true)
+        contestChart.setPinchZoom(true)
+
         ratingChart.isDoubleTapToZoomEnabled = false
+        contestChart.isDoubleTapToZoomEnabled = false
+
         ratingChart.axisLeft.axisMinimum = 0f
+        contestChart.axisLeft.axisMinimum = 0f
     }
 
     private fun hideLoaders() {
@@ -173,14 +229,31 @@ class CompareActivity : BaseActivity() {
 
     private fun hideExtraInfoCharts() {
         hide(ratingChart)
+        hide(contestChart)
     }
 
     private fun showExtraInfoCharts() {
         show(ratingChart)
+        show(contestChart)
     }
 
     private fun hideExtraInfoLoaders() {
         hide(pbRating)
+        hide(pbContests)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_compare, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_compare -> {
+                showSearchDialog()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun showSearchDialog() {
