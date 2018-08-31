@@ -26,7 +26,7 @@ class Application : android.app.Application() {
         }
 
         fun logEvent(event: String) {
-          //  if (BuildConfig.DEBUG) return
+            if (BuildConfig.DEBUG) return
             Answers.getInstance().logCustom(CustomEvent(event))
         }
     }
@@ -42,8 +42,8 @@ class Application : android.app.Application() {
                 .setFontAttrId(R.attr.fontPath)
                 .build())
 
-       // if (!BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             Fabric.with(this, Crashlytics())
-      //  }
+        }
     }
 }

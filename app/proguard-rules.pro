@@ -36,6 +36,8 @@
 
 -dontwarn retrofit2.Platform**
 -dontwarn okio**
+-dontwarn org.conscrypt.**
+-dontwarn okhttp3.**
 
 -dontwarn javax.annotation.**
 -dontwarn com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool
