@@ -16,6 +16,7 @@ import java.util.*
 import android.graphics.drawable.GradientDrawable
 import android.widget.RadioButton
 import android.widget.TextView
+import com.codeforcesvisualizer.model.Contest
 import com.github.mikephil.charting.utils.ColorTemplate
 
 
@@ -221,6 +222,28 @@ fun isBrightColor(color: Int): Boolean {
     }
 
     return rtnValue
+}
+
+fun getSolvedCount(map: MutableMap<String, Boolean>): Int {
+    var count = 0
+    map.values.forEach {
+        if (it) count++
+    }
+    return count
+}
+
+fun createContestUrl(contest: Contest): String {
+    return "http://codeforces.com/contest/${contest.id}"
+}
+
+fun getSolvedWithOneSubCount(map: MutableMap<String, Int>): Int {
+    var count = 0
+
+    map.values.forEach {
+        if (it == 1) count++
+    }
+
+    return count
 }
 
 fun getProblemLinkFromProblem(problemId: String): String {

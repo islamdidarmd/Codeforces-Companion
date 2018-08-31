@@ -12,16 +12,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".view.activity.SplashActivity">
+        <activity
+            android:name=".view.activity.SplashActivity"
+            android:configChanges="screenSize|screenLayout|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".view.activity.MainActivity" />
-        <activity android:name=".view.activity.SearchActivity" />
-        <activity android:name=".view.activity.CompareActivity"></activity>
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:configChanges="screenSize|screenLayout|orientation" />
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:configChanges="screenSize|screenLayout|orientation" />
+        <activity
+            android:name=".view.activity.CompareActivity"
+            android:configChanges="screenSize|screenLayout|orientation" />
+        <activity
+            android:name=".view.activity.AboutActivity"
+            android:configChanges="screenSize|screenLayout|orientation" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="310e29bfe175437b07d913e23477e61ef845dc33" />
     </application>
 
 </manifest>

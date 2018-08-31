@@ -2,6 +2,9 @@ package com.codeforcesvisualizer.view.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
@@ -18,6 +21,8 @@ import com.codeforcesvisualizer.Application
 import com.codeforcesvisualizer.R
 import com.codeforcesvisualizer.adapter.ContestListAdapter
 import com.codeforcesvisualizer.model.Contest
+import com.codeforcesvisualizer.util.ClickListener
+import com.codeforcesvisualizer.util.createContestUrl
 import com.codeforcesvisualizer.util.hide
 import com.codeforcesvisualizer.util.show
 import com.codeforcesvisualizer.viewmodel.ContestList
@@ -47,6 +52,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     hide(rvList)
                     show(tvNoContestFound)
                 } else {
+                    supportActionBar?.title = getString(R.string.upcomming_contests)
                     tvContestListType.text = getString(R.string.upcomming_contests)
                     adapter.updateDataset(upComingContest)
                     hide(tvNoContestFound)
@@ -61,6 +67,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     hide(rvList)
                     show(tvNoContestFound)
                 } else {
+                    supportActionBar?.title = getString(R.string.past_contests)
                     tvContestListType.text = getString(R.string.past_contests)
                     adapter.updateDataset(pastContest)
                     hide(tvNoContestFound)
@@ -71,11 +78,41 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
 
             R.id.nav_drawer_search -> {
+                Application.logEvent("SideNav_Search")
                 goToSearch()
             }
 
             R.id.nav_drawer_compare -> {
+                Application.logEvent("SideNav_Compare")
                 goToCompare()
+            }
+
+            R.id.side_nav_about -> {
+                startActivity(Intent(this, AboutActivity::class.java))
+            }
+
+            R.id.side_nav_rate -> {
+                try {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+                } catch (exception: Exception) {
+
+                }
+            }
+
+            R.id.side_nav_share -> {
+                try {
+                    val i = Intent(Intent.ACTION_SEND)
+                    i.type = "text/plain"
+                    i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+                    var sAux = "\nLet me recommend you this application\n\n"
+                    sAux += "https://play.google.com/store/apps/details?id=$packageName\n"
+                    i.putExtra(Intent.EXTRA_TEXT, sAux)
+                    startActivity(Intent.createChooser(i, getString(R.string.choose_one)))
+
+                    Application.logEvent("Share")
+                } catch (e: Exception) {
+                    //e.toString();
+                }
             }
 
         }
@@ -94,12 +131,29 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         processContests()
         setUpListObservable()
 
+        supportActionBar?.title = getString(R.string.upcomming_contests)
         tvContestListType.text = getString(R.string.upcomming_contests)
+        hide(tvContestListType)
 
         rvList.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         rvList.itemAnimator = DefaultItemAnimator()
 
-        adapter = ContestListAdapter(this, upComingContest)
+        adapter = ContestListAdapter(this, upComingContest, object : ClickListener<Contest> {
+            override fun onClicked(item: Contest, position: Int) {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(createContestUrl(item))
+                try {
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    e.printStackTrace()
+                    Snackbar.make(coordinator,
+                            getString(R.string.failed_to_open_link), Snackbar.LENGTH_LONG).show()
+                }
+
+                Application.logEvent("Contest_List_Click")
+
+            }
+        })
         rvList.adapter = adapter
 
         //If contest list is loaded from cache then try reloading from server
@@ -122,10 +176,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                         Toast.LENGTH_SHORT)
                         .show()
                 contestList.loadData()
+                Application.logEvent("Menu_Reload")
             }
 
             R.id.menu_search -> {
+                Application.logEvent("Menu_Search")
                 goToSearch()
+            }
+
+            R.id.nav_drawer_compare -> {
+                Application.logEvent("Menu_Compare")
+                goToCompare()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -142,11 +203,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 //Notify user about new data
                 Snackbar.make(coordinator,
                         R.string.data_updated, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.reload, View.OnClickListener {
+                        .setAction(R.string.reload, {
                             processContests()
                             bottom_nav.menu.getItem(0).isChecked = true
                             adapter.updateDataset(upComingContest)
-                        }).show()
+                        })
+                        .setActionTextColor(resources.getColor(R.color.colorWhite))
+                        .show()
             }
 
             if (!contestDataInitiated) {
@@ -170,5 +233,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }.run()
 
         upComingContest = upComingContest.reversed().toMutableList()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Application.logEvent("About")
     }
 }

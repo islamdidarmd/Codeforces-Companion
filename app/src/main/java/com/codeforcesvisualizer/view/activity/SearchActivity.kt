@@ -22,6 +22,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.Toast
+import com.codeforcesvisualizer.Application
 import com.codeforcesvisualizer.R
 import com.codeforcesvisualizer.model.User
 import com.codeforcesvisualizer.model.UserExtraResponse
@@ -42,7 +43,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : BaseActivity() {
     private val TAG = "SearchActivity"
     private var loader: AlertDialog? = null
     private var userViewModel: UserViewModel? = null
@@ -101,7 +102,7 @@ class SearchActivity : AppCompatActivity() {
         val etInput = view.findViewById<EditText>(R.id.etInput)
 
         val alertDialog = AlertDialog.Builder(this)
-                .setTitle(getString(R.string.enter_handle))
+                .setTitle(getString(R.string.search_user))
                 .setView(view)
                 .setPositiveButton(R.string.search, { dialog, which ->
                     search(etInput.text.toString().trim())
@@ -130,6 +131,8 @@ class SearchActivity : AppCompatActivity() {
     private fun search(handle: String) {
         Log.d(TAG, handle)
         if (TextUtils.isEmpty(handle)) return
+
+        Application.logEvent("Search_User")
 
         if (loader == null) {
             loader = AlertDialog.Builder(this)
@@ -201,6 +204,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun updateStatus(status: UserStatusResponse?) {
+
         if (status == null) {
             langChart.data = null
             verdictChart.data = null
@@ -240,20 +244,19 @@ class SearchActivity : AppCompatActivity() {
                 levelsMap[it.problem.index] = (levelsMap[it.problem.index]!! + 1)
             }
 
-            //We are saving problem id with contest id and saved status in a map
-            if (((problemsMap["${it.problem.contestId}-${it.problem.index}"] == null ||
-                            !problemsMap["${it.problem.contestId}-${it.problem.index}"]!!)
+            //We are saving problem id and status in a map
+            if (((problemsMap[it.problem.getProblemName()] == null ||
+                            !problemsMap[it.problem.getProblemName()]!!)
                             && it.verdict == "AC")) {
-                problemsMap["${it.problem.contestId}-${it.problem.index}"] = true
+                problemsMap[it.problem.getProblemName()] = true
                 solvedProblem++
 
-            } else if ((problemsMap["${it.problem.contestId}-${it.problem.index}"] == null
+            } else if ((problemsMap[it.problem.getProblemName()] == null
                             && it.verdict != "AC")) {
-                problemsMap["${it.problem.contestId}-${it.problem.index}"] = false
+                problemsMap[it.problem.getProblemName()] = false
             }
 
-            //creating problem id appending with contest id and saving it to a HashSet
-            uniqueProblems.add("${it.problem.contestId}-${it.problem.index}")
+            uniqueProblems.add(it.problem.getProblemName())
 
             if (languageMap[it.programmingLanguage] == null) {
                 languageMap[it.programmingLanguage] = 0f
@@ -486,6 +489,8 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun updateUi(userResponse: UserResponse?) {
+        if (userResponse?.result == null || userResponse.result.isEmpty()) return
+
         val user: User? = userResponse?.result?.get(0)
 
         if (user != null) {
@@ -520,5 +525,10 @@ class SearchActivity : AppCompatActivity() {
                     Snackbar.LENGTH_SHORT).show()
             hide(profileContent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Application.logEvent("Search")
     }
 }

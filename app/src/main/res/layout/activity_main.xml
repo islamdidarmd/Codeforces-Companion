@@ -18,6 +18,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorWhite"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
@@ -67,6 +68,7 @@
         android:id="@+id/side_nav"
         android:layout_width="220dp"
         android:layout_height="match_parent"
+        app:headerLayout="@layout/side_nav_header"
         android:layout_gravity="start"
         app:menu="@menu/menu_nav_drawer" />
 </android.support.v4.widget.DrawerLayout>

@@ -355,7 +355,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="150dp"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -370,7 +369,8 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:minHeight="150dp">
 
                         <ProgressBar
                             android:id="@+id/pbLanguage"
@@ -400,7 +400,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="150dp"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -415,7 +414,8 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:minHeight="150dp">
 
                         <ProgressBar
                             android:id="@+id/pbVerdict"
@@ -445,7 +445,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="150dp"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -460,7 +459,8 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:minHeight="150dp">
 
                         <ProgressBar
                             android:id="@+id/pbLevels"
@@ -490,7 +490,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="150dp"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -505,7 +504,8 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:minHeight="150dp">
 
                         <ProgressBar
                             android:id="@+id/pbtags"
@@ -534,7 +534,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="150dp"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -549,7 +548,8 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:minHeight="150dp">
 
                         <ProgressBar
                             android:id="@+id/pbExtra"
@@ -782,7 +782,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="150dp"
                     android:orientation="vertical"
                     android:padding="8dp">
 
@@ -797,7 +796,8 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:minHeight="150dp">
 
                         <ProgressBar
                             android:id="@+id/pbUnsolved"

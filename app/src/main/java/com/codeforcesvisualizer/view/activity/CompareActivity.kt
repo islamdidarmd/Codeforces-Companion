@@ -11,10 +11,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import com.codeforcesvisualizer.Application
 import com.codeforcesvisualizer.R
 import com.codeforcesvisualizer.model.UserExtraResponse
-import com.codeforcesvisualizer.util.hide
-import com.codeforcesvisualizer.util.show
+import com.codeforcesvisualizer.model.UserStatusResponse
+import com.codeforcesvisualizer.util.*
 import com.codeforcesvisualizer.viewmodel.UserViewModel
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -44,14 +45,13 @@ class CompareActivity : BaseActivity() {
 
     private fun initUi() {
         setSupportActionBar(toolbar)
-        supportActionBar?.title = getString(R.string.compare)
+        supportActionBar?.title = getString(R.string.compare_users)
         toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back_white_24dp)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
         toolbar.setNavigationOnClickListener { finish() }
 
-        hideCharts()
         hideLoaders()
     }
 
@@ -63,22 +63,174 @@ class CompareActivity : BaseActivity() {
                 loader?.cancel()
             }
 
-            updateUi(it)
+            updateExtraUi(it)
         })
+
+        userViewModel?.getStatuses()?.observe(this, Observer {
+            if (loader != null && loader!!.isShowing) {
+                loader?.cancel()
+            }
+
+            updateStatusUi(it)
+        })
+
     }
 
-    private fun updateUi(users: List<UserExtraResponse>?) {
+    private fun updateStatusUi(users: List<UserStatusResponse>?) {
+        if (users == null) {
+            hideStatusInfoCharts()
+            return
+        }
+
+        val user1 = users[0]
+        val user2 = users[1]
+
+        val user1Problems: MutableSet<String> = HashSet()
+        val user2Problems: MutableSet<String> = HashSet()
+
+        val user1ProblemStatus: MutableMap<String, Boolean> = HashMap()
+        val user2ProblemStatus: MutableMap<String, Boolean> = HashMap()
+
+        val user1ProblemSubmissions: MutableMap<String, Int> = HashMap()
+        val user2ProblemSubmissions: MutableMap<String, Int> = HashMap()
+
+        user1.result?.forEach { userStatus ->
+            val it = minifyVerdicts(userStatus)
+
+            val problemName = it.problem.getProblemName()
+            user1Problems.add(problemName)
+
+            if ((user1ProblemStatus[problemName] == null ||
+                            !user1ProblemStatus[problemName]!!) && (it.verdict == "AC")) {
+                user1ProblemStatus[problemName] = true
+            } else {
+                user1ProblemStatus[problemName] = it.verdict == "AC"
+            }
+
+            if (!user1ProblemSubmissions.containsKey(problemName)) {
+                user1ProblemSubmissions[problemName] = 0
+            }
+            user1ProblemSubmissions[problemName] = user1ProblemSubmissions[problemName]!! + 1
+        }
+
+        user2.result?.forEach { userStatus ->
+            val it = minifyVerdicts(userStatus)
+
+            val problemName = it.problem.getProblemName()
+            user2Problems.add(problemName)
+
+            if ((user2ProblemStatus[problemName] == null ||
+                            !user2ProblemStatus[problemName]!!) && (it.verdict == "AC")) {
+                user2ProblemStatus[problemName] = true
+            } else {
+                user2ProblemStatus[problemName] = it.verdict == "AC"
+            }
+
+            if (!user2ProblemSubmissions.containsKey(problemName)) {
+                user2ProblemSubmissions[problemName] = 0
+            }
+            user2ProblemSubmissions[problemName] = user2ProblemSubmissions[problemName]!! + 1
+        }
+
+        val triedSolvedChartEntries1: MutableList<BarEntry> = ArrayList()
+        val triedSolvedChartEntries2: MutableList<BarEntry> = ArrayList()
+
+        val solvedWithOneSubChartEntries: MutableList<BarEntry> = ArrayList()
+
+        triedSolvedChartEntries1.add(BarEntry(0f, user1Problems.size.toFloat()))
+        triedSolvedChartEntries1.add(BarEntry(1f, (user1Problems.size - getSolvedCount(user1ProblemStatus)).toFloat()))
+
+        triedSolvedChartEntries2.add(BarEntry(0f, user2Problems.size.toFloat()))
+        triedSolvedChartEntries2.add(BarEntry(1f, (user2Problems.size - getSolvedCount(user2ProblemStatus)).toFloat()))
+
+        solvedWithOneSubChartEntries.add(BarEntry(0f, getSolvedWithOneSubCount(user1ProblemSubmissions).toFloat()))
+        solvedWithOneSubChartEntries.add(BarEntry(1f, getSolvedWithOneSubCount(user2ProblemSubmissions).toFloat()))
+
+        val triedSolvedDataSet1 = BarDataSet(triedSolvedChartEntries1, user1.handle)
+        val triedSolvedDataSet2 = BarDataSet(triedSolvedChartEntries2, user2.handle)
+
+        val solvedWithOneSubDataSet = BarDataSet(solvedWithOneSubChartEntries, "")
+
+        triedSolvedDataSet1.color = Color.GREEN
+        triedSolvedDataSet2.color = Color.BLUE
+        solvedWithOneSubDataSet.color = Color.BLUE
+
+        val triedSolvedData = BarData(triedSolvedDataSet1, triedSolvedDataSet2)
+        val solvedWithOneSubData = BarData(solvedWithOneSubDataSet)
+
+        triedSolvedData.barWidth = 0.3f
+        solvedWithOneSubData.barWidth = 0.5f
+
+        triedSolvedData.setValueFormatter { value, entry, dataSetIndex, viewPortHandler ->
+            return@setValueFormatter value.toInt().toString()
+        }
+        solvedWithOneSubData.setValueFormatter { value, entry, dataSetIndex, viewPortHandler ->
+            return@setValueFormatter value.toInt().toString()
+        }
+
+        triedChart.xAxis.labelCount = 2
+        oneSubChart.xAxis.labelCount = 2
+        triedChart.xAxis.setValueFormatter { value, axis ->
+            if (value >= 0f && value < 1f) {
+                return@setValueFormatter "Tried"
+            } else if (value >= 1f && value < 2f) {
+                return@setValueFormatter "Solved"
+            } else {
+                return@setValueFormatter ""
+            }
+        }
+
+        oneSubChart.xAxis.setValueFormatter { value, axis ->
+            if (value >= 0f && value < 1f) {
+                return@setValueFormatter user1.handle
+            } else if (value >= 1f && value < 2f) {
+                return@setValueFormatter user2.handle
+            } else {
+                return@setValueFormatter ""
+            }
+        }
+
+        triedChart.data = triedSolvedData
+        oneSubChart.data = solvedWithOneSubData
+
+        setUpCharts()
+
+        triedChart.groupBars(-0.5f, 0.4f, 0.02f)
+
+        triedChart.invalidate()
+        oneSubChart.invalidate()
+
+        triedChart.animateXY(2000, 2000)
+        oneSubChart.animateXY(2000, 2000)
+
+        hideStatusInfoLoaders()
+        showStatusInfoCharts()
+
+    }
+
+    private fun updateExtraUi(users: List<UserExtraResponse>?) {
         if (users == null) {
             hideExtraInfoCharts()
             return
         }
 
-        //setting rating chart values
         val user1 = users[0]
         val user2 = users[1]
 
         var maxRating1 = -1
         var maxRating2 = -1
+
+        var maxUp1 = -1
+        var maxUp2 = -1
+
+        var maxDown1 = Int.MAX_VALUE
+        var maxDown2 = Int.MAX_VALUE
+
+        var bestRank1 = Int.MAX_VALUE
+        var bestRank2 = Int.MAX_VALUE
+
+        var worstRank1 = -1
+        var worstRank2 = -1
 
         var minRating1 = Int.MAX_VALUE
         var minRating2 = Int.MAX_VALUE
@@ -89,10 +241,23 @@ class CompareActivity : BaseActivity() {
         user1.result.forEach {
             maxRating1 = max(maxRating1, max(it.newRating, it.newRating))
             minRating1 = min(minRating1, min(it.newRating, it.newRating))
+
+            maxUp1 = max(maxUp1, (it.newRating - it.oldRating))
+            maxDown1 = min(maxDown1, it.newRating - it.oldRating)
+
+            bestRank1 = min(bestRank1, it.rank)
+            worstRank1 = max(worstRank1, it.rank)
         }
+
         user2.result.forEach {
             maxRating2 = max(maxRating2, max(it.newRating, it.newRating))
             minRating2 = min(minRating2, min(it.newRating, it.newRating))
+
+            maxUp2 = max(maxUp2, (it.newRating - it.oldRating))
+            maxDown2 = min(maxDown2, it.newRating - it.oldRating)
+
+            bestRank2 = min(bestRank2, it.rank)
+            worstRank2 = max(worstRank2, it.rank)
         }
 
         val ratingChartEntries1: MutableList<BarEntry> = ArrayList()
@@ -161,6 +326,24 @@ class CompareActivity : BaseActivity() {
             }
         }
 
+        tvMaxUpDownHandle1.text = user1.handle
+        tvMaxUpDownHandle2.text = user2.handle
+
+        tvMaxUp1.text = "+$maxUp1"
+        tvMaxUp2.text = "+$maxUp2"
+
+        tvMaxDown1.text = maxDown1.toString()
+        tvMaxDown2.text = maxDown2.toString()
+
+        tvRankHandle1.text = user1.handle
+        tvRankHandle2.text = user2.handle
+
+        tvMaxRank1.text = bestRank1.toString()
+        tvMaxRank2.text = bestRank2.toString()
+
+        tvWorstRank1.text = worstRank1.toString()
+        tvWorstRank2.text = worstRank2.toString()
+
         ratingChart.data = ratingData
         contestChart.data = contestData
         setUpCharts()
@@ -181,65 +364,130 @@ class CompareActivity : BaseActivity() {
 
         ratingChart.description.isEnabled = false
         contestChart.description.isEnabled = false
+        triedChart.description.isEnabled = false
+        oneSubChart.description.isEnabled = false
 
         ratingChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        triedChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
 
         ratingChart.legend.isEnabled = true
+        triedChart.legend.isEnabled = true
+
         contestChart.legend.isEnabled = false
+        oneSubChart.legend.isEnabled = false
 
         ratingChart.legend.textColor = Color.BLACK
+        triedChart.legend.textColor = Color.BLACK
 
         ratingChart.axisRight.isEnabled = false
+        triedChart.axisRight.isEnabled = false
         contestChart.axisRight.isEnabled = false
+        oneSubChart.axisRight.isEnabled = false
 
         ratingChart.xAxis.setDrawGridLines(false)
+        triedChart.xAxis.setDrawGridLines(false)
         contestChart.xAxis.setDrawGridLines(false)
+        oneSubChart.xAxis.setDrawGridLines(false)
 
         ratingChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        triedChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         contestChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        oneSubChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
 
         ratingChart.xAxis.granularity = 1f
+        triedChart.xAxis.granularity = 1f
         contestChart.xAxis.granularity = 1f
+        oneSubChart.xAxis.granularity = 1f
 
         ratingChart.xAxis.setCenterAxisLabels(false)
+        triedChart.xAxis.setCenterAxisLabels(false)
 
         ratingChart.xAxis.isGranularityEnabled = true
+        triedChart.xAxis.isGranularityEnabled = true
         contestChart.xAxis.isGranularityEnabled = true
+        oneSubChart.xAxis.isGranularityEnabled = true
 
         ratingChart.setFitBars(false)
+        triedChart.setFitBars(false)
         contestChart.setFitBars(false)
+        oneSubChart.setFitBars(false)
 
         ratingChart.setPinchZoom(true)
+        triedChart.setPinchZoom(true)
         contestChart.setPinchZoom(true)
+        oneSubChart.setPinchZoom(true)
 
         ratingChart.isDoubleTapToZoomEnabled = false
+        triedChart.isDoubleTapToZoomEnabled = false
         contestChart.isDoubleTapToZoomEnabled = false
+        oneSubChart.isDoubleTapToZoomEnabled = false
 
         ratingChart.axisLeft.axisMinimum = 0f
+        triedChart.axisLeft.axisMinimum = 0f
         contestChart.axisLeft.axisMinimum = 0f
+        oneSubChart.axisLeft.axisMinimum = 0f
     }
 
     private fun hideLoaders() {
         hideExtraInfoLoaders()
+        hideStatusInfoLoaders()
     }
 
     private fun hideCharts() {
         hideExtraInfoCharts()
+        hideStatusInfoCharts()
     }
 
     private fun hideExtraInfoCharts() {
+        showExtraInfoLoaders()
+
         hide(ratingChart)
         hide(contestChart)
+        hide(tableRatingUpDown)
+        hide(tableRank)
+    }
+
+    private fun hideStatusInfoCharts() {
+        showStatusInfoLoaders()
+
+        hide(triedChart)
+        hide(oneSubChart)
+    }
+
+    private fun showStatusInfoCharts() {
+        show(triedChart)
+        show(oneSubChart)
     }
 
     private fun showExtraInfoCharts() {
         show(ratingChart)
         show(contestChart)
+        show(tableRatingUpDown)
+        show(tableRank)
     }
 
     private fun hideExtraInfoLoaders() {
         hide(pbRating)
         hide(pbContests)
+        hide(pbUpDown)
+        hide(pbRank)
+    }
+
+    private fun showExtraInfoLoaders() {
+        show(pbRating)
+        show(pbContests)
+        show(pbUpDown)
+        show(pbRank)
+    }
+
+    private fun hideStatusInfoLoaders() {
+        hide(pbTried)
+        hide(pbOneSub)
+    }
+
+    private fun showStatusInfoLoaders() {
+        show(pbTried)
+        show(pbOneSub)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -306,6 +554,7 @@ class CompareActivity : BaseActivity() {
 
     private fun search(handle1: String, handle2: String) {
         Log.d(TAG, "$handle1 $handle2")
+        Application.logEvent("Compare_Users")
 
         if (loader == null) {
             loader = AlertDialog.Builder(this)
@@ -315,8 +564,14 @@ class CompareActivity : BaseActivity() {
                     .create()
         }
 
+        hideCharts()
         loader?.show()
         userViewModel?.loadExtra(handle1, handle2)
+        userViewModel?.loadStatus(handle1, handle2)
+    }
 
+    override fun onResume() {
+        super.onResume()
+        Application.logEvent("Compare")
     }
 }

@@ -73,10 +73,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
+                    fontPath="fonts/raleway.ttf"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    tools:text="@string/name" />
+                    tools:text="@string/name"
+                    tools:ignore="MissingPrefix" />
             </LinearLayout>
 
             <LinearLayout
@@ -100,10 +102,9 @@
                 <TextView
                     android:id="@+id/tvType"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
                     tools:text="@string/type" />
             </LinearLayout>
@@ -130,10 +131,9 @@
                 <TextView
                     android:id="@+id/tvPhase"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
                     tools:text="@string/phase" />
 
@@ -160,10 +160,9 @@
                 <TextView
                     android:id="@+id/tvFrozen"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
                     tools:text="@string/frozen" />
 
@@ -193,7 +192,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
                     tools:text="@string/duration" />
 
@@ -223,7 +221,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
                     tools:text="@string/start" />
 

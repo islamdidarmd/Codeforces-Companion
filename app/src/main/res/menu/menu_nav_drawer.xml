@@ -9,5 +9,17 @@
     <item
         android:id="@+id/nav_drawer_compare"
         android:icon="@drawable/ic_compare_black_24dp"
-        android:title="@string/compare"/>
+        android:title="@string/compare_users"/>
+    <item
+        android:id="@+id/side_nav_about"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="@string/about" />
+    <item
+        android:id="@+id/side_nav_rate"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:title="@string/rate" />
+    <item
+        android:id="@+id/side_nav_share"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:title="@string/share" />
 </menu>

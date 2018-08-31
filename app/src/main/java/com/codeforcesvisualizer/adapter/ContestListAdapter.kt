@@ -9,14 +9,12 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import com.codeforcesvisualizer.R
 import com.codeforcesvisualizer.model.Contest
-import com.codeforcesvisualizer.util.getDateFromTimeStamp
-import com.codeforcesvisualizer.util.hide
-import com.codeforcesvisualizer.util.secToHourMins
-import com.codeforcesvisualizer.util.show
+import com.codeforcesvisualizer.util.*
 import kotlinx.android.synthetic.main.row_contest.view.*
 
 class ContestListAdapter(val context: Context,
-                         var contests: List<Contest>)
+                         var contests: List<Contest>,
+                         val clickListener: ClickListener<Contest>)
     : RecyclerView.Adapter<ContestListAdapter.ViewHolder>() {
 
     private var lastPosition = -1
@@ -79,6 +77,8 @@ class ContestListAdapter(val context: Context,
                     R.anim.down_from_top)
         holder.itemView.startAnimation(animation)
         lastPosition = position
+
+        holder.itemView.setOnClickListener { clickListener.onClicked(contests[position], position) }
     }
 
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {

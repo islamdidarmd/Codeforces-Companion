@@ -56,4 +56,15 @@
     <string name="compare_users">Compare Users</string>
     <string name="Handle1">Handle1</string>
     <string name="Handle2">Handle2</string>
+    <string name="max_up_and_down">Max up and down</string>
+    <string name="tried_and_solved">Tried and Solved</string>
+    <string name="solved_with_one_submission">Solved with one submission</string>
+    <string name="failed_to_open_link">Failed to open link</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="previous">Previous</string>
+    <string name="more">More</string>
+    <string name="about">About</string>
+    <string name="rate">Rate</string>
+    <string name="share">Share</string>
+    <string name="choose_one">choose one</string>
 </resources>

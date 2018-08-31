@@ -4,13 +4,13 @@
     <item
         android:id="@+id/bottom_menu_upcoming"
         android:icon="@drawable/ic_group_work_black_24dp"
-        android:title="Upcomming" />
+        android:title="@string/upcoming" />
     <item
         android:id="@+id/bottom_nav_past_contest"
         android:icon="@drawable/ic_history_black_24dp"
-        android:title="Previous" />
+        android:title="@string/previous" />
     <item
         android:id="@+id/bottom_nav_more"
         android:icon="@drawable/ic_menu_black_24dp"
-        android:title="More" />
+        android:title="@string/more" />
 </menu>

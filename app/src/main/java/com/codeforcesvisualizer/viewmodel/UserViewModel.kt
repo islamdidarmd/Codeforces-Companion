@@ -26,7 +26,6 @@ class UserViewModel : ViewModel() {
     private var userExtras: MutableLiveData<List<UserExtraResponse>> = MutableLiveData()
     private var userStatuses: MutableLiveData<List<UserStatusResponse>> = MutableLiveData()
 
-
     //creating api client for network call
     private val apiClient = ApiClient.getClient()
             .create(ApiService::class.java)
@@ -45,6 +44,10 @@ class UserViewModel : ViewModel() {
 
     fun getExtras(): LiveData<List<UserExtraResponse>> {
         return userExtras
+    }
+
+    fun getStatuses(): LiveData<List<UserStatusResponse>> {
+        return userStatuses
     }
 
     fun loadStatus(handle: String) {
@@ -176,6 +179,71 @@ class UserViewModel : ViewModel() {
             override fun onFailure(call: Call<UserExtraResponse>?, t: Throwable?) {
                 failed = true
                 userExtra.value = null
+                Log.d(TAG, t?.message.toString())
+            }
+        })
+    }
+
+    fun loadStatus(handle1: String, handle2: String) {
+        var failed = false
+        var count = 0
+        val statuses: MutableList<UserStatusResponse> = ArrayList()
+
+        val call1 = apiClient.getUserStatus("$USER_STATUS_URL$handle1")
+        val call2 = apiClient.getUserStatus("$USER_STATUS_URL$handle2")
+
+        call1.enqueue(object : Callback<UserStatusResponse> {
+            override fun onResponse(call: Call<UserStatusResponse>?, response: Response<UserStatusResponse>?) {
+                if (response?.body()?.status == STATUS.OK
+                        && response.body()?.result != null) {
+                    response.body()?.handle = handle1
+
+                    if (count < 2) {
+                        statuses.add(response.body()!!)
+                        count++
+                    }
+
+                    if (!failed && count == 2) {
+                        userStatuses.value = statuses
+                    }
+
+                } else {
+                    failed = true
+                    userStatuses.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<UserStatusResponse>?, t: Throwable?) {
+                failed = true
+                userStatuses.value = null
+                Log.d(TAG, t?.message.toString())
+            }
+        })
+
+        call2.enqueue(object : Callback<UserStatusResponse> {
+            override fun onResponse(call: Call<UserStatusResponse>?, response: Response<UserStatusResponse>?) {
+                if (response?.body()?.status == STATUS.OK
+                        && response.body()?.result != null) {
+                    response.body()?.handle = handle2
+
+                    if (count < 2) {
+                        statuses.add(response.body()!!)
+                        count++
+                    }
+
+                    if (!failed && count == 2) {
+                        userStatuses.value = statuses
+                    }
+
+                } else {
+                    failed = true
+                    userStatuses.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<UserStatusResponse>?, t: Throwable?) {
+                failed = true
+                userStatuses.value = null
                 Log.d(TAG, t?.message.toString())
             }
         })

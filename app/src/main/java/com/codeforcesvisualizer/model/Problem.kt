@@ -16,4 +16,8 @@ data class Problem(val contestId: Int,
         return Gson().toJson(this)
     }
 
+    fun getProblemName(): String {
+        return "$contestId-$index"
+    }
+
 }
