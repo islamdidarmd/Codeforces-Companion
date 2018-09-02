@@ -42,6 +42,45 @@
                 android:textSize="16sp"
                 tools:text="v1.1.2" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/follow_me_on_social"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/facebook"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/ic_facebook"
+                        android:src="?android:attr/selectableItemBackground" />
+
+                    <ImageButton
+                        android:id="@+id/twitter"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/ic_twitter"
+                        android:src="?android:attr/selectableItemBackground" />
+
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
 
 

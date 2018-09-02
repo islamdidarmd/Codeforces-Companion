@@ -77,7 +77,7 @@ class CompareActivity : BaseActivity() {
     }
 
     private fun updateStatusUi(users: List<UserStatusResponse>?) {
-        if (users == null) {
+        if (users == null || users.size < 2) {
             hideStatusInfoCharts()
             return
         }
@@ -209,7 +209,7 @@ class CompareActivity : BaseActivity() {
     }
 
     private fun updateExtraUi(users: List<UserExtraResponse>?) {
-        if (users == null) {
+        if (users == null || users.size < 2) {
             hideExtraInfoCharts()
             return
         }
