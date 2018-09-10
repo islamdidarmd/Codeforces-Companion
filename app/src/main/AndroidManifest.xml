@@ -34,6 +34,7 @@
         <activity
             android:name=".view.activity.AboutActivity"
             android:configChanges="screenSize|screenLayout|orientation" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="310e29bfe175437b07d913e23477e61ef845dc33" />
