@@ -11,10 +11,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.NoActionBar">
+
         <activity
             android:name=".view.activity.SplashActivity"
-            android:configChanges="screenSize|screenLayout|orientation">
+            android:configChanges="screenSize|screenLayout|orientation"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,18 +25,22 @@
             </intent-filter>
 
         </activity>
+
         <activity
             android:name=".view.activity.MainActivity"
-            android:configChanges="screenSize|screenLayout|orientation" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="screenSize|screenLayout|orientation"
+            android:launchMode="singleTask"/>
+
         <activity
             android:name=".view.activity.SearchActivity"
-            android:configChanges="screenSize|screenLayout|orientation" />
+            android:configChanges="screenSize|screenLayout|orientation"
+            android:launchMode="singleTask"/>
+
         <activity
             android:name=".view.activity.CompareActivity"
-            android:configChanges="screenSize|screenLayout|orientation" />
-        <activity
-            android:name=".view.activity.AboutActivity"
-            android:configChanges="screenSize|screenLayout|orientation" />
+            android:configChanges="screenSize|screenLayout|orientation"
+            android:launchMode="singleTask"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,13 +10,14 @@
     android:layout_marginRight="8dp"
     android:layout_marginStart="8dp"
     android:orientation="vertical"
+    app:cardUseCompatPadding="false"
     app:cardCornerRadius="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="12dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -59,12 +60,14 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="@string/name"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/colon"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
@@ -73,7 +76,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
-                    fontPath="fonts/raleway.ttf"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -91,12 +93,14 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="@string/type"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/colon"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
@@ -106,6 +110,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
                     tools:text="@string/type" />
             </LinearLayout>
 
@@ -114,18 +119,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="@string/phase"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/colon"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
@@ -135,6 +143,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
                     tools:text="@string/phase" />
 
             </LinearLayout>
@@ -143,18 +152,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="@string/frozen"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/colon"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
@@ -164,6 +176,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
                     tools:text="@string/frozen" />
 
             </LinearLayout>
@@ -178,12 +191,14 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="@string/duration"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/colon"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
@@ -193,6 +208,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
                     tools:text="@string/duration" />
 
             </LinearLayout>
@@ -207,12 +223,14 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="@string/start"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/colon"
+                    android:textColor="@color/colorBlack"
                     android:textSize="14sp" />
 
                 <TextView
@@ -222,6 +240,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:textSize="14sp"
+                    android:textColor="@color/colorBlack"
                     tools:text="@string/start" />
 
             </LinearLayout>
@@ -229,11 +248,10 @@
 
         <ImageView
             android:id="@+id/ivAlarm"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center_vertical"
-            android:padding="4dp"
             android:src="@drawable/ic_notifications_black_24dp"
             android:visibility="gone" />
     </LinearLayout>
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>
