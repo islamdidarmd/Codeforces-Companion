@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/bottom_menu_upcoming"
-        android:icon="@drawable/ic_group_work_black_24dp"
-        android:title="@string/upcoming" />
-    <item
-        android:id="@+id/bottom_nav_past_contest"
-        android:icon="@drawable/ic_history_black_24dp"
-        android:title="@string/previous" />
     <item
         android:id="@+id/bottom_nav_more"
         android:icon="@drawable/ic_menu_black_24dp"
+        app:showAsAction="always"
         android:title="@string/more" />
+
+    <item
+        android:id="@+id/nav_drawer_compare"
+        android:icon="@drawable/ic_compare_white_24dp"
+        android:title="@string/compare_users"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_search"
+        android:enabled="false"
+        app:showAsAction="always"
+        android:title="@string/search" />
+
+    <item
+        android:id="@+id/bottom_nav_past_contest"
+        android:icon="@drawable/ic_history_black_24dp"
+        app:showAsAction="always"
+        android:title="@string/previous" />
+    <item
+        android:id="@+id/bottom_menu_upcoming"
+        android:icon="@drawable/ic_group_work_black_24dp"
+        app:showAsAction="always"
+        android:title="@string/upcoming" />
 </menu>

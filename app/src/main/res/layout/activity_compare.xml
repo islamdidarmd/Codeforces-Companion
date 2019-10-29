@@ -1,491 +1,527 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".view.activity.MainActivity">
+    android:fitsSystemWindows="false"
+    tools:context=".view.activity.SearchActivity">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinator"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <include layout="@layout/app_bar" />
-
-        <ScrollView
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:titleEnabled="false"
+            app:toolbarId="@id/toolbar">
 
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:title="@string/compare_users"
+                app:layout_collapseMode="pin" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:orientation="vertical">
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true">
 
-                <android.support.v7.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    app:cardCornerRadius="2dp"
-                    app:cardUseCompatPadding="true">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                    <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/rating"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp">
+                        android:minHeight="150dp">
 
-                        <TextView
+                        <ProgressBar
+                            android:id="@+id/pbRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:text="@string/rating"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center" />
 
-                        <FrameLayout
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/ratingChart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="150dp">
+                            android:layout_gravity="center"
+                            android:minHeight="300dp"
+                            android:visibility="gone" />
 
-                            <ProgressBar
-                                android:id="@+id/pbRating"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center" />
+                    </FrameLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                            <com.github.mikephil.charting.charts.BarChart
-                                android:id="@+id/ratingChart"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:minHeight="300dp"
-                                android:visibility="gone" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true">
 
-                        </FrameLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    app:cardCornerRadius="2dp"
-                    app:cardUseCompatPadding="true">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                    <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/contests"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp">
+                        android:minHeight="150dp">
 
-                        <TextView
+                        <ProgressBar
+                            android:id="@+id/pbContests"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:text="@string/contests"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center" />
 
-                        <FrameLayout
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/contestChart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="150dp">
+                            android:layout_gravity="center"
+                            android:minHeight="300dp"
+                            android:visibility="gone" />
 
-                            <ProgressBar
-                                android:id="@+id/pbContests"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center" />
+                    </FrameLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                            <com.github.mikephil.charting.charts.BarChart
-                                android:id="@+id/contestChart"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:minHeight="300dp"
-                                android:visibility="gone" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true">
 
-                        </FrameLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    app:cardCornerRadius="2dp"
-                    app:cardUseCompatPadding="true">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                    <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/max_up_and_down"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp">
+                        android:minHeight="100dp">
 
-                        <TextView
+                        <ProgressBar
+                            android:id="@+id/pbUpDown"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:text="@string/max_up_and_down"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center" />
 
-                        <FrameLayout
+                        <TableLayout
+                            android:id="@+id/tableRatingUpDown"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="100dp">
+                            android:stretchColumns="1"
+                            android:visibility="gone">
 
-                            <ProgressBar
-                                android:id="@+id/pbUpDown"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center" />
+                            <TableRow android:background="@color/colorPrimary">
 
-                            <TableLayout
-                                android:id="@+id/tableRatingUpDown"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:stretchColumns="1"
-                                android:visibility="gone">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="start"
+                                    android:padding="3dp"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
 
-                                <TableRow android:background="@color/colorPrimary">
+                                <TextView
+                                    android:id="@+id/tvMaxUpDownHandle1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="3dp"
+                                    android:text="@string/Handle1"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
 
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="start"
-                                        android:padding="3dp"
-                                        android:text=""
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
+                                <TextView
+                                    android:id="@+id/tvMaxUpDownHandle2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:padding="3dp"
+                                    android:text="@string/Handle2"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
+                            </TableRow>
 
-                                    <TextView
-                                        android:id="@+id/tvMaxUpDownHandle1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:padding="3dp"
-                                        android:text="@string/Handle1"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
+                            <TableRow>
 
-                                    <TextView
-                                        android:id="@+id/tvMaxUpDownHandle2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="end"
-                                        android:padding="3dp"
-                                        android:text="@string/Handle2"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
-                                </TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="start"
+                                    android:padding="3dp"
+                                    android:text="@string/max_up"
+                                    android:textColor="@color/colorBlack" />
 
-                                <TableRow>
+                                <TextView
+                                    android:id="@+id/tvMaxUp1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="3dp"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
 
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="start"
-                                        android:padding="3dp"
-                                        android:text="@string/max_up"
-                                        android:textColor="@color/colorBlack" />
+                                <TextView
+                                    android:id="@+id/tvMaxUp2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:padding="3dp"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
+                            </TableRow>
 
-                                    <TextView
-                                        android:id="@+id/tvMaxUp1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:padding="3dp"
-                                        android:text=""
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
+                            <TableRow>
 
-                                    <TextView
-                                        android:id="@+id/tvMaxUp2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="end"
-                                        android:padding="3dp"
-                                        android:text=""
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
-                                </TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="start"
+                                    android:padding="3dp"
+                                    android:text="@string/max_down"
+                                    android:textColor="@color/colorBlack" />
 
-                                <TableRow>
+                                <TextView
+                                    android:id="@+id/tvMaxDown1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="3dp"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
 
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="start"
-                                        android:padding="3dp"
-                                        android:text="@string/max_down"
-                                        android:textColor="@color/colorBlack" />
+                                <TextView
+                                    android:id="@+id/tvMaxDown2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:padding="3dp"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
+                            </TableRow>
+                        </TableLayout>
+                    </FrameLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                                    <TextView
-                                        android:id="@+id/tvMaxDown1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:padding="3dp"
-                                        android:text=""
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true">
 
-                                    <TextView
-                                        android:id="@+id/tvMaxDown2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="end"
-                                        android:padding="3dp"
-                                        android:text=""
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
-                                </TableRow>
-                            </TableLayout>
-                        </FrameLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    app:cardCornerRadius="2dp"
-                    app:cardUseCompatPadding="true">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                    <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/rank"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp">
+                        android:minHeight="100dp">
 
-                        <TextView
+                        <ProgressBar
+                            android:id="@+id/pbRank"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:text="@string/rank"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center" />
 
-                        <FrameLayout
+                        <TableLayout
+                            android:id="@+id/tableRank"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="100dp">
+                            android:stretchColumns="1"
+                            android:visibility="gone">
 
-                            <ProgressBar
-                                android:id="@+id/pbRank"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center" />
+                            <TableRow android:background="@color/colorPrimary">
 
-                            <TableLayout
-                                android:id="@+id/tableRank"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:stretchColumns="1"
-                                android:visibility="gone">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="start"
+                                    android:padding="3dp"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack" />
 
-                                <TableRow android:background="@color/colorPrimary">
+                                <TextView
+                                    android:id="@+id/tvRankHandle1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="3dp"
+                                    android:text="@string/Handle1"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
 
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="start"
-                                        android:padding="3dp"
-                                        android:text=""
-                                        android:textColor="@color/colorBlack" />
+                                <TextView
+                                    android:id="@+id/tvRankHandle2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:padding="3dp"
+                                    android:text="@string/Handle2"
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
+                            </TableRow>
 
-                                    <TextView
-                                        android:id="@+id/tvRankHandle1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:padding="3dp"
-                                        android:text="@string/Handle1"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
+                            <TableRow>
 
-                                    <TextView
-                                        android:id="@+id/tvRankHandle2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="end"
-                                        android:padding="3dp"
-                                        android:text="@string/Handle2"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
-                                </TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="start"
+                                    android:padding="3dp"
+                                    android:text="@string/best_rank"
+                                    android:textColor="@color/colorBlack" />
 
-                                <TableRow>
+                                <TextView
+                                    android:id="@+id/tvMaxRank1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="3dp"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
 
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="start"
-                                        android:padding="3dp"
-                                        android:text="@string/best_rank"
-                                        android:textColor="@color/colorBlack" />
+                                <TextView
+                                    android:id="@+id/tvMaxRank2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:padding="3dp"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
+                            </TableRow>
 
-                                    <TextView
-                                        android:id="@+id/tvMaxRank1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:padding="3dp"
-                                        android:text=""
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
+                            <TableRow>
 
-                                    <TextView
-                                        android:id="@+id/tvMaxRank2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="end"
-                                        android:padding="3dp"
-                                        android:text=""
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
-                                </TableRow>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="start"
+                                    android:padding="3dp"
+                                    android:text="@string/worst_rank"
+                                    android:textColor="@color/colorBlack" />
 
-                                <TableRow>
+                                <TextView
+                                    android:id="@+id/tvWorstRank1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="3dp"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
 
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="start"
-                                        android:padding="3dp"
-                                        android:text="@string/worst_rank"
-                                        android:textColor="@color/colorBlack" />
+                                <TextView
+                                    android:id="@+id/tvWorstRank2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:padding="3dp"
+                                    android:text=""
+                                    android:textColor="@color/colorBlack"
+                                    android:textSize="12sp" />
+                            </TableRow>
+                        </TableLayout>
+                    </FrameLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                                    <TextView
-                                        android:id="@+id/tvWorstRank1"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:padding="3dp"
-                                        android:text=""
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true">
 
-                                    <TextView
-                                        android:id="@+id/tvWorstRank2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="end"
-                                        android:padding="3dp"
-                                        android:text=""
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="12sp" />
-                                </TableRow>
-                            </TableLayout>
-                        </FrameLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    app:cardCornerRadius="2dp"
-                    app:cardUseCompatPadding="true">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                    <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/tried_and_solved"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp">
+                        android:minHeight="150dp">
 
-                        <TextView
+                        <ProgressBar
+                            android:id="@+id/pbTried"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:text="@string/tried_and_solved"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center" />
 
-                        <FrameLayout
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/triedChart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="150dp">
+                            android:layout_gravity="center"
+                            android:minHeight="300dp"
+                            android:visibility="gone" />
 
-                            <ProgressBar
-                                android:id="@+id/pbTried"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center" />
+                    </FrameLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                            <com.github.mikephil.charting.charts.BarChart
-                                android:id="@+id/triedChart"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:minHeight="300dp"
-                                android:visibility="gone" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true">
 
-                        </FrameLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    app:cardCornerRadius="2dp"
-                    app:cardUseCompatPadding="true">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                    <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="@string/solved_with_one_submission"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp">
+                        android:minHeight="150dp">
 
-                        <TextView
+                        <ProgressBar
+                            android:id="@+id/pbOneSub"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:text="@string/solved_with_one_submission"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center" />
 
-                        <FrameLayout
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/oneSubChart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="150dp">
+                            android:layout_gravity="center"
+                            android:minHeight="300dp"
+                            android:visibility="gone" />
 
-                            <ProgressBar
-                                android:id="@+id/pbOneSub"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center" />
+                    </FrameLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                            <com.github.mikephil.charting.charts.BarChart
-                                android:id="@+id/oneSubChart"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:minHeight="300dp"
-                                android:visibility="gone" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-                        </FrameLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottom_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="bottom"
+        app:hideOnScroll="true"
+        app:fabAlignmentMode="end" />
 
-            </LinearLayout>
-        </ScrollView>
-    </android.support.design.widget.CoordinatorLayout>
-</android.support.v4.widget.DrawerLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_compare_white_24dp"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_anchor="@id/bottom_appbar"
+        app:tint="@color/grey_200" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
