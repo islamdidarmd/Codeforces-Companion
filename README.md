@@ -18,5 +18,3 @@ In this app you can :<br>
   <img src="https://lh3.googleusercontent.com/Uazqz4Ml9JxadeTU4uEwpUUGjzGCUeTJXn2GETzszKWeMYgESATjxAW0kKga2EsJ2MTY=w720-h310-rw">
   <img src="https://lh3.googleusercontent.com/ucudk79Ifl6uDNmlBLx2wQdY-WwYFSY9WbCNIc_sxDm5p6ptC0ugJ8KxFKyVTrpQDrA=w720-h310-rw">
 </p>
-
-<br><h2>Licence</h2><br>
