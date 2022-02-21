@@ -3,10 +3,6 @@ package com.codeforcesvisualizer
 import android.content.Context
 import android.content.SharedPreferences
 import com.codeforcesvisualizer.model.ContestResponse
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.answers.Answers
-import com.crashlytics.android.answers.CustomEvent
-import io.fabric.sdk.android.Fabric
 
 
 class Application : android.app.Application() {
@@ -21,7 +17,7 @@ class Application : android.app.Application() {
         mInstance = this
 
         if (!BuildConfig.DEBUG) {
-            Fabric.with(this, Answers(), Crashlytics())
+        //    Fabric.with(this, Answers(), Crashlytics())
         }
     }
 }

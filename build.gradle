@@ -15,7 +15,7 @@ buildscript {
         mpa_chart_version = 'v3.0.3'
         flowlayout_version = '0.4.0'
         cardview_version = '1.0.0'
-        crashlytics_version = '18.2.0'
+        crashlytics_version = '18.2.8'
         analytics_version = '20.0.2'
     }
     repositories {
@@ -23,7 +23,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.0'
+        classpath 'com.android.tools.build:gradle:7.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.3.10'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'

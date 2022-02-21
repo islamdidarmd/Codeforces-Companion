@@ -17,7 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import coil.api.load
+import coil.load
 import coil.transform.CircleCropTransformation
 import com.codeforcesvisualizer.R
 import com.codeforcesvisualizer.model.User
