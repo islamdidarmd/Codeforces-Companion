@@ -14,13 +14,13 @@ configurations {
     implementation.exclude group: 'org.jetbrains', module: 'annotations'
 }
 android {
-    compileSdkVersion 31
+    compileSdkVersion versions.compileSdk
     defaultConfig {
         applicationId "com.codeforcesvisualizer"
-        minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 5
-        versionName "2.0.0"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
     }
     buildTypes {
         debug {
@@ -48,29 +48,29 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation "androidx.core:core-ktx:$ktx_version"
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation deps.core_ktx
+    implementation deps.app_compat
 
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    implementation "com.google.android.material:material:$material_version"
-    implementation "com.google.code.gson:gson:$gson_version"
+    implementation deps.constraintlayout
+    implementation deps.material
+    implementation deps.gson
 
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$retrofit_coroutines_adapter_version"
+    implementation deps.retrofit
+    implementation deps.converter_gson
+    implementation deps.coroutines_adapter
 
-    implementation "io.coil-kt:coil:$coil_version"
+    implementation deps.coil
 
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extention_version"
+    implementation deps.lifecycle_extensions
 
-    implementation "com.github.PhilJay:MPAndroidChart:$mpa_chart_version"
+    implementation deps.MPAndroidChart
 
-    implementation "com.wefika:flowlayout:$flowlayout_version"
+    implementation deps.flowlayout
 
-    implementation "androidx.cardview:cardview:$cardview_version"
+    implementation deps.cardview
 
-    implementation "com.google.firebase:firebase-crashlytics:$crashlytics_version"
-    implementation "com.google.firebase:firebase-analytics:$analytics_version"
+    implementation deps.crashlytics
+    implementation deps.analytics
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
