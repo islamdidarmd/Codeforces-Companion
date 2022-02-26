@@ -40,13 +40,16 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    sourceSets{
+    sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation project(":core")
+    implementation project(":domain")
 
     implementation deps.core_ktx
     implementation deps.app_compat

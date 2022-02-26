@@ -30,6 +30,8 @@ android {
 }
 
 dependencies {
+    api project(":core")
+
     implementation deps.core_ktx
     implementation deps.app_compat
     implementation deps.material
