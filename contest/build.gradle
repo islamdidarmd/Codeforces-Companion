@@ -33,22 +33,17 @@ dependencies {
     implementation project(":core")
     implementation project(":domain")
 
+    //core
+    implementation deps.compose_material
+
+    //extensions
+    implementation deps.core_ktx
+
     //lifecycle
     implementation deps.lifecycle_runtime_ktx
     implementation deps.lifecycle_extensions
 
-    //network
-    implementation deps.okhttp
-    implementation deps.logging_interceptor
-    implementation deps.retrofit
-    implementation deps.converter_moshi
-
-
-    //testing
-    testImplementation deps.core_testing
     testImplementation deps.junit
-//    testImplementation deps.mockk
-
     androidTestImplementation deps.android_junit
     androidTestImplementation deps.expresso_core
 }
