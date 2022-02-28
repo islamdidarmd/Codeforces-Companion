@@ -35,6 +35,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion versions.compose_version
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -50,6 +59,14 @@ dependencies {
 
     implementation project(":core")
     implementation project(":domain")
+    implementation project(":contest")
+
+    implementation deps.compose_material
+    implementation deps.compose_runtime_livedata
+    implementation deps.compose_tooling_preview
+    implementation deps.activity_compose
+    implementation deps.viewmodel_compose
+    implementation deps.coil_compose
 
     implementation deps.core_ktx
     implementation deps.app_compat

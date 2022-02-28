@@ -50,5 +50,5 @@ dependencies {
 //    testImplementation deps.mockk
 
     androidTestImplementation deps.android_junit
-    androidTestImplementation deps.expresso_core
+    androidTestImplementation deps.espresso_core
 }

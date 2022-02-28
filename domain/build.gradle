@@ -34,5 +34,5 @@ dependencies {
 
     testImplementation deps.junit
     androidTestImplementation deps.android_junit
-    androidTestImplementation deps.expresso_core
+    androidTestImplementation deps.espresso_core
 }

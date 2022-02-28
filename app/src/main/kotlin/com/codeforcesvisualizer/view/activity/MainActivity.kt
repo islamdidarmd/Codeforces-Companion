@@ -9,14 +9,17 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.material.MaterialTheme
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codeforcesvisualizer.Application
 import com.codeforcesvisualizer.R
 import com.codeforcesvisualizer.adapter.ContestListAdapter
+import com.codeforcesvisualizer.contest.ContestListScreen
 import com.codeforcesvisualizer.model.Contest
 import com.codeforcesvisualizer.util.*
 import com.codeforcesvisualizer.util.EventLogger.logEvent
@@ -30,7 +33,7 @@ import kotlinx.android.synthetic.main.activity_main.coordinator
 import kotlinx.android.synthetic.main.side_nav_header.view.*
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener,
-        BottomNavigationView.OnNavigationItemSelectedListener {
+    BottomNavigationView.OnNavigationItemSelectedListener {
 
     lateinit var adapter: ContestListAdapter
     lateinit var upComingContest: MutableList<Contest>
@@ -88,7 +91,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        /*setContentView(R.layout.activity_main)
         bottom_nav.setOnNavigationItemSelectedListener(this)
 
         setBottomAppBar()
@@ -98,7 +101,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         toolbar.title = getString(R.string.upcomming_contests)
         tvContestListType.text = getString(R.string.upcomming_contests)
-        tvContestListType.hide()
+        tvContestListType.hide()*/
+
+        setContent {
+            MaterialTheme {
+                ContestListScreen()
+            }
+        }
     }
 
     private fun setBottomAppBar() {
@@ -115,11 +124,20 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         bottomSheetView.tvRate.setOnClickListener {
             try {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$packageName")
+                    )
+                )
             } catch (exception: Exception) {
                 exception.printStackTrace()
-                Toast.makeText(this@MainActivity, getString(R.string.no_suitable_app_found), Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.no_suitable_app_found),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
         }
         bottomSheetView.tvShare.setOnClickListener {
@@ -135,8 +153,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 logEvent("Share")
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this@MainActivity, getString(R.string.no_suitable_app_found), Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.no_suitable_app_found),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
         }
 
@@ -170,40 +192,52 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         dialogView.facebook.setOnClickListener {
             try {
-                val facebook = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/islamdidarmd"))
+                val facebook =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/islamdidarmd"))
                 startActivity(facebook)
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this@MainActivity, getString(R.string.no_suitable_app_found), Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.no_suitable_app_found),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
         }
 
         dialogView.twitter.setOnClickListener {
             try {
-                val twitter = Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/islamdidarmd"))
+                val twitter =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/islamdidarmd"))
                 startActivity(twitter)
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this@MainActivity, getString(R.string.no_suitable_app_found), Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.no_suitable_app_found),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
         }
         AlertDialog.Builder(this)
-                .setView(dialogView)
-                .setPositiveButton(R.string.ok) { dialogInterface, i -> dialogInterface.dismiss() }
-                .show()
-                .window?.setBackgroundDrawableResource(R.drawable.bg_rounded_white)
+            .setView(dialogView)
+            .setPositiveButton(R.string.ok) { dialogInterface, i -> dialogInterface.dismiss() }
+            .show()
+            .window?.setBackgroundDrawableResource(R.drawable.bg_rounded_white)
         logEvent("About")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.menu_reload -> {
-                Toast.makeText(this,
-                        getString(R.string.fetching_data_from_server),
-                        Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.fetching_data_from_server),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
                 logEvent("Menu_Reload")
             }
 
@@ -251,8 +285,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     startActivity(intent)
                 } catch (e: ActivityNotFoundException) {
                     e.printStackTrace()
-                    Snackbar.make(coordinator,
-                            getString(R.string.failed_to_open_link), Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(
+                        coordinator,
+                        getString(R.string.failed_to_open_link), Snackbar.LENGTH_LONG
+                    ).show()
                 }
 
                 logEvent("Contest_List_Click")

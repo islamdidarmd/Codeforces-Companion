@@ -1,6 +1,6 @@
 ext.versions = [
         //root project
-        kotlin_version                     : '1.6.10',
+        kotlin_version                     : '1.5.31',
         gradle_plugin_version              : '7.1.2',
         google_services_version            : '4.3.10',
         firebase_crashlytics_version       : '2.8.1',
@@ -23,6 +23,7 @@ ext.versions = [
 
         //UI
         compose_version                    : '1.0.5',
+        compose_viewmodel_version          : '1.0.0-alpha07',
         material_version                   : '1.5.0',
         coil_version                       : '1.4.0',
         mpa_chart_version                  : 'v3.0.3',
@@ -74,9 +75,10 @@ ext.deps = [
         compose_material        : "androidx.compose.material:material:$versions.compose_version",
         compose_runtime_livedata: "androidx.compose.runtime:runtime-livedata:$versions.compose_version",
         compose_tooling_preview : "androidx.compose.ui:ui-tooling-preview:$versions.compose_version",
-        activity_compose        : "androidx.activity:activity-compose:$versions.activity_compose_version",
+        activity_compose        : "androidx.activity:activity-compose:$versions.compose_version",
+        viewmodel_compose       : "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose_viewmodel_version",
         coil_compose            : "io.coil-kt:coil-compose:$versions.coil_version",
-        compose_ui_tooling_debug: "androidx.compose.ui:ui-tooling:$versions.coil_version",
+        compose_ui_tooling_debug: "androidx.compose.ui:ui-tooling:$versions.compose_version",
 
         //networking
         gson                    : "com.google.code.gson:gson:$versions.gson_version",
@@ -95,6 +97,6 @@ ext.deps = [
         core_testing            : "androidx.arch.core:core-testing:$versions.core_testing_version",
         junit                   : "junit:junit:$versions.junit_version",
         android_junit           : "androidx.test.ext:junit:$versions.android_junit_version",
-        expresso_core           : "androidx.test.espresso:espresso-core:$versions.expresso_core_version",
+        espresso_core           : "androidx.test.espresso:espresso-core:$versions.espresso_core_version",
         mockk                   : "io.mockk:mockk: $versions.mockk_version"
 ]
