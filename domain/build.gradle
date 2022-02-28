@@ -32,9 +32,6 @@ android {
 dependencies {
     api project(":core")
 
-    implementation deps.core_ktx
-    implementation deps.app_compat
-    implementation deps.material
     testImplementation deps.junit
     androidTestImplementation deps.android_junit
     androidTestImplementation deps.expresso_core
