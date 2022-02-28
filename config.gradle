@@ -22,6 +22,7 @@ ext.versions = [
         lifecycle_extention_version        : '2.2.0',
 
         //UI
+        compose_version                    : '1.0.5',
         material_version                   : '1.5.0',
         coil_version                       : '1.4.0',
         mpa_chart_version                  : 'v3.0.3',
@@ -54,39 +55,46 @@ ext.classpaths = [
 ]
 
 ext.deps = [
-        app_compat             : "androidx.appcompat:appcompat:$versions.appcompat_version",
+        app_compat              : "androidx.appcompat:appcompat:$versions.appcompat_version",
 
         //extensions
-        core_ktx               : "androidx.core:core-ktx:$versions.ktx_version",
-        lifecycle_runtime_ktx  : "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle_runtime_ktx_version",
-        lifecycle_viewmodel_ktx: "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle_viewmodel_ktx_version",
-        lifecycle_extensions   : "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle_extention_version",
+        core_ktx                : "androidx.core:core-ktx:$versions.ktx_version",
+        lifecycle_runtime_ktx   : "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle_runtime_ktx_version",
+        lifecycle_viewmodel_ktx : "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle_viewmodel_ktx_version",
+        lifecycle_extensions    : "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle_extention_version",
 
         //UI
-        constraintlayout       : "androidx.constraintlayout:constraintlayout:$versions.constraint_layout_version",
-        material               : "com.google.android.material:material:$versions.material_version",
-        coil                   : "io.coil-kt:coil:$versions.coil_version",
-        MPAndroidChart         : "com.github.PhilJay:MPAndroidChart:$versions.mpa_chart_version",
-        flowlayout             : "com.wefika:flowlayout:$versions.flowlayout_version",
-        cardview               : "androidx.cardview:cardview:$versions.cardview_version",
+        constraintlayout        : "androidx.constraintlayout:constraintlayout:$versions.constraint_layout_version",
+        material                : "com.google.android.material:material:$versions.material_version",
+        coil                    : "io.coil-kt:coil:$versions.coil_version",
+        MPAndroidChart          : "com.github.PhilJay:MPAndroidChart:$versions.mpa_chart_version",
+        flowlayout              : "com.wefika:flowlayout:$versions.flowlayout_version",
+        cardview                : "androidx.cardview:cardview:$versions.cardview_version",
+        compose_ui              : "androidx.compose.ui:ui:$versions.compose_version",
+        compose_material        : "androidx.compose.material:material:$versions.compose_version",
+        compose_runtime_livedata: "androidx.compose.runtime:runtime-livedata:$versions.compose_version",
+        compose_tooling_preview : "androidx.compose.ui:ui-tooling-preview:$versions.compose_version",
+        activity_compose        : "androidx.activity:activity-compose:$versions.activity_compose_version",
+        coil_compose            : "io.coil-kt:coil-compose:$versions.coil_version",
+        compose_ui_tooling_debug: "androidx.compose.ui:ui-tooling:$versions.coil_version",
 
         //networking
-        gson                   : "com.google.code.gson:gson:$versions.gson_version",
-        retrofit               : "com.squareup.retrofit2:retrofit:$versions.retrofit_version",
-        okhttp                 : "com.squareup.okhttp3:okhttp:$versions.okhttp_version",
-        logging_interceptor    : "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_version",
-        converter_gson         : "com.squareup.retrofit2:converter-gson:$versions.retrofit_version",
-        converter_moshi        : "com.squareup.retrofit2:converter-moshi:$versions.retrofit_version",
-        coroutines_adapter     : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$versions.retrofit_coroutines_adapter_version",
+        gson                    : "com.google.code.gson:gson:$versions.gson_version",
+        retrofit                : "com.squareup.retrofit2:retrofit:$versions.retrofit_version",
+        okhttp                  : "com.squareup.okhttp3:okhttp:$versions.okhttp_version",
+        logging_interceptor     : "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_version",
+        converter_gson          : "com.squareup.retrofit2:converter-gson:$versions.retrofit_version",
+        converter_moshi         : "com.squareup.retrofit2:converter-moshi:$versions.retrofit_version",
+        coroutines_adapter      : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$versions.retrofit_coroutines_adapter_version",
 
         //analytics
-        crashlytics            : "com.google.firebase:firebase-crashlytics:$versions.crashlytics_version",
-        analytics              : "com.google.firebase:firebase-analytics:$versions.analytics_version",
+        crashlytics             : "com.google.firebase:firebase-crashlytics:$versions.crashlytics_version",
+        analytics               : "com.google.firebase:firebase-analytics:$versions.analytics_version",
 
         //testing
-        core_testing           : "androidx.arch.core:core-testing:$versions.core_testing_version",
-        junit                  : "junit:junit:$versions.junit_version",
-        android_junit          : "androidx.test.ext:junit:$versions.android_junit_version",
-        expresso_core          : "androidx.test.espresso:espresso-core:$versions.expresso_core_version",
-        mockk                  : "io.mockk:mockk: $versions.mockk_version"
+        core_testing            : "androidx.arch.core:core-testing:$versions.core_testing_version",
+        junit                   : "junit:junit:$versions.junit_version",
+        android_junit           : "androidx.test.ext:junit:$versions.android_junit_version",
+        expresso_core           : "androidx.test.espresso:espresso-core:$versions.expresso_core_version",
+        mockk                   : "io.mockk:mockk: $versions.mockk_version"
 ]
