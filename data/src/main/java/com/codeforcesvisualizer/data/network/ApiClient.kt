@@ -11,27 +11,29 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-fun getOkHttpClient(): OkHttpClient {
-    return OkHttpClient.Builder()
-        .connectTimeout(OKHTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS)
-        .readTimeout(OKHTTP_READ_TIMEOUT, TimeUnit.SECONDS)
-        .writeTimeout(OKHTTP_WRITE_TIMEOUT, TimeUnit.SECONDS)
-        .addInterceptor(getLoggingInterceptor())
-        .build()
-}
+object ApiClient {
+    fun getOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .connectTimeout(OKHTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(OKHTTP_READ_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(OKHTTP_WRITE_TIMEOUT, TimeUnit.SECONDS)
+            .addInterceptor(getLoggingInterceptor())
+            .build()
+    }
 
-fun getLoggingInterceptor(): Interceptor {
-    return HttpLoggingInterceptor()
-        .setLevel(
-            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
-            else HttpLoggingInterceptor.Level.NONE
-        )
-}
+    private fun getLoggingInterceptor(): Interceptor {
+        return HttpLoggingInterceptor()
+            .setLevel(
+                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+                else HttpLoggingInterceptor.Level.NONE
+            )
+    }
 
-fun getRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit {
-    return Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .addConverterFactory(MoshiConverterFactory.create())
-        .client(okHttpClient)
-        .build()
+    fun getRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
 }

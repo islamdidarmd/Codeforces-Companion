@@ -3,8 +3,9 @@ package com.codeforcesvisualizer
 import android.content.Context
 import android.content.SharedPreferences
 import com.codeforcesvisualizer.model.ContestResponse
+import dagger.hilt.android.HiltAndroidApp
 
-
+@HiltAndroidApp
 class Application : android.app.Application() {
 
     companion object {

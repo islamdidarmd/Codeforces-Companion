@@ -8,12 +8,13 @@ import com.codeforcesvisualizer.data.network.CFApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.concurrent.CancellationException
+import javax.inject.Inject
 
 interface CFRemoteDataSource {
     suspend fun getContestList(): Either<AppError, ContestListResponse>
 }
 
-class CFRemoteDataSourceImpl(
+class CFRemoteDataSourceImpl @Inject constructor(
     private val api: CFApiService
 ) : CFRemoteDataSource {
     override suspend fun getContestList(): Either<AppError, ContestListResponse> {
