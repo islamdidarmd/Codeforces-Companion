@@ -6,43 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <androidx.compose.ui.platform.ComposeView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/contest_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"
-        android:background="@color/colorWhite"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/tvContestListType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:visibility="gone"
-                tools:text="@string/app_name" />
-
-            <TextView
-                android:id="@+id/tvNoContestFound"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/no_contest_found"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="4dp"
-                android:scrollbars="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/row_contest" />
-    </RelativeLayout>
-
-    <include layout="@layout/side_nav_header"/>
+    <include layout="@layout/side_nav_header" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

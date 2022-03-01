@@ -19,7 +19,7 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        contestViewModel = ViewModelProviders.of(this).get(ContestViewModel::class.java)
+    /*    contestViewModel = ViewModelProviders.of(this).get(ContestViewModel::class.java)
 
         initLoading()
 
@@ -41,8 +41,9 @@ class SplashActivity : BaseActivity() {
 
             //initialization failed. Try again
             contestViewModel.reload()
-        }
+        }*/
 
+        goToHome()
     }
 
     private fun initLoading() {
