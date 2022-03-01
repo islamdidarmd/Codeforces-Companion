@@ -3,7 +3,7 @@ package com.codeforcesvisualizer.contest
 import com.codeforcesvisualizer.domain.entity.Contest
 
 data class ContestListUiState(
-    val loading: Boolean,
-    val contestList: List<Contest>,
-    val userMessage: String,
+    val loading: Boolean = true,
+    val contestList: List<Contest> = emptyList(),
+    val userMessage: String = "",
 )

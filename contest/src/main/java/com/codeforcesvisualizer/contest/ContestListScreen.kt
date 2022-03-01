@@ -1,38 +1,30 @@
 package com.codeforcesvisualizer.contest
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.codeforcesvisualizer.core.data.ui.CFLoadingIndicator
 
 @Composable
 fun ContestListScreen(
     modifier: Modifier,
-    contestViewModel: ContestViewModel = viewModel()
+    viewModel: ContestViewModel = hiltViewModel()
 ) {
-    val uiState = contestViewModel.uiState.collectAsState(
-        initial = ContestListUiState(
-            loading = true,
-            emptyList(),
-            ""
-        )
-    )
-
-    if (uiState.value.loading) {
-        Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-    }
+    val uiState = viewModel.uiState.collectAsState(initial = ContestListUiState())
+    viewModel.loadContestList()
+    ContestListScreen(modifier = modifier, state = uiState)
 }
 
-@Preview
 @Composable
-fun Preview() {
-    ContestListScreen(modifier = Modifier)
+internal fun ContestListScreen(
+    modifier: Modifier,
+    state: State<ContestListUiState>,
+) {
+    if (state.value.loading) {
+        CFLoadingIndicator(modifier = modifier)
+    } else {
+        ContestList(modifier = modifier, contestList = state.value.contestList)
+    }
 }

@@ -27,9 +27,25 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion versions.compose_version
+    }
 }
 
 dependencies {
+    //UI
+    implementation deps.compose_material
+    implementation deps.compose_runtime_livedata
+    implementation deps.compose_tooling_preview
+    implementation deps.activity_compose
+    implementation deps.viewmodel_compose
+    implementation deps.coil_compose
+    debugImplementation deps.compose_ui_tooling_debug
+
     testImplementation deps.junit
     androidTestImplementation deps.android_junit
     androidTestImplementation deps.espresso_core

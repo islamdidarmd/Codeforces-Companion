@@ -1,7 +1,7 @@
 package com.codeforcesvisualizer.data.repository
 
-import com.codeforcesvisualizer.core.data.AppError
-import com.codeforcesvisualizer.core.data.Either
+import com.codeforcesvisualizer.core.data.data.AppError
+import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.data.datasource.CFRemoteDataSource
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.codeforcesvisualizer.domain.repository.CFRepository

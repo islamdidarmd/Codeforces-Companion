@@ -1,13 +1,10 @@
 package com.codeforcesvisualizer.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.codeforcesvisualizer.core.data.AppError
-import com.codeforcesvisualizer.core.data.Either
+import com.codeforcesvisualizer.core.data.data.Either
 
 import com.codeforcesvisualizer.data.config.BASE_URL
 import com.codeforcesvisualizer.data.datasource.CFRemoteDataSourceImpl
-import com.codeforcesvisualizer.data.model.ContestListResponse
-import com.codeforcesvisualizer.data.model.Status
 import com.codeforcesvisualizer.data.network.CFApiService
 import com.codeforcesvisualizer.data.network.getOkHttpClient
 import com.codeforcesvisualizer.data.network.getRetrofit
