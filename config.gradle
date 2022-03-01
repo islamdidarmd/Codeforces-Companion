@@ -41,6 +41,10 @@ ext.versions = [
         crashlytics_version                : '18.2.8',
         analytics_version                  : '20.0.2',
 
+        //di
+        dagger_hilt_version                : '2.38.1',
+        hilt_navigation_compose            : '1.0.0',
+
         //testing
         core_testing_version               : '2.1.0',
         junit_version                      : '4.13.2',
@@ -49,10 +53,11 @@ ext.versions = [
         mockk_version                      : '1.12.1'
 ]
 ext.classpaths = [
-        gradle         : "com.android.tools.build:gradle:$versions.gradle_plugin_version",
-        kotlin_gradle  : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin_version",
-        google_services: "com.google.gms:google-services:$versions.google_services_version",
-        crashlytics    : "com.google.firebase:firebase-crashlytics-gradle:$versions.firebase_crashlytics_version",
+        gradle            : "com.android.tools.build:gradle:$versions.gradle_plugin_version",
+        kotlin_gradle     : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin_version",
+        hilt_gradle_plugin: "com.google.dagger:hilt-android-gradle-plugin:$versions.dagger_hilt_version",
+        google_services   : "com.google.gms:google-services:$versions.google_services_version",
+        crashlytics       : "com.google.firebase:firebase-crashlytics-gradle:$versions.firebase_crashlytics_version",
 ]
 
 ext.deps = [
@@ -92,6 +97,11 @@ ext.deps = [
         //analytics
         crashlytics             : "com.google.firebase:firebase-crashlytics:$versions.crashlytics_version",
         analytics               : "com.google.firebase:firebase-analytics:$versions.analytics_version",
+
+        //di
+        hilt_android            : "com.google.dagger:hilt-android:$versions.dagger_hilt_version",
+        hilt_compiler           : "com.google.dagger:hilt-compiler:$versions.dagger_hilt_version",
+        hilt_navigation_compose : "androidx.hilt:hilt-navigation-compose:$versions.hilt_navigation_compose",
 
         //testing
         core_testing            : "androidx.arch.core:core-testing:$versions.core_testing_version",

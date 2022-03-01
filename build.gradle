@@ -10,6 +10,7 @@ buildscript {
     dependencies {
         classpath classpaths.gradle
         classpath classpaths.kotlin_gradle
+        classpath classpaths.hilt_gradle_plugin
         classpath classpaths.google_services
         classpath classpaths.crashlytics
 

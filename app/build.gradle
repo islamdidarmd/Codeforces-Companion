@@ -1,3 +1,6 @@
+plugins {
+    id "dagger.hilt.android.plugin"
+}
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
@@ -59,6 +62,7 @@ dependencies {
 
     implementation project(":core")
     implementation project(":domain")
+    implementation project(":data")
     implementation project(":contest")
 
     implementation deps.compose_material
@@ -91,6 +95,11 @@ dependencies {
 
     implementation deps.crashlytics
     implementation deps.analytics
+
+    //di
+    implementation deps.hilt_android
+    implementation deps.hilt_navigation_compose
+    kapt deps.hilt_compiler
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
