@@ -1,6 +1,7 @@
 package com.codeforcesvisualizer.core.data.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
 fun Chip(
@@ -30,30 +32,15 @@ fun Chip(
     TextButton(
         modifier = modifier
             .defaultMinSize(
-                minHeight = 28.dp
+                minHeight = 24.dp
             ),
-        shape = RoundedCornerShape(50),
-        contentPadding = PaddingValues(0.dp),
-        border = BorderStroke(width = 1.dp, color = MaterialTheme.colors.primary),
-        onClick = onClick
-    ) {
-        Text(text = label)
-    }
-}
-
-@Composable
-fun SelectedChip(
-    modifier: Modifier = Modifier,
-    label: String,
-    onClick: () -> Unit
-) {
-    Button(
-        modifier = modifier.defaultMinSize(
-            minHeight = 28.dp
+        shape = RoundedCornerShape(percent = 50),
+        colors = ButtonDefaults.textButtonColors(
+            backgroundColor = MaterialTheme.colors.secondary,
+            contentColor = MaterialTheme.colors.onSecondary
         ),
-        shape = RoundedCornerShape(50),
-        contentPadding = PaddingValues(0.dp),
-        onClick = onClick,
+        contentPadding = PaddingValues(horizontal = 20.dp),
+        onClick = onClick
     ) {
         Text(text = label)
     }
@@ -64,10 +51,6 @@ fun SelectedChip(
 fun Preview() {
     Column {
         Chip(label = "Chip") {
-
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        SelectedChip(label = "Chip") {
 
         }
     }
