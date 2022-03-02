@@ -9,7 +9,7 @@ import com.codeforcesvisualizer.core.data.ui.CFLoadingIndicator
 
 @Composable
 fun ContestListScreen(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     viewModel: ContestViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsState(initial = ContestListUiState())
@@ -19,7 +19,7 @@ fun ContestListScreen(
 
 @Composable
 internal fun ContestListScreen(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     state: State<ContestListUiState>,
 ) {
     if (state.value.loading) {

@@ -12,13 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.codeforcesvisualizer.core.data.ui.Chip
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.codeforcesvisualizer.domain.entity.Phase
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun ContestList(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     contestList: List<Contest>
 ) {
     val upcoming = contestList.filter { it.phase == Phase.BEFORE }
@@ -41,7 +42,7 @@ internal fun ContestList(
 }
 
 @Composable
-internal fun Header(modifier: Modifier, text: String) {
+internal fun Header(modifier: Modifier = Modifier, text: String) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -52,12 +53,15 @@ internal fun Header(modifier: Modifier, text: String) {
 }
 
 @Composable
-internal fun ContestListItem(modifier: Modifier, contest: Contest) {
-    Card(modifier = modifier
-        .fillMaxWidth()
-        .padding(8.dp)) {
+internal fun ContestListItem(modifier: Modifier = Modifier, contest: Contest) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Text(text = contest.name)
+            Chip(label = contest.type.name) {}
         }
     }
 }
