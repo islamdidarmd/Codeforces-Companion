@@ -3,6 +3,7 @@
     package="com.codeforcesvisualizer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".Application"
@@ -15,23 +16,17 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".view.activity.SplashActivity"
+            android:name=".view.activity.MainActivity"
             android:configChanges="screenSize|screenLayout|orientation"
             android:exported="true"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-        <activity
-            android:name=".view.activity.MainActivity"
-            android:configChanges="screenSize|screenLayout|orientation"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".view.activity.SearchActivity"
