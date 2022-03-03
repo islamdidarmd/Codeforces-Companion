@@ -1,9 +1,6 @@
 package com.codeforcesvisualizer.core.data.ui
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,6 +20,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.codeforcesvisualizer.core.data.theme.Gray300
+import com.codeforcesvisualizer.core.data.theme.Gray800
 
 @Composable
 fun Chip(
@@ -37,8 +36,8 @@ fun Chip(
             ),
         shape = RoundedCornerShape(percent = 50),
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = MaterialTheme.colors.secondary,
-            contentColor = MaterialTheme.colors.onSecondary
+            backgroundColor = if (isSystemInDarkTheme()) Gray800 else Gray300,
+            contentColor = MaterialTheme.colors.onSurface
         ),
         contentPadding = PaddingValues(horizontal = 20.dp),
         onClick = onClick
