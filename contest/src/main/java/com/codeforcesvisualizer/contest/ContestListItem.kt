@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import com.codeforcesvisualizer.core.data.ui.Chip
 import com.codeforcesvisualizer.core.data.ui.HeightSpacer
 import com.codeforcesvisualizer.core.data.ui.WidthSpacer
@@ -21,7 +20,6 @@ import com.codeforcesvisualizer.core.data.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.core.data.utils.convertToHMS
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.codeforcesvisualizer.domain.entity.Phase
-import java.util.*
 
 @Composable
 internal fun ContestListItem(modifier: Modifier = Modifier, contest: Contest) {
@@ -29,9 +27,10 @@ internal fun ContestListItem(modifier: Modifier = Modifier, contest: Contest) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(horizontal = 12.dp, vertical = 8.dp)
             .clickable {
-            }
+            },
+        elevation = 2.dp
     ) {
         Row(
             modifier = Modifier
