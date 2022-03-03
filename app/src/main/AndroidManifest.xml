@@ -15,8 +15,7 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name=".view.activity.MainActivity"
-            android:configChanges="screenSize|screenLayout|orientation"
+            android:name=".home.HomeActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
