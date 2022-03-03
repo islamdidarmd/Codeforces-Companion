@@ -19,8 +19,8 @@ fun CFTheme(content: @Composable () -> Unit) {
 private val CFLightColors = lightColors(
     primary = Blue700,
     primaryVariant = Blue900,
-    secondary = Yellow600,
-    secondaryVariant = Yellow700,
+    secondary = Yellow700,
+    secondaryVariant = Yellow800,
 
     onPrimary = White50,
     onSecondary = Black900
@@ -29,8 +29,8 @@ private val CFLightColors = lightColors(
 private val CFDarkColors = darkColors(
     primary = Blue400,
     primaryVariant = Blue400,
-    secondary = Yellow300,
-    secondaryVariant = Yellow300,
+    secondary = Yellow400,
+    secondaryVariant = Yellow400,
 
     onPrimary = Black900,
     onSecondary = Black900,

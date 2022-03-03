@@ -3,6 +3,7 @@ package com.codeforcesvisualizer.contest
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -60,7 +61,9 @@ internal fun Header(modifier: Modifier = Modifier, text: String) {
             .background(MaterialTheme.colors.primarySurface)
     ) {
         Text(
-            text = text, modifier = Modifier.padding(8.dp), color = MaterialTheme.colors.onPrimary,
+            text = text,
+            modifier = Modifier.padding(8.dp),
+            color = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary,
             style = MaterialTheme.typography.body2
         )
     }
