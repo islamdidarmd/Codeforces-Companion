@@ -28,7 +28,9 @@ private val CFLightColors = lightColors(
 
 private val CFDarkColors = darkColors(
     primary = Blue400,
+    primaryVariant = Blue400,
     secondary = Yellow300,
+    secondaryVariant = Yellow300,
 
     onPrimary = Black900,
     onSecondary = Black900,
