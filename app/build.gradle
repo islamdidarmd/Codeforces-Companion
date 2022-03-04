@@ -67,6 +67,7 @@ dependencies {
 
     implementation deps.compose_material
     implementation deps.compose_runtime_livedata
+    implementation deps.compose_navigation
     implementation deps.compose_tooling_preview
     implementation deps.activity_compose
     implementation deps.viewmodel_compose

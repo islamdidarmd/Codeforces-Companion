@@ -1,6 +1,6 @@
 package com.codeforcesvisualizer.data.model
 
-enum class Status {
+enum class StatusModel {
     OK,
     FAILED
 }

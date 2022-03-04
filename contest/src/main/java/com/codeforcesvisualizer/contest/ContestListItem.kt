@@ -19,7 +19,6 @@ import com.codeforcesvisualizer.core.data.ui.WidthSpacer
 import com.codeforcesvisualizer.core.data.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.core.data.utils.convertToHMS
 import com.codeforcesvisualizer.domain.entity.Contest
-import com.codeforcesvisualizer.domain.entity.Phase
 
 @Composable
 internal fun ContestListItem(modifier: Modifier = Modifier, contest: Contest) {
@@ -48,14 +47,14 @@ internal fun ContestListItem(modifier: Modifier = Modifier, contest: Contest) {
                 )
                 HeightSpacer(height = 8.dp)
                 Row {
-                    Chip(label = contest.type.name) {}
+                    Chip(label = contest.type) {}
                     WidthSpacer(width = 4.dp)
                     Chip(label = contest.durationSeconds.convertToHMS()) {}
                 }
                 HeightSpacer(height = 4.dp)
                 Chip(label = contest.startTimeSeconds.convertTimeStampToDateString()) {}
             }
-            if (contest.phase == Phase.BEFORE) IconButton(
+            if (contest.scheduled) IconButton(
                 modifier = Modifier
                     .fillMaxHeight()
                     .align(alignment = Alignment.CenterVertically),

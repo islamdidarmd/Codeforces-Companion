@@ -24,6 +24,7 @@ ext.versions = [
         //UI
         compose_version                    : '1.0.5',
         compose_viewmodel_version          : '1.0.0-alpha07',
+        compose_navigation                 : '2.4.1',
         material_version                   : '1.5.0',
         coil_version                       : '1.4.0',
         mpa_chart_version                  : 'v3.0.3',
@@ -79,6 +80,7 @@ ext.deps = [
         compose_ui              : "androidx.compose.ui:ui:$versions.compose_version",
         compose_material        : "androidx.compose.material:material:$versions.compose_version",
         compose_runtime_livedata: "androidx.compose.runtime:runtime-livedata:$versions.compose_version",
+        compose_navigation      : "androidx.navigation:navigation-compose:$versions.compose_navigation",
         compose_tooling_preview : "androidx.compose.ui:ui-tooling-preview:$versions.compose_version",
         activity_compose        : "androidx.activity:activity-compose:$versions.compose_version",
         viewmodel_compose       : "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose_viewmodel_version",

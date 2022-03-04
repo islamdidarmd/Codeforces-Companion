@@ -3,7 +3,7 @@ package com.codeforcesvisualizer.data.datasource
 import com.codeforcesvisualizer.core.data.data.AppError
 import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.core.data.data.InvalidApiResponseError
-import com.codeforcesvisualizer.data.model.ContestListResponse
+import com.codeforcesvisualizer.data.model.ContestListResponseModel
 import com.codeforcesvisualizer.data.network.CFApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,13 +11,13 @@ import java.util.concurrent.CancellationException
 import javax.inject.Inject
 
 interface CFRemoteDataSource {
-    suspend fun getContestList(): Either<AppError, ContestListResponse>
+    suspend fun getContestList(): Either<AppError, ContestListResponseModel>
 }
 
 class CFRemoteDataSourceImpl @Inject constructor(
     private val api: CFApiService
 ) : CFRemoteDataSource {
-    override suspend fun getContestList(): Either<AppError, ContestListResponse> {
+    override suspend fun getContestList(): Either<AppError, ContestListResponseModel> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = api.getContestList()

@@ -3,9 +3,10 @@ package com.codeforcesvisualizer.domain.entity
 data class Contest(
     val id: Int,
     val name: String,
-    val type: Type,
-    val phase: Phase,
+    val type: String,
+    val phase: String,
     val frozen: Boolean,
+    val scheduled: Boolean,
     val durationSeconds: Int,
     val startTimeSeconds: Long,
     val relativeTimeSeconds: Long,
@@ -18,15 +19,3 @@ data class Contest(
     val country: String?,
     val season: String?,
 )
-enum class Phase {
-    BEFORE,
-    CODING,
-    PENDING_SYSTEM_TEST,
-    SYSTEM_TEST,
-    FINISHED
-}
-enum class Type {
-    CF,
-    IOI,
-    ICPC
-}
