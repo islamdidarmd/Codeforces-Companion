@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="contests">Contests</string>
     <string name="upcoming">Upcoming</string>
     <string name="past">Past</string>
 </resources>

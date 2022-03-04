@@ -23,7 +23,6 @@ import com.codeforcesvisualizer.navigation.Screen
 fun Home(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     Scaffold(
-        topBar = { TopBar() },
         bottomBar = { BottomNavigation(navController) }
     ) { innerPadding ->
         AppNavigator(
@@ -31,13 +30,6 @@ fun Home(modifier: Modifier = Modifier) {
             navController = navController
         )
     }
-}
-
-@Composable
-fun TopBar() {
-    TopAppBar(title = {
-        Text(text = stringResource(id = R.string.contests))
-    })
 }
 
 @Composable
