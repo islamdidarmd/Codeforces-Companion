@@ -53,6 +53,7 @@ dependencies {
     implementation deps.compose_material
     implementation deps.compose_runtime_livedata
     implementation deps.compose_tooling_preview
+    implementation deps.compose_accompanist_flowlayout
     implementation deps.activity_compose
     implementation deps.viewmodel_compose
     implementation deps.coil_compose

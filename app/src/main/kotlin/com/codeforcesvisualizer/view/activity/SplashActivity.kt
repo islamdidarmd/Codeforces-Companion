@@ -9,17 +9,16 @@ import com.codeforcesvisualizer.model.ContestResponse
 import com.codeforcesvisualizer.util.hide
 import com.codeforcesvisualizer.util.show
 import com.codeforcesvisualizer.viewmodel.ContestViewModel
-import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : BaseActivity() {
     val TAG = "SplashActivity"
     lateinit var contestViewModel: ContestViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+   /* override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-    /*    contestViewModel = ViewModelProviders.of(this).get(ContestViewModel::class.java)
+    *//*    contestViewModel = ViewModelProviders.of(this).get(ContestViewModel::class.java)
 
         initLoading()
 
@@ -41,7 +40,7 @@ class SplashActivity : BaseActivity() {
 
             //initialization failed. Try again
             contestViewModel.reload()
-        }*/
+        }*//*
 
         goToHome()
     }
@@ -69,5 +68,5 @@ class SplashActivity : BaseActivity() {
     override fun finish() {
         contestViewModel.getContests().removeObservers(this)
         super.finish()
-    }
+    }*/
 }

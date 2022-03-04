@@ -23,9 +23,6 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import kotlinx.android.synthetic.main.activity_compare.*
-import kotlinx.android.synthetic.main.activity_compare.bottom_appbar
-import kotlinx.android.synthetic.main.activity_compare.toolbar
 import kotlin.math.max
 import kotlin.math.min
 
@@ -39,13 +36,13 @@ class CompareActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compare)
 
-        initUi()
-        showSearchDialog()
+    //    initUi()
+        //showSearchDialog()
 
-        setUpObservable()
+    //    setUpObservable()
     }
 
-    private fun initUi() {
+/*    private fun initUi() {
         setSupportActionBar(bottom_appbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -559,7 +556,7 @@ class CompareActivity : BaseActivity() {
         loader?.show()
         userViewModel?.loadExtra(handle1, handle2)
         userViewModel?.loadStatus(handle1, handle2)
-    }
+    }*/
 
     override fun onResume() {
         super.onResume()

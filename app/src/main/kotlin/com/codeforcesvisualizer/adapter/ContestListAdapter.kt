@@ -10,7 +10,6 @@ import android.view.animation.AnimationUtils
 import com.codeforcesvisualizer.R
 import com.codeforcesvisualizer.model.Contest
 import com.codeforcesvisualizer.util.*
-import kotlinx.android.synthetic.main.row_contest.view.*
 
 class ContestListAdapter(val context: Context,
                          var contests: List<Contest>,
@@ -33,7 +32,7 @@ class ContestListAdapter(val context: Context,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.tvName.text = contests[position].name
+       /* holder.itemView.tvName.text = contests[position].name
         holder.itemView.tvType.text = contests[position].type
         holder.itemView.tvFrozen.text = contests[position].frozen.toString()
         holder.itemView.tvDuration.text = secToHourMins(contests[position].durationSeconds.toLong())
@@ -50,7 +49,7 @@ class ContestListAdapter(val context: Context,
         holder.itemView.startAnimation(animation)
         lastPosition = position
 
-        holder.itemView.setOnClickListener { clickListener.onClicked(contests[position], position) }
+        holder.itemView.setOnClickListener { clickListener.onClicked(contests[position], position) }*/
     }
 
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v)

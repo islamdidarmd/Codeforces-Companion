@@ -35,7 +35,6 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_search.*
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -46,7 +45,7 @@ class SearchActivity : BaseActivity() {
     private var loader: AlertDialog? = null
     private var userViewModel: UserViewModel? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+ /*   override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = getString(R.string.search_user)
         setContentView(R.layout.activity_search)
@@ -505,4 +504,4 @@ class SearchActivity : BaseActivity() {
         super.onResume()
         logEvent("Search")
     }
-}
+*/}

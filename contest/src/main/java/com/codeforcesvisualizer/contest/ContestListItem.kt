@@ -19,6 +19,8 @@ import com.codeforcesvisualizer.core.data.ui.WidthSpacer
 import com.codeforcesvisualizer.core.data.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.core.data.utils.convertToHMS
 import com.codeforcesvisualizer.domain.entity.Contest
+import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.flowlayout.SizeMode
 
 @Composable
 internal fun ContestListItem(modifier: Modifier = Modifier, contest: Contest) {
@@ -46,13 +48,14 @@ internal fun ContestListItem(modifier: Modifier = Modifier, contest: Contest) {
                     color = MaterialTheme.colors.primary,
                 )
                 HeightSpacer(height = 8.dp)
-                Row {
+                FlowRow(
+                    mainAxisSpacing = 4.dp,
+                    crossAxisSpacing = 4.dp
+                ) {
                     Chip(label = contest.type) {}
-                    WidthSpacer(width = 4.dp)
                     Chip(label = contest.durationSeconds.convertToHMS()) {}
+                    Chip(label = contest.startTimeSeconds.convertTimeStampToDateString()) {}
                 }
-                HeightSpacer(height = 4.dp)
-                Chip(label = contest.startTimeSeconds.convertTimeStampToDateString()) {}
             }
             if (contest.scheduled) IconButton(
                 modifier = Modifier
