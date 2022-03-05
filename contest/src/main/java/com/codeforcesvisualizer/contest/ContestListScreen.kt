@@ -1,16 +1,14 @@
 package com.codeforcesvisualizer.contest
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.codeforcesvisualizer.core.data.ui.CFLoadingIndicator
+import com.codeforcesvisualizer.core.data.components.CFLoadingIndicator
 
 @Composable
 fun ContestListScreen(

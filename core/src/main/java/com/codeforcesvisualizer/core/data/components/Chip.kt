@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.core.data.ui
+package com.codeforcesvisualizer.core.data.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
