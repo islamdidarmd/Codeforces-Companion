@@ -1,6 +1,5 @@
 package com.codeforcesvisualizer.contest.list
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -8,34 +7,40 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.contest.R
+import com.codeforcesvisualizer.contest.search.ContestSearchList
 import com.codeforcesvisualizer.core.data.components.CFLoadingIndicator
 import com.codeforcesvisualizer.core.data.components.Center
 
 @Composable
 fun ContestListScreen(
     modifier: Modifier = Modifier,
-    viewModel: ContestViewModel = hiltViewModel()
+    viewModel: ContestViewModel = hiltViewModel(),
+    openSearch: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState(initial = ContestListUiState())
     viewModel.loadContestList()
-    ContestListScreen(modifier = modifier, state = uiState)
+    ContestListScreen(
+        modifier = modifier,
+        state = uiState,
+        openSearch = openSearch
+    )
 }
 
 @Composable
 internal fun ContestListScreen(
     modifier: Modifier = Modifier,
     state: State<ContestListUiState>,
+    openSearch: () -> Unit
 ) {
 
     Scaffold(
         modifier = modifier,
-        topBar = { TopBar() }) { innerPadding ->
+        topBar = { TopBar(openSearch = openSearch) }) { innerPadding ->
         when {
             state.value.loading -> {
                 CFLoadingIndicator(modifier = modifier.padding(innerPadding))
@@ -56,13 +61,13 @@ internal fun ContestListScreen(
 }
 
 @Composable
-internal fun TopBar() {
+internal fun TopBar(openSearch: () -> Unit) {
     TopAppBar(
         title = {
             Text(text = stringResource(id = R.string.contests))
         },
         actions = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = openSearch) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
             }
         }
@@ -72,5 +77,5 @@ internal fun TopBar() {
 @Preview
 @Composable
 private fun Preview() {
-    ContestListScreen()
+    ContestListScreen(openSearch = {})
 }

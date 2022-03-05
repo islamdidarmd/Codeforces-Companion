@@ -6,8 +6,8 @@ import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.data.config.BASE_URL
 import com.codeforcesvisualizer.data.datasource.CFRemoteDataSourceImpl
 import com.codeforcesvisualizer.data.network.CFApiService
-import com.codeforcesvisualizer.data.network.getOkHttpClient
-import com.codeforcesvisualizer.data.network.getRetrofit
+import com.codeforcesvisualizer.data.network.ApiClient.getOkHttpClient
+import com.codeforcesvisualizer.data.network.ApiClient.getRetrofit
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test

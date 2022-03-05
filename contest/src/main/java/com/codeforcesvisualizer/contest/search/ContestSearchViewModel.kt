@@ -1,11 +1,11 @@
-package com.codeforcesvisualizer.contest.list
+package com.codeforcesvisualizer.contest.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codeforcesvisualizer.core.data.data.AppError
 import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.domain.entity.Contest
-import com.codeforcesvisualizer.domain.usecase.GetContestListUseCase
+import com.codeforcesvisualizer.domain.usecase.FilterContestListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,26 +13,31 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ContestViewModel @Inject constructor(
-    private val contestListUseCase: GetContestListUseCase
+class ContestSearchViewModel @Inject constructor(
+    private val filterContestListUseCase: FilterContestListUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(ContestListUiState())
-    val uiState: Flow<ContestListUiState> = _uiState
+    private val _searchTextFlow = MutableStateFlow("")
+    val searchTextFlow: Flow<String> = _searchTextFlow
 
-    fun loadContestList() {
+    private val _uiState = MutableStateFlow(ContestSearchUiState())
+    val uiState: Flow<ContestSearchUiState> = _uiState
+
+    fun onSearchTextChanged(text: String) {
+        _searchTextFlow.value = text
         _uiState.value = _uiState.value.copy(loading = true)
+
         viewModelScope.launch {
-            val data: Either<AppError, List<Contest>> = contestListUseCase.invoke()
+            val data: Either<AppError, List<Contest>> = filterContestListUseCase.invoke(text)
             if (data is Either.Right) {
                 _uiState.value = _uiState.value.copy(
                     loading = false,
                     userMessage = "",
-                    contestList = data.data,
+                    matches = data.data,
                 )
             } else {
                 _uiState.value = _uiState.value.copy(
                     loading = false,
-                    contestList = emptyList(),
+                    matches = emptyList(),
                     userMessage = (data as Either.Left).data.message
                 )
             }

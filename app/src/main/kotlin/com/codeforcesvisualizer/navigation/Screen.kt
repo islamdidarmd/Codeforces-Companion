@@ -15,10 +15,14 @@ internal sealed class Screen(val route: String, val icon: @Composable () -> Unit
 }
 
 internal sealed class LeafScreen(private val route: String) {
-    fun createRoute(root: Screen) = "${root.route}/$route"
+    open fun createRoute(root: Screen) = "${root.route}/$route"
 
     object ContestList : LeafScreen("contest-list")
+    object ContestSearch : LeafScreen("contest-search")
+
     object Profile : LeafScreen("home")
+
     object Compare : LeafScreen("home")
+
     object More : LeafScreen("home")
 }

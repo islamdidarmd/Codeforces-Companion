@@ -5,9 +5,9 @@ import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.core.data.data.InvalidApiResponseError
 import com.codeforcesvisualizer.data.model.ContestListResponseModel
 import com.codeforcesvisualizer.data.network.CFApiService
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.concurrent.CancellationException
 import javax.inject.Inject
 
 interface CFRemoteDataSource {
