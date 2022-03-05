@@ -20,6 +20,7 @@ class ContestViewModel @Inject constructor(
     val uiState: Flow<ContestListUiState> = _uiState
 
     fun loadContestList() {
+        _uiState.value = _uiState.value.copy(loading = true)
         viewModelScope.launch {
             val data: Either<AppError, List<Contest>> = contestListUseCase.invoke()
             if (data is Either.Right) {
