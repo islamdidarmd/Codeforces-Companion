@@ -38,7 +38,7 @@ fun Chip(
 
 @Preview
 @Composable
-fun Preview() {
+private fun Preview() {
     Column {
         Chip(label = "Chip") {
 
