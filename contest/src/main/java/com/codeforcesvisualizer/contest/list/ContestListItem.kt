@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.contest
+package com.codeforcesvisualizer.contest.list
 
 import android.content.Context
 import android.content.Intent
@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.codeforcesvisualizer.contest.R
 import com.codeforcesvisualizer.core.data.components.Chip
 import com.codeforcesvisualizer.core.data.components.HeightSpacer
 import com.codeforcesvisualizer.core.data.utils.convertTimeStampToDateString

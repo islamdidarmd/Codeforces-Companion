@@ -1,31 +1,12 @@
 package com.codeforcesvisualizer.view.activity
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.view.WindowManager
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.ui.Modifier
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.codeforcesvisualizer.Application
 import com.codeforcesvisualizer.R
 import com.codeforcesvisualizer.adapter.ContestListAdapter
-import com.codeforcesvisualizer.contest.ContestListScreen
 import com.codeforcesvisualizer.model.Contest
-import com.codeforcesvisualizer.util.*
 import com.codeforcesvisualizer.util.EventLogger.logEvent
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

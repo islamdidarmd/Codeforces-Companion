@@ -4,8 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.codeforcesvisualizer.contest.ContestListScreen
-import com.codeforcesvisualizer.home.Home
+import com.codeforcesvisualizer.contest.list.ContestListScreen
 
 internal fun NavGraphBuilder.addHomeTopLevel(
     navController: NavController

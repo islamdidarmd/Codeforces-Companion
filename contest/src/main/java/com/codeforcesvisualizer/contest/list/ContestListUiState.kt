@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.contest
+package com.codeforcesvisualizer.contest.list
 
 import com.codeforcesvisualizer.domain.entity.Contest
 

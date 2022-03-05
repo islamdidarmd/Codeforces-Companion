@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.contest
+package com.codeforcesvisualizer.contest.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme

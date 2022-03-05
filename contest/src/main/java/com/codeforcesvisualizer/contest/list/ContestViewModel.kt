@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.contest
+package com.codeforcesvisualizer.contest.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.contest
+package com.codeforcesvisualizer.contest.list
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -8,6 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.codeforcesvisualizer.contest.R
 import com.codeforcesvisualizer.core.data.components.CFLoadingIndicator
 
 @Composable
