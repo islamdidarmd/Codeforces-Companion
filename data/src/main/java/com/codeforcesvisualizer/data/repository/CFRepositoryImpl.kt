@@ -30,7 +30,10 @@ class CFRepositoryImpl @Inject constructor(
     override suspend fun filterContestList(key: String): Either<AppError, List<Contest>> {
         return withContext(Dispatchers.IO) {
             val filtered = _contestList.filter { contest ->
-                contest.name.contains(key) || contest.type.contains(key)
+                contest.name.contains(key, ignoreCase = true) || contest.type.contains(
+                    key,
+                    ignoreCase = true
+                )
             }
             if (filtered.isNotEmpty()) Either.Right(data = filtered)
             else Either.Left(data = AppError("No matching data"))
