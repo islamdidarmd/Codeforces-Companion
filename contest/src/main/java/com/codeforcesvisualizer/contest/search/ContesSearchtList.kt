@@ -19,7 +19,7 @@ internal fun ContestSearchList(
 ) {
     LazyColumn(modifier = modifier) {
         if (contestList.isNotEmpty()) stickyHeader {
-            Header(text = "Results")
+            Header(text = stringResource(id = R.string.results))
         }
         items(contestList) { contest ->
             ContestListItem(modifier = Modifier, contest = contest)

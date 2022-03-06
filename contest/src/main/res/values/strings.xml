@@ -3,4 +3,6 @@
     <string name="contests">Contests</string>
     <string name="upcoming">Upcoming</string>
     <string name="past">Past</string>
+    <string name="results">Results</string>
+    <string name="contest_search_placeholder">Enter Contest name of type</string>
 </resources>

@@ -7,8 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.codeforcesvisualizer.contest.R
 import com.codeforcesvisualizer.contest.list.ContestViewModel
 import com.codeforcesvisualizer.core.data.components.CFLoadingIndicator
 import com.codeforcesvisualizer.core.data.components.Center
@@ -58,7 +60,7 @@ internal fun ContestSearchBar(
 ) {
     SearchBar(
         searchText = searchText,
-        placeholderText = "Enter Contest name of type",
+        placeholderText = stringResource(id = R.string.contest_search_placeholder),
         onSearchTextChanged = onSearchTextChanged,
         onClearText = { onSearchTextChanged("") },
         onNavigateBack = navigateUp
