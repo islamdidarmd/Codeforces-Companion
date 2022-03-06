@@ -34,12 +34,6 @@ fun ContestSearchScreen(
         }
     ) { innerPadding ->
         when {
-            /*uiState.loading -> {
-                Center(modifier = Modifier.padding(innerPadding)) {
-                    CFLoadingIndicator()
-                }
-            }*/
-
             uiState.userMessage.isNotBlank() -> {
                 Center(modifier = modifier.padding(innerPadding)) {
                     Text(text = uiState.userMessage)

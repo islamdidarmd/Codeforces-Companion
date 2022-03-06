@@ -24,19 +24,16 @@ class ContestSearchViewModel @Inject constructor(
 
     fun onSearchTextChanged(text: String) {
         _searchTextFlow.value = text
-        _uiState.value = _uiState.value.copy(loading = true)
 
         viewModelScope.launch {
             val data: Either<AppError, List<Contest>> = filterContestListUseCase.invoke(text)
             if (data is Either.Right) {
                 _uiState.value = _uiState.value.copy(
-                    loading = false,
                     userMessage = "",
                     matches = data.data,
                 )
             } else {
                 _uiState.value = _uiState.value.copy(
-                    loading = false,
                     matches = emptyList(),
                     userMessage = (data as Either.Left).data.message
                 )
