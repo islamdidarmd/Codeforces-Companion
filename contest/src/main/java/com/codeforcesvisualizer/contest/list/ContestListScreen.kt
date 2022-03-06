@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,14 +21,16 @@ import com.codeforcesvisualizer.core.data.components.Center
 fun ContestListScreen(
     modifier: Modifier = Modifier,
     viewModel: ContestViewModel = hiltViewModel(),
-    openSearch: () -> Unit
+    openSearch: () -> Unit,
+    openContestDetails: (Int) -> Unit,
 ) {
     val uiState = viewModel.uiState.collectAsState(initial = ContestListUiState())
     viewModel.loadContestList()
     ContestListScreen(
         modifier = modifier,
         state = uiState,
-        openSearch = openSearch
+        openSearch = openSearch,
+        openContestDetails = openContestDetails,
     )
 }
 
@@ -35,7 +38,8 @@ fun ContestListScreen(
 internal fun ContestListScreen(
     modifier: Modifier = Modifier,
     state: State<ContestListUiState>,
-    openSearch: () -> Unit
+    openSearch: () -> Unit,
+    openContestDetails: (Int) -> Unit,
 ) {
 
     Scaffold(
@@ -53,7 +57,8 @@ internal fun ContestListScreen(
             else -> {
                 ContestList(
                     modifier = Modifier.padding(innerPadding),
-                    contestList = state.value.contestList
+                    contestList = state.value.contestList,
+                    openContestDetails = openContestDetails
                 )
             }
         }
@@ -77,5 +82,5 @@ internal fun TopBar(openSearch: () -> Unit) {
 @Preview
 @Composable
 private fun Preview() {
-    ContestListScreen(openSearch = {})
+    ContestListScreen(openSearch = {}, openContestDetails = {})
 }

@@ -15,14 +15,19 @@ import com.codeforcesvisualizer.domain.entity.Contest
 @Composable
 internal fun ContestSearchList(
     modifier: Modifier = Modifier,
-    contestList: List<Contest>
+    contestList: List<Contest>,
+    openContestDetails: (Int) -> Unit,
 ) {
     LazyColumn(modifier = modifier) {
         if (contestList.isNotEmpty()) stickyHeader {
             Header(text = stringResource(id = R.string.results))
         }
         items(contestList) { contest ->
-            ContestListItem(modifier = Modifier, contest = contest)
+            ContestListItem(
+                modifier = Modifier,
+                contest = contest,
+                openContestDetails = openContestDetails
+            )
         }
     }
 }

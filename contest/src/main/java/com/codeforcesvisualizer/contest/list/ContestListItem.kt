@@ -22,13 +22,18 @@ import com.codeforcesvisualizer.domain.entity.Contest
 import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
-internal fun ContestListItem(modifier: Modifier = Modifier, contest: Contest) {
+internal fun ContestListItem(
+    modifier: Modifier = Modifier,
+    contest: Contest,
+    openContestDetails: (Int) -> Unit
+) {
     val context = LocalContext.current
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .clickable {
+                openContestDetails(contest.id)
             },
         elevation = 2.dp
     ) {
