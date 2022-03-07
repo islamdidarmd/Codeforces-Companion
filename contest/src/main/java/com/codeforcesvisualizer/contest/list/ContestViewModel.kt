@@ -7,8 +7,8 @@ import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.codeforcesvisualizer.domain.usecase.GetContestListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,9 +17,14 @@ class ContestViewModel @Inject constructor(
     private val contestListUseCase: GetContestListUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ContestListUiState())
-    val uiState: Flow<ContestListUiState> = _uiState
+    val uiState: StateFlow<ContestListUiState> = _uiState
 
-    fun loadContestList() {
+    init {
+        loadContestList()
+    }
+
+
+    private fun loadContestList() {
         _uiState.value = _uiState.value.copy(loading = true)
         viewModelScope.launch {
             val data: Either<AppError, List<Contest>> = contestListUseCase.invoke()
