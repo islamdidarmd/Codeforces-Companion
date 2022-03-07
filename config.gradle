@@ -1,6 +1,6 @@
 ext.versions = [
         //root project
-        kotlin_version                     : '1.5.31',
+        kotlin_version                     : '1.6.10',
         gradle_plugin_version              : '7.1.2',
         google_services_version            : '4.3.10',
         firebase_crashlytics_version       : '2.8.1',
@@ -22,10 +22,10 @@ ext.versions = [
         lifecycle_extention_version        : '2.2.0',
 
         //UI
-        compose_version                    : '1.0.5',
-        compose_viewmodel_version          : '1.0.0-alpha07',
+        compose_version                    : '1.1.1',
+        compose_viewmodel_version          : '2.4.1',
         compose_navigation                 : '2.4.1',
-        compose_accompanist                : '0.20.3',
+        compose_accompanist                : '0.23.1',
         material_version                   : '1.5.0',
         coil_version                       : '1.4.0',
         mpa_chart_version                  : 'v3.0.3',

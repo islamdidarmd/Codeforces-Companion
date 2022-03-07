@@ -1,38 +1,30 @@
 package com.codeforcesvisualizer.core.data.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun Chip(
     modifier: Modifier = Modifier,
-    label: String,
-    onClick: () -> Unit
+    label: String
 ) {
-    TextButton(
+    Box(
         modifier = modifier
-            .defaultMinSize(
-                minHeight = 24.dp
-            ),
-        shape = RoundedCornerShape(percent = 50),
-        colors = ButtonDefaults.textButtonColors(
-            backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.1f),
-            contentColor = MaterialTheme.colors.onSurface
-        ),
-        contentPadding = PaddingValues(horizontal = 20.dp),
-        onClick = onClick
+            .defaultMinSize(minHeight = 24.dp)
+            .clip(shape = CircleShape)
+            .background(color = MaterialTheme.colors.primary.copy(alpha = 0.1f))
+            .padding(PaddingValues(horizontal = 16.dp, vertical = 4.dp))
     ) {
-        Text(text = label)
+        Text(text = label, style = MaterialTheme.typography.body2)
     }
 }
 
@@ -40,8 +32,6 @@ fun Chip(
 @Composable
 private fun Preview() {
     Column {
-        Chip(label = "Chip") {
-
-        }
+        Chip(label = "Chip")
     }
 }

@@ -56,9 +56,9 @@ internal fun ContestListItem(
                     mainAxisSpacing = 4.dp,
                     crossAxisSpacing = 4.dp
                 ) {
-                    Chip(label = contest.type) {}
-                    Chip(label = contest.durationSeconds.convertToHMS()) {}
-                    Chip(label = contest.startTimeSeconds.convertTimeStampToDateString()) {}
+                    Chip(label = contest.type)
+                    Chip(label = contest.durationSeconds.convertToHMS())
+                    Chip(label = contest.startTimeSeconds.convertTimeStampToDateString())
                 }
             }
             if (contest.scheduled) IconButton(
