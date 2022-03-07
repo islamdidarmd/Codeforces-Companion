@@ -17,9 +17,9 @@ data class ContestModel(
     @field:Json(name = "durationSeconds")
     val durationSeconds: Int,
     @field:Json(name = "startTimeSeconds")
-    val startTimeSeconds: Long,
+    val startTimeSeconds: Int,
     @field:Json(name = "relativeTimeSeconds")
-    val relativeTimeSeconds: Long,
+    val relativeTimeSeconds: Int,
     @field:Json(name = "preparedBy")
     val preparedBy: String?,
     @field:Json(name = "websiteUrl")

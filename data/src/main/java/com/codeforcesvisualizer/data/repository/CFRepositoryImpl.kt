@@ -27,8 +27,16 @@ class CFRepositoryImpl @Inject constructor(
         } else Either.Left(data = (data as Either.Left).data)
     }
 
+    override suspend fun getContestById(id: Int): Either<AppError, Contest> {
+        return withContext(Dispatchers.IO) {
+            val contest = _contestList.find { contest -> contest.id == id }
+            if (contest != null) Either.Right(data = contest)
+            else Either.Left(data = AppError("Contest Not Found"))
+        }
+    }
+
     override suspend fun filterContestList(key: String): Either<AppError, List<Contest>> {
-        if(key.isBlank()) return Either.Left(data = AppError(""))
+        if (key.isBlank()) return Either.Left(data = AppError(""))
 
         return withContext(Dispatchers.IO) {
             val filtered = _contestList.filter { contest ->

@@ -7,5 +7,7 @@ import com.codeforcesvisualizer.domain.entity.Contest
 interface CFRepository {
     suspend fun getContestList(): Either<AppError, List<Contest>>
 
+    suspend fun getContestById(id: Int): Either<AppError, Contest>
+
     suspend fun filterContestList(key: String): Either<AppError, List<Contest>>
 }

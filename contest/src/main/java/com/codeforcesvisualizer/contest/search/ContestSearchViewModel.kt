@@ -9,6 +9,7 @@ import com.codeforcesvisualizer.domain.usecase.FilterContestListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,10 +18,10 @@ class ContestSearchViewModel @Inject constructor(
     private val filterContestListUseCase: FilterContestListUseCase
 ) : ViewModel() {
     private val _searchTextFlow = MutableStateFlow("")
-    val searchTextFlow: Flow<String> = _searchTextFlow
+    val searchTextFlow: StateFlow<String> = _searchTextFlow
 
     private val _uiState = MutableStateFlow(ContestSearchUiState())
-    val uiState: Flow<ContestSearchUiState> = _uiState
+    val uiState: StateFlow<ContestSearchUiState> = _uiState
 
     fun onSearchTextChanged(text: String) {
         _searchTextFlow.value = text

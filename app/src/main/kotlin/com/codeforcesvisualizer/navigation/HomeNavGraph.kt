@@ -1,5 +1,8 @@
 package com.codeforcesvisualizer.navigation
 
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.codeforcesvisualizer.contest.details.ContestDetailsScreen
@@ -51,9 +54,17 @@ private fun NavGraphBuilder.addContestDetails(
             }
         )
     ) { backStackEntry ->
+        val contestId = backStackEntry.arguments?.getInt("contestId") ?: -1
+        val context = LocalContext.current
+
         ContestDetailsScreen(
-            navController = navController,
-            contestId = backStackEntry.arguments?.getInt("contestId") ?: -1
+            contestId = contestId,
+            onNavigateBack = { navController.navigateUp() },
+            onOpenWebSite = {
+                val url = "https://codeforces.com/contests/$contestId"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                context.startActivity(intent)
+            }
         )
     }
 }

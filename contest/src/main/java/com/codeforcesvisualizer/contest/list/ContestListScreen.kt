@@ -24,7 +24,7 @@ fun ContestListScreen(
     openSearch: () -> Unit,
     openContestDetails: (Int) -> Unit,
 ) {
-    val uiState = viewModel.uiState.collectAsState(initial = ContestListUiState())
+    val uiState = viewModel.uiState.collectAsState()
     ContestListScreen(
         modifier = modifier,
         state = uiState,

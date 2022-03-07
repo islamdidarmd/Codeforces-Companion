@@ -23,8 +23,8 @@ fun ContestSearchScreen(
     navigateUp: () -> Unit,
     openContestDetails: (Int) -> Unit,
 ) {
-    val searchText by contestSearchViewModel.searchTextFlow.collectAsState("")
-    val uiState by contestSearchViewModel.uiState.collectAsState(ContestSearchUiState())
+    val searchText by contestSearchViewModel.searchTextFlow.collectAsState()
+    val uiState by contestSearchViewModel.uiState.collectAsState()
 
     Scaffold(
         modifier = modifier,

@@ -5,4 +5,6 @@
     <string name="past">Past</string>
     <string name="results">Results</string>
     <string name="contest_search_placeholder">Enter Contest name of type</string>
+    <string name="before_start">Before Start</string>
+    <string name="visit_website">Visit Website</string>
 </resources>
