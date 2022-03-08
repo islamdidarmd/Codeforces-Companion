@@ -22,10 +22,10 @@ ext.versions = [
         lifecycle_extention_version        : '2.2.0',
 
         //UI
-        compose_version                    : '1.1.1',
+        compose_version                    : '1.2.0-alpha04',
         compose_viewmodel_version          : '2.4.1',
         compose_navigation                 : '2.4.1',
-        compose_accompanist                : '0.23.1',
+        compose_accompanist                : '0.24.3-alpha',
         material_version                   : '1.5.0',
         coil_version                       : '1.4.0',
         mpa_chart_version                  : 'v3.0.3',
@@ -86,6 +86,7 @@ ext.deps = [
         compose_tooling_preview                 : "androidx.compose.ui:ui-tooling-preview:$versions.compose_version",
         compose_accompanist_flowlayout          : "com.google.accompanist:accompanist-flowlayout:$versions.compose_accompanist",
         compose_accompanist_placeholder_material: "com.google.accompanist:accompanist-placeholder-material:$versions.compose_accompanist",
+        compose_accompanist_webview             : "com.google.accompanist:accompanist-webview:$versions.compose_accompanist",
         activity_compose                        : "androidx.activity:activity-compose:$versions.compose_version",
         viewmodel_compose                       : "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose_viewmodel_version",
         coil_compose                            : "io.coil-kt:coil-compose:$versions.coil_version",

@@ -4,13 +4,23 @@ import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.painterResource
+import com.codeforcesvisualizer.R
 
 internal sealed class Screen(val route: String, val icon: @Composable () -> Unit) {
     object Home : Screen("home", { Icon(Icons.Default.Home, contentDescription = "Home") })
     object Profile :
-        Screen("profile", { Icon(Icons.Default.Search, contentDescription = "Profile") })
+        Screen("profile", { Icon(Icons.Default.Face, contentDescription = "Profile") })
 
-    object Compare : Screen("compare", { Icon(Icons.Default.Face, contentDescription = "Compare") })
+    object Compare : Screen(
+        "compare",
+        {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_compare_arrows_24),
+                contentDescription = "Compare"
+            )
+        })
+
     object More : Screen("more", { Icon(Icons.Default.Menu, contentDescription = "More") })
 }
 

@@ -42,7 +42,7 @@ fun ContestDetailsScreen(
             CFAppBar(title = title, onNavigateBack = onNavigateBack)
         },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
+            if (uiState.contest?.scheduled == true) ExtendedFloatingActionButton(
                 text = { Text(stringResource(R.string.visit_website)) },
                 onClick = onOpenWebSite
             )
@@ -83,25 +83,31 @@ private fun ContestDetailsScreen(
     contest: Contest,
     remainingTime: Long,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        if(contest.scheduled) Text(text = stringResource(R.string.before_start))
-        else Text(text = stringResource(R.string.contest_ended))
-
-        Text(text = remainingTime.convertToHMS(), style = MaterialTheme.typography.h6)
-
-        HeightSpacer(height = 16.dp)
-        FlowRow(
-            mainAxisSpacing = 4.dp,
-            crossAxisSpacing = 4.dp
+    if (!contest.scheduled) {
+        ContestDetailsWebView(
+            modifier = modifier,
+            "https://codeforces.com/contests/${contest.id}?mobile=true"
+        )
+    } else {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Chip(label = contest.type)
-            Chip(label = contest.durationSeconds.convertToHMS())
-            Chip(label = contest.startTimeSeconds.convertTimeStampToDateString())
+            Text(text = stringResource(R.string.before_start))
+
+            Text(text = remainingTime.convertToHMS(), style = MaterialTheme.typography.h6)
+
+            HeightSpacer(height = 16.dp)
+            FlowRow(
+                mainAxisSpacing = 4.dp,
+                crossAxisSpacing = 4.dp
+            ) {
+                Chip(label = contest.type)
+                Chip(label = contest.durationSeconds.convertToHMS())
+                Chip(label = contest.startTimeSeconds.convertTimeStampToDateString())
+            }
         }
     }
 }
