@@ -39,14 +39,10 @@ fun SearchBar(
 ) {
     val focusRequester = remember { FocusRequester() }
 
-    TopAppBar(
+    CFAppBar(
         modifier = modifier.fillMaxWidth(),
-        title = { Text(text = "") },
-        navigationIcon = {
-            IconButton(onClick = onNavigateBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-            }
-        },
+        title =  "",
+        onNavigateBack = onNavigateBack,
         actions = {
             SearchBarInputField(
                 searchText = searchText,

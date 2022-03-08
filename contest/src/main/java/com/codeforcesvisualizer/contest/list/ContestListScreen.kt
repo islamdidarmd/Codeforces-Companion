@@ -7,13 +7,12 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.contest.R
-import com.codeforcesvisualizer.contest.search.ContestSearchList
+import com.codeforcesvisualizer.core.data.components.CFAppBar
 import com.codeforcesvisualizer.core.data.components.CFLoadingIndicator
 import com.codeforcesvisualizer.core.data.components.Center
 
@@ -65,11 +64,9 @@ internal fun ContestListScreen(
 }
 
 @Composable
-internal fun TopBar(openSearch: () -> Unit) {
-    TopAppBar(
-        title = {
-            Text(text = stringResource(id = R.string.contests))
-        },
+private fun TopBar(openSearch: () -> Unit) {
+    CFAppBar(
+        title = stringResource(id = R.string.contests),
         actions = {
             IconButton(onClick = openSearch) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = "Search")

@@ -2,23 +2,15 @@ package com.codeforcesvisualizer.contest.details
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.codeforcesvisualizer.contest.R
-import com.codeforcesvisualizer.core.data.components.CFLoadingIndicator
-import com.codeforcesvisualizer.core.data.components.Center
-import com.codeforcesvisualizer.core.data.components.Chip
-import com.codeforcesvisualizer.core.data.components.HeightSpacer
+import com.codeforcesvisualizer.core.data.components.*
 import com.codeforcesvisualizer.core.data.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.core.data.utils.convertToHMS
 import com.codeforcesvisualizer.domain.entity.Contest
@@ -110,24 +102,4 @@ private fun ContestDetailsScreen(
             }
         }
     }
-}
-
-
-@Composable
-private fun CFAppBar(
-    modifier: Modifier = Modifier,
-    title: String,
-    onNavigateBack: () -> Unit,
-) {
-    TopAppBar(
-        modifier = modifier,
-        title = {
-            Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis)
-        },
-        navigationIcon = {
-            IconButton(onClick = onNavigateBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-            }
-        },
-    )
 }

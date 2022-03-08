@@ -50,6 +50,10 @@ dependencies {
 
     //UI
     implementation deps.compose_ui
+    implementation deps.compose_foundation
+    implementation deps.compose_material
+
+    implementation deps.compose_accompanist_webview
 
     implementation deps.compose_runtime_livedata
 
