@@ -22,6 +22,7 @@ fun ContestListScreen(
     viewModel: ContestViewModel = hiltViewModel(),
     openSearch: () -> Unit,
     openContestDetails: (Int) -> Unit,
+    onOpenWebSite: (Int) -> Unit,
 ) {
     val uiState = viewModel.uiState.collectAsState()
     ContestListScreen(
@@ -29,6 +30,7 @@ fun ContestListScreen(
         state = uiState,
         openSearch = openSearch,
         openContestDetails = openContestDetails,
+        onOpenWebSite = onOpenWebSite
     )
 }
 
@@ -38,6 +40,7 @@ internal fun ContestListScreen(
     state: State<ContestListUiState>,
     openSearch: () -> Unit,
     openContestDetails: (Int) -> Unit,
+    onOpenWebSite: (Int) -> Unit,
 ) {
 
     Scaffold(
@@ -56,7 +59,8 @@ internal fun ContestListScreen(
                 ContestList(
                     modifier = Modifier.padding(innerPadding),
                     contestList = state.value.contestList,
-                    openContestDetails = openContestDetails
+                    openContestDetails = openContestDetails,
+                    onOpenWebSite = onOpenWebSite
                 )
             }
         }
@@ -78,5 +82,5 @@ private fun TopBar(openSearch: () -> Unit) {
 @Preview
 @Composable
 private fun Preview() {
-    ContestListScreen(openSearch = {}, openContestDetails = {})
+    ContestListScreen(openSearch = {}, openContestDetails = {}, onOpenWebSite = {})
 }

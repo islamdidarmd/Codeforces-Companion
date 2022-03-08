@@ -20,8 +20,9 @@ import com.codeforcesvisualizer.core.data.components.SearchBar
 fun ContestSearchScreen(
     modifier: Modifier = Modifier,
     contestSearchViewModel: ContestSearchViewModel = hiltViewModel(),
-    navigateUp: () -> Unit,
+    onNavigateBack: () -> Unit,
     openContestDetails: (Int) -> Unit,
+    onOpenWebSite: (Int) -> Unit,
 ) {
     val searchText by contestSearchViewModel.searchTextFlow.collectAsState()
     val uiState by contestSearchViewModel.uiState.collectAsState()
@@ -32,7 +33,7 @@ fun ContestSearchScreen(
             ContestSearchBar(
                 searchText = searchText,
                 onSearchTextChanged = { text -> contestSearchViewModel.onSearchTextChanged(text) },
-                navigateUp = navigateUp
+                navigateUp = onNavigateBack
             )
         }
     ) { innerPadding ->
@@ -48,6 +49,7 @@ fun ContestSearchScreen(
                     modifier = Modifier.padding(innerPadding),
                     contestList = uiState.matches,
                     openContestDetails = openContestDetails,
+                    onOpenWebSite = onOpenWebSite
                 )
             }
         }
@@ -73,5 +75,5 @@ internal fun ContestSearchBar(
 @Preview
 @Composable
 private fun Preview() {
-    ContestSearchScreen(navigateUp = {}, openContestDetails = {})
+    ContestSearchScreen(onNavigateBack = {}, openContestDetails = {}, onOpenWebSite = {})
 }

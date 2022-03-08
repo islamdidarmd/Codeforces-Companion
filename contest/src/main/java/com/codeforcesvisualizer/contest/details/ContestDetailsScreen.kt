@@ -21,7 +21,7 @@ fun ContestDetailsScreen(
     modifier: Modifier = Modifier,
     contestId: Int,
     onNavigateBack: () -> Unit,
-    onOpenWebSite: () -> Unit,
+    onOpenWebSite: (Int) -> Unit,
     viewModel: ContestDetailsViewModel = hiltViewModel()
 ) {
     var title by remember { mutableStateOf("Details") }
@@ -36,7 +36,7 @@ fun ContestDetailsScreen(
         floatingActionButton = {
             if (uiState.contest?.scheduled == true) ExtendedFloatingActionButton(
                 text = { Text(stringResource(R.string.visit_website)) },
-                onClick = onOpenWebSite
+                onClick = { onOpenWebSite(contestId) }
             )
         }
     ) { innerPadding ->
@@ -59,6 +59,7 @@ fun ContestDetailsScreen(
                     modifier = Modifier.padding(innerPadding),
                     contest = contest,
                     remainingTime = remainingTimeState,
+                    onOpenWebSite = onOpenWebSite
                 )
             }
         }
@@ -74,12 +75,10 @@ private fun ContestDetailsScreen(
     modifier: Modifier,
     contest: Contest,
     remainingTime: Long,
+    onOpenWebSite: (Int) -> Unit,
 ) {
     if (!contest.scheduled) {
-        ContestDetailsWebView(
-            modifier = modifier,
-            "https://codeforces.com/contests/${contest.id}?mobile=true"
-        )
+        onOpenWebSite(contest.id)
     } else {
         Column(
             modifier = modifier

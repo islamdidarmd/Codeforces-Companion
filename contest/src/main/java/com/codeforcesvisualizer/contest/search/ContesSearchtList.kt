@@ -17,6 +17,7 @@ internal fun ContestSearchList(
     modifier: Modifier = Modifier,
     contestList: List<Contest>,
     openContestDetails: (Int) -> Unit,
+    onOpenWebSite: (Int) -> Unit,
 ) {
     LazyColumn(modifier = modifier) {
         if (contestList.isNotEmpty()) stickyHeader {
@@ -26,7 +27,8 @@ internal fun ContestSearchList(
             ContestListItem(
                 modifier = Modifier,
                 contest = contest,
-                openContestDetails = openContestDetails
+                openContestDetails = openContestDetails,
+                onOpenWebSite = onOpenWebSite
             )
         }
     }

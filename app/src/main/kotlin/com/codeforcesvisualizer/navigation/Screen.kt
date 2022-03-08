@@ -24,7 +24,7 @@ internal sealed class Screen(val route: String, val icon: @Composable () -> Unit
     object More : Screen("more", { Icon(Icons.Default.Menu, contentDescription = "More") })
 }
 
-internal sealed class LeafScreen(private val route: String) {
+internal sealed class LeafScreen(val route: String) {
     open fun createRoute(root: Screen) = "${root.route}/$route"
 
     object ContestList : LeafScreen("contest")
@@ -40,4 +40,13 @@ internal sealed class LeafScreen(private val route: String) {
     object Compare : LeafScreen("home")
 
     object More : LeafScreen("home")
+
+    object WebView : LeafScreen("webview") {
+        override fun createRoute(root: Screen): String {
+            return "${root.route}/$route?link={link}"
+        }
+        fun createRoute(root: Screen, link: String): String {
+            return "${root.route}/webview?link=$link"
+        }
+    }
 }

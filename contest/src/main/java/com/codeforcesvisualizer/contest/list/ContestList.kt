@@ -16,6 +16,7 @@ internal fun ContestList(
     modifier: Modifier = Modifier,
     contestList: List<Contest>,
     openContestDetails: (Int) -> Unit,
+    onOpenWebSite: (Int) -> Unit,
 ) {
     val state = rememberLazyListState()
 
@@ -35,7 +36,8 @@ internal fun ContestList(
                 ContestListItem(
                     modifier = Modifier,
                     contest = contest,
-                    openContestDetails = openContestDetails
+                    openContestDetails = openContestDetails,
+                    onOpenWebSite = onOpenWebSite
                 )
             }
         }

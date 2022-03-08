@@ -25,7 +25,8 @@ import com.google.accompanist.flowlayout.FlowRow
 internal fun ContestListItem(
     modifier: Modifier = Modifier,
     contest: Contest,
-    openContestDetails: (Int) -> Unit
+    openContestDetails: (Int) -> Unit,
+    onOpenWebSite: (Int) -> Unit,
 ) {
     val context = LocalContext.current
     Card(
@@ -33,7 +34,8 @@ internal fun ContestListItem(
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .clickable {
-                openContestDetails(contest.id)
+                if (contest.scheduled) openContestDetails(contest.id)
+                else onOpenWebSite(contest.id)
             },
         elevation = 2.dp
     ) {

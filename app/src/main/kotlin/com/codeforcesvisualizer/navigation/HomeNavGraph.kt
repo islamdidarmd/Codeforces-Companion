@@ -9,6 +9,7 @@ import com.codeforcesvisualizer.contest.details.ContestDetailsScreen
 import com.codeforcesvisualizer.contest.list.ContestListScreen
 import com.codeforcesvisualizer.contest.search.ContestSearchScreen
 import com.codeforcesvisualizer.data.config.BASE_URL
+import com.codeforcesvisualizer.webview.CFWebViewScreen
 
 internal fun NavGraphBuilder.addHomeTopLevel(
     navController: NavController
@@ -20,6 +21,7 @@ internal fun NavGraphBuilder.addHomeTopLevel(
         addContestList(navController, Screen.Home)
         addContestSearch(navController, Screen.Home)
         addContestDetails(navController, Screen.Home)
+        addWebView(navController, Screen.Home)
     }
 }
 
@@ -39,7 +41,12 @@ private fun NavGraphBuilder.addContestList(
                         contestId = contestId
                     )
                 )
-            })
+            },
+            onOpenWebSite = { contestId ->
+                val url = "$BASE_URL/contests/$contestId"
+                navController.navigate(LeafScreen.WebView.createRoute(root = root, link = url))
+            },
+        )
     }
 }
 
@@ -56,15 +63,12 @@ private fun NavGraphBuilder.addContestDetails(
         )
     ) { backStackEntry ->
         val contestId = backStackEntry.arguments?.getInt("contestId") ?: -1
-        val context = LocalContext.current
-
         ContestDetailsScreen(
             contestId = contestId,
             onNavigateBack = { navController.navigateUp() },
             onOpenWebSite = {
                 val url = "$BASE_URL/contests/$contestId"
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                context.startActivity(intent)
+                navController.navigate(LeafScreen.WebView.createRoute(root = root, link = url))
             }
         )
     }
@@ -76,7 +80,7 @@ private fun NavGraphBuilder.addContestSearch(
 ) {
     composable(route = LeafScreen.ContestSearch.createRoute(root = root)) {
         ContestSearchScreen(
-            navigateUp = { navController.navigateUp() },
+            onNavigateBack = { navController.navigateUp() },
             openContestDetails = { contestId ->
                 navController.navigate(
                     LeafScreen.ContestDetails.createRoute(
@@ -84,7 +88,29 @@ private fun NavGraphBuilder.addContestSearch(
                         contestId = contestId
                     )
                 )
-            }
+            },
+            onOpenWebSite = { contestId ->
+                val url = "$BASE_URL/contests/$contestId"
+                navController.navigate(LeafScreen.WebView.createRoute(root = root, link = url))
+            },
+        )
+    }
+}
+
+private fun NavGraphBuilder.addWebView(
+    navController: NavController,
+    root: Screen
+) {
+    composable(
+        route = LeafScreen.WebView.createRoute(root = root),
+        arguments = listOf(navArgument("link") {
+            defaultValue = ""
+            type = NavType.StringType
+        })
+    ) { backStackEntry ->
+        CFWebViewScreen(
+            onNavigateBack = { navController.navigateUp() },
+            link = backStackEntry.arguments?.getString("link")!!
         )
     }
 }
