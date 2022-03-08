@@ -80,13 +80,20 @@ ext.deps = [
         cardview                                : "androidx.cardview:cardview:$versions.cardview_version",
 
         compose_ui                              : "androidx.compose.ui:ui:$versions.compose_version",
+        compose_foundation                      : "androidx.compose.foundation:foundation:$versions.compose_version",
+
+        compose_material_icons_core             : "androidx.compose.material:material-icons-core:$versions.compose_version",
+        compose_material_icons_extended         : "androidx.compose.material:material-icons-extended:$versions.compose_version",
         compose_material                        : "androidx.compose.material:material:$versions.compose_version",
+
         compose_runtime_livedata                : "androidx.compose.runtime:runtime-livedata:$versions.compose_version",
         compose_navigation                      : "androidx.navigation:navigation-compose:$versions.compose_navigation",
         compose_tooling_preview                 : "androidx.compose.ui:ui-tooling-preview:$versions.compose_version",
+
         compose_accompanist_flowlayout          : "com.google.accompanist:accompanist-flowlayout:$versions.compose_accompanist",
         compose_accompanist_placeholder_material: "com.google.accompanist:accompanist-placeholder-material:$versions.compose_accompanist",
         compose_accompanist_webview             : "com.google.accompanist:accompanist-webview:$versions.compose_accompanist",
+
         activity_compose                        : "androidx.activity:activity-compose:$versions.compose_version",
         viewmodel_compose                       : "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose_viewmodel_version",
         coil_compose                            : "io.coil-kt:coil-compose:$versions.coil_version",

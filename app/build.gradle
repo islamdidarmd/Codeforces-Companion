@@ -3,8 +3,8 @@ plugins {
     id "com.android.application"
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
- //   id "com.google.gms.google-services"
- //   id "com.google.firebase.crashlytics"
+    //   id "com.google.gms.google-services"
+    //   id "com.google.firebase.crashlytics"
 }
 
 configurations {
@@ -59,14 +59,20 @@ dependencies {
     implementation project(":domain")
     implementation project(":data")
     implementation project(":contest")
+    implementation project(":webview")
 
+    implementation deps.compose_ui
     implementation deps.compose_material
-    implementation deps.compose_runtime_livedata
-    implementation deps.compose_navigation
-    implementation deps.compose_tooling_preview
+    implementation deps.coil_compose
+
     implementation deps.activity_compose
     implementation deps.viewmodel_compose
-    implementation deps.coil_compose
+
+    implementation deps.compose_runtime_livedata
+    implementation deps.compose_navigation
+
+    implementation deps.compose_tooling_preview
+    debugImplementation deps.compose_ui_tooling_debug
 
     implementation deps.core_ktx
     implementation deps.app_compat

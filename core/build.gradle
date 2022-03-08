@@ -43,12 +43,16 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
 }
 dependencies {
     //UI
+    implementation deps.compose_ui
     implementation deps.compose_material
+    implementation deps.coil_compose
+
     implementation deps.compose_runtime_livedata
-    implementation deps.compose_tooling_preview
+
     implementation deps.activity_compose
     implementation deps.viewmodel_compose
-    implementation deps.coil_compose
+
+    implementation deps.compose_tooling_preview
     debugImplementation deps.compose_ui_tooling_debug
 
     testImplementation deps.junit

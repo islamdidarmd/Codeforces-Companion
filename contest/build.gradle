@@ -50,14 +50,18 @@ dependencies {
     implementation project(":domain")
 
     //core
+    implementation deps.compose_ui
     implementation deps.compose_material
+
     implementation deps.compose_runtime_livedata
-    implementation deps.compose_tooling_preview
-    implementation deps.compose_accompanist_flowlayout
-    implementation deps.compose_accompanist_webview
     implementation deps.activity_compose
     implementation deps.viewmodel_compose
-    implementation deps.coil_compose
+
+    implementation deps.compose_accompanist_flowlayout
+    implementation deps.compose_accompanist_webview
+
+    implementation deps.compose_tooling_preview
+    debugImplementation deps.compose_ui_tooling_debug
 
     //extensions
     implementation deps.core_ktx
@@ -74,6 +78,4 @@ dependencies {
     testImplementation deps.junit
     androidTestImplementation deps.android_junit
     androidTestImplementation deps.espresso_core
-
-    debugImplementation deps.compose_ui_tooling_debug
 }
