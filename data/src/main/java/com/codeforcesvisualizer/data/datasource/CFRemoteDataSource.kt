@@ -3,6 +3,7 @@ package com.codeforcesvisualizer.data.datasource
 import com.codeforcesvisualizer.core.data.data.AppError
 import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.core.data.data.InvalidApiResponseError
+import com.codeforcesvisualizer.core.data.data.ServerConnectionResponseError
 import com.codeforcesvisualizer.data.model.ContestListResponseModel
 import com.codeforcesvisualizer.data.network.CFApiService
 import kotlinx.coroutines.CancellationException
@@ -29,7 +30,7 @@ class CFRemoteDataSourceImpl @Inject constructor(
                 }
             } catch (e: Exception) {
                 if (e is CancellationException) throw e
-                else Either.Left(data = AppError(message = e.message ?: ""))
+                else Either.Left(data = ServerConnectionResponseError())
             }
         }
     }

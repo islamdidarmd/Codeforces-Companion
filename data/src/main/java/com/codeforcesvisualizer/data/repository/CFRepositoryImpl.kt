@@ -1,7 +1,9 @@
 package com.codeforcesvisualizer.data.repository
 
 import com.codeforcesvisualizer.core.data.data.AppError
+import com.codeforcesvisualizer.core.data.data.DataNotFoundError
 import com.codeforcesvisualizer.core.data.data.Either
+import com.codeforcesvisualizer.core.data.data.MatchingDataNotFoundError
 import com.codeforcesvisualizer.data.datasource.CFRemoteDataSource
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.codeforcesvisualizer.domain.repository.CFRepository
@@ -31,7 +33,7 @@ class CFRepositoryImpl @Inject constructor(
         return withContext(Dispatchers.IO) {
             val contest = _contestList.find { contest -> contest.id == id }
             if (contest != null) Either.Right(data = contest)
-            else Either.Left(data = AppError("Contest Not Found"))
+            else Either.Left(data = DataNotFoundError())
         }
     }
 
@@ -46,7 +48,7 @@ class CFRepositoryImpl @Inject constructor(
                 )
             }
             if (filtered.isNotEmpty()) Either.Right(data = filtered)
-            else Either.Left(data = AppError("No matching data"))
+            else Either.Left(data = MatchingDataNotFoundError())
         }
     }
 }

@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.codeforcesvisualizer.contest.details.ContestDetailsScreen
 import com.codeforcesvisualizer.contest.list.ContestListScreen
 import com.codeforcesvisualizer.contest.search.ContestSearchScreen
+import com.codeforcesvisualizer.data.config.BASE_URL
 
 internal fun NavGraphBuilder.addHomeTopLevel(
     navController: NavController
@@ -61,7 +62,7 @@ private fun NavGraphBuilder.addContestDetails(
             contestId = contestId,
             onNavigateBack = { navController.navigateUp() },
             onOpenWebSite = {
-                val url = "https://codeforces.com/contests/$contestId"
+                val url = "$BASE_URL/contests/$contestId"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 context.startActivity(intent)
             }

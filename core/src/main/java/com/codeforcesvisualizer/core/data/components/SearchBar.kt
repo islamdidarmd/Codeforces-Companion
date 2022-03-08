@@ -22,7 +22,9 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -80,8 +82,11 @@ internal fun SearchBarInputField(
             .padding(vertical = 2.dp)
             .onFocusChanged { showClearButton = it.isFocused }
             .focusRequester(focusRequester),
-        value = searchText,
-        onValueChange = onSearchTextChanged,
+        value = TextFieldValue(
+            text = searchText,
+            selection = TextRange(searchText.length)
+        ),
+        onValueChange = { value -> onSearchTextChanged(value.text) },
         placeholder = { Text(text = placeholderText) },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
