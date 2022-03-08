@@ -89,7 +89,8 @@ private fun ContestDetailsScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = stringResource(R.string.before_start))
+        if(contest.scheduled) Text(text = stringResource(R.string.before_start))
+        else Text(text = stringResource(R.string.contest_ended))
 
         Text(text = remainingTime.convertToHMS(), style = MaterialTheme.typography.h6)
 
