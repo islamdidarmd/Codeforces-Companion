@@ -6,6 +6,6 @@
     <string name="results">Results</string>
     <string name="contest_search_placeholder">Enter Contest name of type</string>
     <string name="before_start">Before Start</string>
-    <string name="visit_website">Visit Website</string>
+    <string name="register">Register Now</string>
     <string name="contest_ended">Contest Ended</string>
 </resources>

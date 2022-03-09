@@ -35,7 +35,7 @@ fun ContestDetailsScreen(
         },
         floatingActionButton = {
             if (uiState.contest?.scheduled == true) ExtendedFloatingActionButton(
-                text = { Text(stringResource(R.string.visit_website)) },
+                text = { Text(stringResource(R.string.register)) },
                 onClick = { onOpenWebSite(contestId) }
             )
         }
