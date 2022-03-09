@@ -35,11 +35,11 @@ internal sealed class LeafScreen(val route: String) {
         }
     }
 
-    object Profile : LeafScreen("home")
+    object Profile : LeafScreen("profile")
 
-    object Compare : LeafScreen("home")
+    object Compare : LeafScreen("compare")
 
-    object More : LeafScreen("home")
+    object More : LeafScreen("more")
 
     object WebView : LeafScreen("webview") {
         override fun createRoute(root: Screen): String {

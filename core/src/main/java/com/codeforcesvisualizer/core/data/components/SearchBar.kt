@@ -78,11 +78,8 @@ internal fun SearchBarInputField(
             .padding(vertical = 2.dp)
             .onFocusChanged { showClearButton = it.isFocused }
             .focusRequester(focusRequester),
-        value = TextFieldValue(
-            text = searchText,
-            selection = TextRange(searchText.length)
-        ),
-        onValueChange = { value -> onSearchTextChanged(value.text) },
+        value =searchText,
+        onValueChange = { value -> onSearchTextChanged(value) },
         placeholder = { Text(text = placeholderText) },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
