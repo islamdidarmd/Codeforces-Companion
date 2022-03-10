@@ -104,7 +104,10 @@ internal fun SearchBarInputField(
         trailingIcon = {
             SearchBarTrailingIcon(
                 visible = showClearButton,
-                onClick = onClearText
+                onClick = {
+                    textFieldValue = TextFieldValue("")
+                    onClearText()
+                }
             )
         },
         singleLine = true,
