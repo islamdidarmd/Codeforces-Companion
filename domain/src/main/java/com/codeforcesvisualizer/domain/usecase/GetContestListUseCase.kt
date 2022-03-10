@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetContestListUseCase @Inject constructor(
     private val cfRepository: CFRepository
 ) {
-    suspend operator fun invoke(): Either<AppError, List<Contest>> {
-        return cfRepository.getContestList()
+    suspend operator fun invoke(refresh: Boolean = false): Either<AppError, List<Contest>> {
+        return cfRepository.getContestList(refresh)
     }
 }

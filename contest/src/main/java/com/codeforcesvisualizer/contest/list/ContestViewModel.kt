@@ -23,24 +23,36 @@ class ContestViewModel @Inject constructor(
         loadContestList()
     }
 
+    fun refreshContestList() {
+        if (_uiState.value.refreshing) return
+        _uiState.value = _uiState.value.copy(refreshing = true)
+        viewModelScope.launch {
+            getContestList(true)
+            _uiState.value = _uiState.value.copy(refreshing = false)
+        }
+    }
 
     private fun loadContestList() {
         _uiState.value = _uiState.value.copy(loading = true)
         viewModelScope.launch {
-            val data: Either<AppError, List<Contest>> = contestListUseCase.invoke()
-            if (data is Either.Right) {
-                _uiState.value = _uiState.value.copy(
-                    loading = false,
-                    userMessage = "",
-                    contestList = data.data,
-                )
-            } else {
-                _uiState.value = _uiState.value.copy(
-                    loading = false,
-                    contestList = emptyList(),
-                    userMessage = (data as Either.Left).data.message
-                )
-            }
+            getContestList()
+        }
+    }
+
+    private suspend fun getContestList(refresh: Boolean = false) {
+        val data: Either<AppError, List<Contest>> = contestListUseCase.invoke(refresh)
+        if (data is Either.Right) {
+            _uiState.value = _uiState.value.copy(
+                loading = false,
+                userMessage = "",
+                contestList = data.data,
+            )
+        } else {
+            _uiState.value = _uiState.value.copy(
+                loading = false,
+                contestList = emptyList(),
+                userMessage = (data as Either.Left).data.message
+            )
         }
     }
 }

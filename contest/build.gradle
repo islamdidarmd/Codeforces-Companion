@@ -56,6 +56,7 @@ dependencies {
 
     implementation deps.compose_accompanist_flowlayout
     implementation deps.compose_accompanist_webview
+    implementation deps.compose_accompanist_swiperefresh
 
     implementation deps.compose_tooling_preview
     debugImplementation deps.compose_ui_tooling_debug

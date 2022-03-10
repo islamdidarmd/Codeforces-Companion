@@ -5,7 +5,7 @@ import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.domain.entity.Contest
 
 interface CFRepository {
-    suspend fun getContestList(): Either<AppError, List<Contest>>
+    suspend fun getContestList(refresh: Boolean = true): Either<AppError, List<Contest>>
 
     suspend fun getContestById(id: Int): Either<AppError, Contest>
 

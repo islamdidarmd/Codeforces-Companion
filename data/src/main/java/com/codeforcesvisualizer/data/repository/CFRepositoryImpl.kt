@@ -16,8 +16,8 @@ class CFRepositoryImpl @Inject constructor(
 ) : CFRepository {
     private val _contestList = mutableListOf<Contest>()
 
-    override suspend fun getContestList(): Either<AppError, List<Contest>> {
-        if (_contestList.isNotEmpty()) return Either.Right(data = _contestList)
+    override suspend fun getContestList(refresh: Boolean): Either<AppError, List<Contest>> {
+        if (!refresh && _contestList.isNotEmpty()) return Either.Right(data = _contestList)
 
         val data = cfRemoteDataSource.getContestList()
         return if (data is Either.Right) {

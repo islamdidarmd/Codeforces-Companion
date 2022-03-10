@@ -94,6 +94,7 @@ ext.deps = [
         compose_accompanist_flowlayout          : "com.google.accompanist:accompanist-flowlayout:$versions.compose_accompanist",
         compose_accompanist_placeholder_material: "com.google.accompanist:accompanist-placeholder-material:$versions.compose_accompanist",
         compose_accompanist_webview             : "com.google.accompanist:accompanist-webview:$versions.compose_accompanist",
+        compose_accompanist_swiperefresh        : "com.google.accompanist:accompanist-swiperefresh:$versions.compose_accompanist",
 
         activity_compose                        : "androidx.activity:activity-compose:$versions.compose_version",
         viewmodel_compose                       : "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose_viewmodel_version",
