@@ -41,7 +41,7 @@ fun SearchBar(
 
     CFAppBar(
         modifier = modifier.fillMaxWidth(),
-        title =  "",
+        title = "",
         onNavigateBack = onNavigateBack,
         actions = {
             SearchBarInputField(
@@ -72,14 +72,21 @@ internal fun SearchBarInputField(
     var showClearButton by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    var textFieldValue by remember {
+        mutableStateOf(TextFieldValue(searchText, selection = TextRange(searchText.length)))
+    }
+
     TextField(
         modifier = modifier
             .fillMaxSize()
             .padding(vertical = 2.dp)
             .onFocusChanged { showClearButton = it.isFocused }
             .focusRequester(focusRequester),
-        value =searchText,
-        onValueChange = { value -> onSearchTextChanged(value) },
+        value = textFieldValue,
+        onValueChange = { value ->
+            textFieldValue = value
+            onSearchTextChanged(value.text)
+        },
         placeholder = { Text(text = placeholderText) },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
