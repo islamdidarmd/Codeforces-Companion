@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -52,10 +53,11 @@ private fun ContestListScreen(
         modifier = modifier,
         topBar = { TopBar(openSearch = openSearch) },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                text = { Text(text = stringResource(R.string.refresh)) },
+            FloatingActionButton(
                 onClick = onRefresh
-            )
+            ){
+                Icon(imageVector = Icons.Default.Refresh, contentDescription = "Refresh")
+            }
         }
     )
     { innerPadding ->

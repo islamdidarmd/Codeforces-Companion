@@ -1,6 +1,9 @@
 package com.codeforcesvisualizer.home
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,13 +19,12 @@ import com.codeforcesvisualizer.navigation.Screen
 @Composable
 fun Home(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    Scaffold(
-        bottomBar = { BottomNavigation(navController) }
-    ) { innerPadding ->
+    Column(modifier = modifier) {
         AppNavigator(
-            modifier = modifier.padding(innerPadding),
+            modifier = Modifier.weight(1f),
             navController = navController
         )
+        BottomNavigation(navController)
     }
 }
 

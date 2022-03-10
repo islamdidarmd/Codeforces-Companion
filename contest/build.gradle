@@ -50,8 +50,6 @@ dependencies {
     implementation deps.compose_ui
     implementation deps.compose_material
 
-    implementation deps.compose_runtime_livedata
-    implementation deps.activity_compose
     implementation deps.viewmodel_compose
 
     implementation deps.compose_accompanist_flowlayout
