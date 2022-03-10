@@ -1,5 +1,6 @@
 package com.codeforcesvisualizer.navigation
 
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -22,8 +23,11 @@ private fun NavGraphBuilder.addProfileSearchScreen(
     root: Screen
 ) {
     composable(
-        route = LeafScreen.Profile.createRoute(Screen.Profile)
+        route = LeafScreen.Profile.createRoute(root)
     ) {
-        ProfileSearchScreen()
+        ProfileSearchScreen(
+            modifier = Modifier,
+            onNavigateBack = { navController.navigateUp() }
+        )
     }
 }

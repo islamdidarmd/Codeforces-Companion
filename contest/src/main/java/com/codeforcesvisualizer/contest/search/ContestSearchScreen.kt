@@ -33,7 +33,7 @@ fun ContestSearchScreen(
             ContestSearchBar(
                 searchText = searchText,
                 onSearchTextChanged = { text -> contestSearchViewModel.onSearchTextChanged(text) },
-                navigateUp = onNavigateBack
+                onNavigateBack = onNavigateBack
             )
         }
     ) { innerPadding ->
@@ -57,17 +57,17 @@ fun ContestSearchScreen(
 }
 
 @Composable
-internal fun ContestSearchBar(
+private fun ContestSearchBar(
     searchText: String,
     onSearchTextChanged: (String) -> Unit,
-    navigateUp: () -> Unit
+    onNavigateBack: () -> Unit
 ) {
     SearchBar(
         searchText = searchText,
         placeholderText = stringResource(id = R.string.contest_search_placeholder),
         onSearchTextChanged = onSearchTextChanged,
         onClearText = { onSearchTextChanged("") },
-        onNavigateBack = navigateUp
+        onNavigateBack = onNavigateBack
     )
 }
 
