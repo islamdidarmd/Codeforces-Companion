@@ -53,9 +53,9 @@ private fun ContestListScreen(
         modifier = modifier,
         topBar = { TopBar(openSearch = openSearch) },
         floatingActionButton = {
-            FloatingActionButton(
+            if (state.value.userMessage.isNotEmpty()) FloatingActionButton(
                 onClick = onRefresh
-            ){
+            ) {
                 Icon(imageVector = Icons.Default.Refresh, contentDescription = "Refresh")
             }
         }
