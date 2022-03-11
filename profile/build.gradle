@@ -42,12 +42,21 @@ dependencies {
     implementation deps.compose_ui
     implementation deps.compose_foundation
     implementation deps.compose_material
+
+    implementation deps.compose_material_icons_core
+    implementation deps.compose_material_icons_extended
+
     implementation deps.coil_compose
 
     implementation deps.viewmodel_compose
 
     implementation deps.compose_tooling_preview
     debugImplementation deps.compose_ui_tooling_debug
+
+    //di
+    implementation deps.hilt_android
+    implementation deps.hilt_navigation_compose
+    kapt deps.hilt_compiler
 
     testImplementation deps.junit
     androidTestImplementation deps.android_junit

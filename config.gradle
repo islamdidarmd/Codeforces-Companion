@@ -27,7 +27,7 @@ ext.versions = [
         compose_navigation                 : '2.4.1',
         compose_accompanist                : '0.24.3-alpha',
         material_version                   : '1.5.0',
-        coil_version                       : '1.4.0',
+        coil_version                       : '2.0.0-rc01',
         mpa_chart_version                  : 'v3.0.3',
         flowlayout_version                 : '0.4.0',
         cardview_version                   : '1.0.0',
