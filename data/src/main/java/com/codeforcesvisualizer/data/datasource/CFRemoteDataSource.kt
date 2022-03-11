@@ -6,6 +6,7 @@ import com.codeforcesvisualizer.core.data.data.InvalidApiResponseError
 import com.codeforcesvisualizer.core.data.data.ServerConnectionResponseError
 import com.codeforcesvisualizer.data.model.ContestListResponseModel
 import com.codeforcesvisualizer.data.model.UserInfoResponseModel
+import com.codeforcesvisualizer.data.model.UserStatusResponseModel
 import com.codeforcesvisualizer.data.network.CFApiService
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +16,7 @@ import javax.inject.Inject
 interface CFRemoteDataSource {
     suspend fun getContestList(): Either<AppError, ContestListResponseModel>
     suspend fun getUserInfoByHandle(handle: String): Either<AppError, UserInfoResponseModel>
+    suspend fun getUserStatusByHandle(handle: String): Either<AppError, UserStatusResponseModel>
 }
 
 class CFRemoteDataSourceImpl @Inject constructor(
@@ -41,6 +43,23 @@ class CFRemoteDataSourceImpl @Inject constructor(
         return withContext(Dispatchers.IO) {
             try {
                 val response = api.getUserInfoByHandle(handle)
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    Either.Right(data = body)
+                } else {
+                    Either.Left(data = InvalidApiResponseError())
+                }
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                else Either.Left(data = ServerConnectionResponseError())
+            }
+        }
+    }
+
+    override suspend fun getUserStatusByHandle(handle: String): Either<AppError, UserStatusResponseModel> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = api.getUserStatusByHandle(handle)
                 val body = response.body()
                 if (response.isSuccessful && body != null) {
                     Either.Right(data = body)

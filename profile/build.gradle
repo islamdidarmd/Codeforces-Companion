@@ -46,6 +46,8 @@ dependencies {
     implementation deps.compose_material_icons_core
     implementation deps.compose_material_icons_extended
 
+    implementation deps.MPAndroidChart
+
     implementation deps.coil_compose
 
     implementation deps.viewmodel_compose

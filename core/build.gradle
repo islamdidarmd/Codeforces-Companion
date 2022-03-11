@@ -45,6 +45,8 @@ dependencies {
     implementation deps.compose_material
     implementation deps.coil_compose
 
+    implementation deps.MPAndroidChart
+
     implementation deps.compose_runtime_livedata
 
     implementation deps.activity_compose

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -61,8 +62,11 @@ private fun UserInfoCard(
     user: User
 ) {
     Column(modifier = modifier.padding(12.dp)) {
-        Text(text = stringResource(R.string.profile), style = MaterialTheme.typography.h6)
-        HeightSpacer(height = 4.dp)
+        Text(
+            text = stringResource(R.string.profile),
+            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
+        )
+        HeightSpacer(height = 8.dp)
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
@@ -71,7 +75,7 @@ private fun UserInfoCard(
                     .clip(CircleShape),
                 model = user.avatar,
                 contentDescription = user.firstName,
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
             )
             WidthSpacer(width = 8.dp)
             Column {

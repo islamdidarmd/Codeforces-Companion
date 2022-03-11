@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.domain.usecase.GetUserInfoByHandleUseCase
+import com.codeforcesvisualizer.domain.usecase.GetUserStatusByHandleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,13 +13,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileSearchViewModel @Inject constructor(
-    private val getUserInfoByHandleUseCase: GetUserInfoByHandleUseCase
+    private val getUserInfoByHandleUseCase: GetUserInfoByHandleUseCase,
+    private val getUserStatusByHandleUseCase: GetUserStatusByHandleUseCase
 ) : ViewModel() {
     private val _searchTextState = MutableStateFlow("")
     val searchTextState: StateFlow<String> = _searchTextState
 
     private val _userInfoState = MutableStateFlow(UserInfoUiState())
     val userInfoState: StateFlow<UserInfoUiState> = _userInfoState
+
+    private val _userStatusState = MutableStateFlow(UserStatusUiState())
+    val userStatusState: StateFlow<UserStatusUiState> = _userStatusState
 
     fun onSearchTextChanged(text: String) {
         _searchTextState.value = text
@@ -41,6 +46,29 @@ class ProfileSearchViewModel @Inject constructor(
                         loading = false,
                         userMessage = "",
                         user = data.data
+                    )
+                }
+            }
+        }
+    }
+
+    fun getUserStatusByHandle(handle: String) {
+        _userStatusState.value = _userStatusState.value.copy(loading = true)
+        viewModelScope.launch {
+            when (val data = getUserStatusByHandleUseCase(handle)) {
+                is Either.Left -> {
+                    _userStatusState.value = _userStatusState.value.copy(
+                        loading = false,
+                        userMessage = data.data.message,
+                        userStatus = null
+                    )
+                }
+
+                is Either.Right -> {
+                    _userStatusState.value = _userStatusState.value.copy(
+                        loading = false,
+                        userMessage = "",
+                        userStatus = data.data
                     )
                 }
             }

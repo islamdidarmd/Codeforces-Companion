@@ -19,6 +19,7 @@ fun ProfileSearchScreen(
 ) {
     val searchTextState by viewModel.searchTextState.collectAsState()
     val userInfoUiState by viewModel.userInfoState.collectAsState()
+    val userStatusUiState by viewModel.userStatusState.collectAsState()
 
     Scaffold(
         modifier = modifier,
@@ -31,13 +32,15 @@ fun ProfileSearchScreen(
                 },
                 onSearch = {
                     viewModel.getUserInfoByHandle(searchTextState)
+                    viewModel.getUserStatusByHandle(searchTextState)
                 }
             )
         }
     ) { innerPadding ->
         ProfileSearchScreen(
             modifier = Modifier.padding(innerPadding),
-            userInfoUiState = userInfoUiState
+            userInfoUiState = userInfoUiState,
+            userStatusUiState = userStatusUiState
         )
     }
 }
@@ -64,7 +67,8 @@ private fun ProfileSearchBar(
 @Composable
 private fun ProfileSearchScreen(
     modifier: Modifier = Modifier,
-    userInfoUiState: UserInfoUiState
+    userInfoUiState: UserInfoUiState,
+    userStatusUiState: UserStatusUiState
 ) {
     LazyColumn(modifier = modifier) {
         if (userInfoUiState.loading
@@ -72,6 +76,12 @@ private fun ProfileSearchScreen(
             || userInfoUiState.user != null
         ) item {
             UserInfoCard(userInfoUiState = userInfoUiState)
+        }
+        if (userStatusUiState.loading
+            || userStatusUiState.userMessage.isNotBlank()
+            || userStatusUiState.userStatus != null
+        ) item {
+            UserStatusCard(userStatusUiState = userStatusUiState)
         }
     }
 }

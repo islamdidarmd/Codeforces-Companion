@@ -7,6 +7,7 @@ import com.codeforcesvisualizer.core.data.data.MatchingDataNotFoundError
 import com.codeforcesvisualizer.data.datasource.CFRemoteDataSource
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.codeforcesvisualizer.domain.entity.User
+import com.codeforcesvisualizer.domain.entity.UserStatus
 import com.codeforcesvisualizer.domain.repository.CFRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -33,6 +34,12 @@ class CFRepositoryImpl @Inject constructor(
     override suspend fun getUserInfoByHandle(handle: String): Either<AppError, User> {
         val data = cfRemoteDataSource.getUserInfoByHandle(handle.trim())
         return if (data is Either.Right) Either.Right(data = data.data.toEntity().first())
+        else Either.Left(data = (data as Either.Left).data)
+    }
+
+    override suspend fun getUserStatusByHandle(handle: String): Either<AppError, List<UserStatus>> {
+        val data = cfRemoteDataSource.getUserStatusByHandle(handle.trim())
+        return if (data is Either.Right) Either.Right(data = data.data.toEntity())
         else Either.Left(data = (data as Either.Left).data)
     }
 
