@@ -24,7 +24,7 @@ import java.util.ArrayList
 fun CFPieChart(
     modifier: Modifier = Modifier
         .fillMaxWidth()
-        .height(250.dp),
+        .height(320.dp),
     entries: List<PieEntry>,
     itemCount: Int,
     minSizePercentToDrawLabel: Int
@@ -37,7 +37,7 @@ fun CFPieChart(
                     colors = getColorList()
                     valueTextSize = 14f
                     setValueFormatter { value, entry, _, _ ->
-                        return@setValueFormatter if (((value * itemCount) / 100) < minSizePercentToDrawLabel) {
+                        return@setValueFormatter if (((value / itemCount) * 100) < minSizePercentToDrawLabel) {
                             (entry as PieEntry).label = ""
                             ""
                         } else value.toInt().toString()
