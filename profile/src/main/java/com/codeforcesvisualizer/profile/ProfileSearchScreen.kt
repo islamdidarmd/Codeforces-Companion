@@ -80,8 +80,13 @@ private fun ProfileSearchScreen(
         if (userStatusUiState.loading
             || userStatusUiState.userMessage.isNotBlank()
             || userStatusUiState.userStatus != null
-        ) item {
-            UserStatusCard(userStatusUiState = userStatusUiState)
+        ){
+            item {
+                LanguageCard(userStatusUiState = userStatusUiState)
+            }
+            item {
+                VerdictCard(userStatusUiState = userStatusUiState)
+            }
         }
     }
 }
