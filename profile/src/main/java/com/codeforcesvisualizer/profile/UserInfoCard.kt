@@ -81,16 +81,16 @@ private fun UserInfoCard(
             Column {
                 Text(text = "${user.firstName} ${user.lastName}")
                 HeightSpacer(height = 8.dp)
-                if (!user.city.isNullOrBlank() || !user.country.isNullOrBlank()) {
+                if (user.city.isNotBlank() || user.country.isNotBlank()) {
                     Chip(
-                        label = "${user.city?.plus(",")} ${user.country}",
+                        label = "${user.city.plus(",")} ${user.country}",
                         icon = Icons.Default.Home
                     )
                 }
                 HeightSpacer(height = 2.dp)
-                if (!user.organization.isNullOrBlank()) {
+                if (user.organization.isNotBlank()) {
                     Chip(
-                        label = "${user.organization}",
+                        label = user.organization,
                         icon = Icons.Default.Work
                     )
                 }

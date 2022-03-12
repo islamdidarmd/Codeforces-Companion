@@ -8,6 +8,7 @@ import com.codeforcesvisualizer.data.model.ContestListResponseModel
 import com.codeforcesvisualizer.data.model.UserInfoResponseModel
 import com.codeforcesvisualizer.data.model.UserStatusResponseModel
 import com.codeforcesvisualizer.data.network.CFApiService
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -30,7 +31,14 @@ class CFRemoteDataSourceImpl @Inject constructor(
                 if (response.isSuccessful && body != null) {
                     Either.Right(data = body)
                 } else {
-                    Either.Left(data = InvalidApiResponseError())
+                    if(response.errorBody() == null){
+                        return@withContext Either.Left(data = InvalidApiResponseError())
+                    }
+
+                    val moshi = Moshi.Builder().build()
+                    val adapter = moshi.adapter(ContestListResponseModel::class.java)
+                    val errorBody = adapter.fromJson(response.errorBody()!!.source())
+                    Either.Left(data = AppError(message = errorBody?.comment ?: ""))
                 }
             } catch (e: Exception) {
                 if (e is CancellationException) throw e
@@ -47,7 +55,14 @@ class CFRemoteDataSourceImpl @Inject constructor(
                 if (response.isSuccessful && body != null) {
                     Either.Right(data = body)
                 } else {
-                    Either.Left(data = InvalidApiResponseError())
+                    if(response.errorBody() == null){
+                        return@withContext Either.Left(data = InvalidApiResponseError())
+                    }
+
+                    val moshi = Moshi.Builder().build()
+                    val adapter = moshi.adapter(UserInfoResponseModel::class.java)
+                    val errorBody = adapter.fromJson(response.errorBody()!!.source())
+                    Either.Left(data = AppError(message = errorBody?.comment ?: ""))
                 }
             } catch (e: Exception) {
                 if (e is CancellationException) throw e
@@ -64,7 +79,14 @@ class CFRemoteDataSourceImpl @Inject constructor(
                 if (response.isSuccessful && body != null) {
                     Either.Right(data = body)
                 } else {
-                    Either.Left(data = InvalidApiResponseError())
+                    if(response.errorBody() == null){
+                        return@withContext Either.Left(data = InvalidApiResponseError())
+                    }
+
+                    val moshi = Moshi.Builder().build()
+                    val adapter = moshi.adapter(UserStatusResponseModel::class.java)
+                    val errorBody = adapter.fromJson(response.errorBody()!!.source())
+                    Either.Left(data = AppError(message = errorBody?.comment ?: ""))
                 }
             } catch (e: Exception) {
                 if (e is CancellationException) throw e

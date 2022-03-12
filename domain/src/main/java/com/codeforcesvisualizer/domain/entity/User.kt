@@ -2,12 +2,12 @@ package com.codeforcesvisualizer.domain.entity
 
 data class User(
     val handle: String,
-    val email: String?,
-    val firstName: String?,
-    val lastName: String?,
-    val country: String?,
-    val city: String?,
-    val organization: String?,
+    val email: String,
+    val firstName: String,
+    val lastName: String,
+    val country: String,
+    val city: String,
+    val organization: String,
     val contribution: Int,
     val rank: String,
     val rating: Int,

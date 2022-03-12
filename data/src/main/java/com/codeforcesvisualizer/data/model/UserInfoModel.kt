@@ -29,16 +29,16 @@ data class UserInfoModel(
     val contribution: Int,
 
     @field:Json(name = "rank")
-    val rank: String,
+    val rank: String?,
 
     @field:Json(name = "rating")
-    val rating: Int,
+    val rating: Int?,
 
     @field:Json(name = "maxRank")
-    val maxRank: String,
+    val maxRank: String?,
 
     @field:Json(name = "maxRating")
-    val maxRating: Int,
+    val maxRating: Int?,
 
     @field:Json(name = "lastOnlineTimeSeconds")
     val lastOnlineTimeSeconds: Int,
@@ -58,17 +58,17 @@ data class UserInfoModel(
     fun toEntity(): User {
         return User(
             handle = handle,
-            email = email,
-            firstName = firstName,
-            lastName = lastName,
-            country = country,
-            city = city,
-            organization = organization,
+            email = email ?: "",
+            firstName = firstName ?: "",
+            lastName = lastName ?: "",
+            country = country ?: "",
+            city = city ?: "",
+            organization = organization ?: "",
             contribution = contribution,
-            rank = rank,
-            rating = rating,
-            maxRank = maxRank,
-            maxRating = maxRating,
+            rank = rank ?: "",
+            rating = rating ?: 0,
+            maxRank = maxRank ?: "",
+            maxRating = maxRating ?: 0,
             lastOnlineTimeSeconds = lastOnlineTimeSeconds,
             registrationTimeSeconds = registrationTimeSeconds,
             friendOfCount = friendOfCount,
