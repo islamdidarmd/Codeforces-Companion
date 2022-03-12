@@ -90,6 +90,12 @@ private fun ProfileSearchScreen(
             item {
                 LevelsCard(userStatusUiState = userStatusUiState)
             }
+            item {
+                TagsCard(userStatusUiState = userStatusUiState)
+            }
+            item {
+                UnsolvedCard(userStatusUiState = userStatusUiState)
+            }
         }
     }
 }

@@ -20,14 +20,16 @@ import androidx.compose.ui.unit.dp
 fun Chip(
     modifier: Modifier = Modifier,
     label: String,
-    icon: ImageVector? = null
+    icon: ImageVector? = null,
+    onClick: (() -> Unit)? = null
 ) {
     Row(
         modifier = modifier
             .defaultMinSize(minHeight = 24.dp)
             .clip(shape = CircleShape)
             .background(color = MaterialTheme.colors.primary.copy(alpha = 0.1f))
-            .padding(PaddingValues(horizontal = 16.dp, vertical = 4.dp)),
+            .padding(PaddingValues(horizontal = 16.dp, vertical = 4.dp))
+            .clickable(enabled = onClick != null) { onClick?.invoke() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (icon != null) {

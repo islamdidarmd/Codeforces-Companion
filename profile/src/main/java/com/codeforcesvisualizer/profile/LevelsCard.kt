@@ -58,23 +58,23 @@ private fun LevelsCard(
     modifier: Modifier = Modifier,
     userStatusList: List<UserStatus>
 ) {
+    val levelsMap = sortedMapOf<String, Int>()
+    userStatusList.forEach {
+        if (isSupportedIndex(it.problem.index) && minifyVerdicts(it.verdict) == "AC") {
+            levelsMap[it.problem.index] = (levelsMap[it.problem.index] ?: 0) + 1
+        }
+    }
+
+    var barIndex = 0f
+    val entries = levelsMap.map { level -> BarEntry(++barIndex, level.value.toFloat()) }
+    val levelList = levelsMap.keys.toList()
+
     Column(modifier = modifier.padding(12.dp)) {
         Text(
             text = stringResource(R.string.levels),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
-
-        val levelsMap = sortedMapOf<String, Int>()
-        userStatusList.forEach {
-            if (isSupportedIndex(it.problem.index) && minifyVerdicts(it.verdict) == "AC") {
-                levelsMap[it.problem.index] = (levelsMap[it.problem.index] ?: 0) + 1
-            }
-        }
-
-        var barIndex = 0f
-        val entries = levelsMap.map { level -> BarEntry(++barIndex, level.value.toFloat()) }
-        val levelList = levelsMap.keys.toList()
 
         CFBarChart(
             entries = entries,

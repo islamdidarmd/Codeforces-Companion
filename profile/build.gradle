@@ -48,6 +48,8 @@ dependencies {
 
     implementation deps.MPAndroidChart
 
+    implementation deps.compose_accompanist_flowlayout
+
     implementation deps.coil_compose
 
     implementation deps.viewmodel_compose

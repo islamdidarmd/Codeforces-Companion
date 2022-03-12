@@ -12,16 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.codeforcesvisualizer.core.data.components.CFPieChart
 import com.codeforcesvisualizer.core.data.components.Center
+import com.codeforcesvisualizer.core.data.components.Chip
 import com.codeforcesvisualizer.core.data.components.HeightSpacer
 import com.codeforcesvisualizer.domain.entity.UserStatus
-import com.github.mikephil.charting.data.PieEntry
+import com.google.accompanist.flowlayout.FlowColumn
+import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
-fun LanguageCard(
+fun TagsCard(
     modifier: Modifier = Modifier,
     userStatusUiState: UserStatusUiState
 ) {
@@ -47,43 +47,31 @@ fun LanguageCard(
             }
 
             userStatusUiState.userStatus != null ->
-                LanguageCard(userStatusList = userStatusUiState.userStatus)
+                TagsCard(userStatusList = userStatusUiState.userStatus)
         }
     }
 }
 
 @Composable
-private fun LanguageCard(
+private fun TagsCard(
     modifier: Modifier = Modifier,
     userStatusList: List<UserStatus>
 ) {
-    val languageCounterMap = mutableMapOf<String, Int>()
-    userStatusList.forEach {
-        languageCounterMap[it.programmingLanguage] =
-            (languageCounterMap[it.programmingLanguage] ?: 0) + 1
-    }
-    val entries = languageCounterMap.map { PieEntry(it.value.toFloat(), it.key) }
+    val tags = sortedSetOf<String>()
+    userStatusList.forEach { status -> tags.addAll(status.problem.tags) }
 
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = stringResource(R.string.language),
+            text = stringResource(R.string.tags),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
-        CFPieChart(
-            entries = entries,
-            itemCount = userStatusList.size,
-            minSizePercentToDrawLabel = 10
-        )
-    }
-}
 
-@Preview
-@Composable
-private fun Preview() {
-    LanguageCard(
-        userStatusUiState = UserStatusUiState(
-            userStatus = listOf()
-        )
-    )
+        FlowRow(
+            mainAxisSpacing = 4.dp,
+            crossAxisSpacing = 4.dp
+        ) {
+            tags.forEach { tag -> Chip(label = tag) }
+        }
+    }
 }

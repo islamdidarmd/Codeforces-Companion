@@ -75,7 +75,7 @@ private fun UserInfoCard(
                     .clip(CircleShape),
                 model = user.avatar,
                 contentDescription = user.firstName,
-                contentScale = ContentScale.Fit,
+                contentScale = ContentScale.Crop,
             )
             WidthSpacer(width = 8.dp)
             Column {
