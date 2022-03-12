@@ -87,6 +87,9 @@ private fun ProfileSearchScreen(
             item {
                 VerdictCard(userStatusUiState = userStatusUiState)
             }
+            item {
+                LevelsCard(userStatusUiState = userStatusUiState)
+            }
         }
     }
 }

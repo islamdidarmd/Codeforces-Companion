@@ -22,15 +22,15 @@ import java.util.ArrayList
 @SuppressLint("ModifierParameter")
 @Composable
 fun CFPieChart(
-    modifier: Modifier = Modifier
-        .fillMaxWidth()
-        .height(320.dp),
+    modifier: Modifier = Modifier,
     entries: List<PieEntry>,
     itemCount: Int,
     minSizePercentToDrawLabel: Int
 ) {
     AndroidView(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(320.dp),
         factory = { context ->
             return@AndroidView PieChart(context).apply {
                 val dataset = PieDataSet(entries, "").apply {

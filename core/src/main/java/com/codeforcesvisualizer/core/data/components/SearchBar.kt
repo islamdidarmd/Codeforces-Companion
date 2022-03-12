@@ -20,12 +20,14 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
@@ -37,6 +39,7 @@ fun SearchBar(
     onNavigateBack: () -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     CFAppBar(
         modifier = modifier.fillMaxWidth(),
@@ -47,8 +50,12 @@ fun SearchBar(
                 searchText = searchText,
                 placeholderText = placeholderText,
                 focusRequester = focusRequester,
+                keyboardController = keyboardController,
                 onSearchTextChanged = onSearchTextChanged,
-                onSearch = onSearch,
+                onSearch = {
+                    keyboardController?.hide()
+                    onSearch?.invoke()
+                },
                 onClearText = onClearText,
             )
         }
@@ -66,13 +73,12 @@ internal fun SearchBarInputField(
     searchText: String = "",
     placeholderText: String = "",
     focusRequester: FocusRequester,
+    keyboardController: SoftwareKeyboardController?,
     onSearchTextChanged: (String) -> Unit,
     onSearch: (() -> Unit)? = null,
     onClearText: () -> Unit,
 ) {
     var showClearButton by remember { mutableStateOf(false) }
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     var textFieldValue by remember {
         mutableStateOf(TextFieldValue(searchText, selection = TextRange(searchText.length)))
     }

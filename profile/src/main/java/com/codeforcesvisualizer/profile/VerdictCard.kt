@@ -61,11 +61,11 @@ private fun VerdictCard(
         )
         HeightSpacer(height = 8.dp)
 
-        val verdictCounterNap = mutableMapOf<String, Int>()
+        val verdictCounterMap = mutableMapOf<String, Int>()
         userStatusList.forEach {
-            verdictCounterNap[it.verdict] = (verdictCounterNap[it.verdict] ?: 0) + 1
+            verdictCounterMap[it.verdict] = (verdictCounterMap[it.verdict] ?: 0) + 1
         }
-        val entries = verdictCounterNap.map { PieEntry(it.value.toFloat(), minifyVerdicts(it.key)) }
+        val entries = verdictCounterMap.map { PieEntry(it.value.toFloat(), minifyVerdicts(it.key)) }
 
         CFPieChart(
             entries = entries,

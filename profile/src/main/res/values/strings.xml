@@ -2,4 +2,5 @@
 <resources>
     <string name="enter_handle_hint">Enter Handle</string>
     <string name="profile">Profile</string>
+    <string name="levels">Levels</string>
 </resources>
