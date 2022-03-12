@@ -27,7 +27,7 @@ ext.versions = [
         compose_navigation                 : '2.4.1',
         compose_accompanist                : '0.24.3-alpha',
         material_version                   : '1.5.0',
-        coil_version                       : '1.4.0',
+        coil_version                       : '2.0.0-rc01',
         mpa_chart_version                  : 'v3.0.3',
         flowlayout_version                 : '0.4.0',
         cardview_version                   : '1.0.0',
@@ -94,6 +94,7 @@ ext.deps = [
         compose_accompanist_flowlayout          : "com.google.accompanist:accompanist-flowlayout:$versions.compose_accompanist",
         compose_accompanist_placeholder_material: "com.google.accompanist:accompanist-placeholder-material:$versions.compose_accompanist",
         compose_accompanist_webview             : "com.google.accompanist:accompanist-webview:$versions.compose_accompanist",
+        compose_accompanist_swiperefresh        : "com.google.accompanist:accompanist-swiperefresh:$versions.compose_accompanist",
 
         activity_compose                        : "androidx.activity:activity-compose:$versions.compose_version",
         viewmodel_compose                       : "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose_viewmodel_version",

@@ -56,6 +56,7 @@ dependencies {
     implementation project(":data")
     implementation project(":contest")
     implementation project(":webview")
+    implementation project(":profile")
 
     implementation deps.compose_ui
     implementation deps.compose_material

@@ -16,5 +16,6 @@ fun AppNavigator(
         modifier = modifier
     ) {
         addHomeTopLevel(navController)
+        addProfileTopLevel(navController)
     }
 }

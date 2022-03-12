@@ -8,4 +8,5 @@
     <string name="before_start">Before Start</string>
     <string name="register">Register Now</string>
     <string name="contest_ended">Contest Ended</string>
+    <string name="refresh">Refresh</string>
 </resources>

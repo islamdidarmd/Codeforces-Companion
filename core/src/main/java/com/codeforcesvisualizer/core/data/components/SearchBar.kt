@@ -4,16 +4,14 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -22,33 +20,42 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
     searchText: String = "",
     placeholderText: String = "",
     onSearchTextChanged: (String) -> Unit,
+    onSearch: (() -> Unit)? = null,
     onClearText: () -> Unit,
     onNavigateBack: () -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     CFAppBar(
         modifier = modifier.fillMaxWidth(),
-        title =  "",
+        title = "",
         onNavigateBack = onNavigateBack,
         actions = {
             SearchBarInputField(
                 searchText = searchText,
                 placeholderText = placeholderText,
                 focusRequester = focusRequester,
+                keyboardController = keyboardController,
                 onSearchTextChanged = onSearchTextChanged,
+                onSearch = {
+                    keyboardController?.hide()
+                    onSearch?.invoke()
+                },
                 onClearText = onClearText,
             )
         }
@@ -66,11 +73,15 @@ internal fun SearchBarInputField(
     searchText: String = "",
     placeholderText: String = "",
     focusRequester: FocusRequester,
+    keyboardController: SoftwareKeyboardController?,
     onSearchTextChanged: (String) -> Unit,
+    onSearch: (() -> Unit)? = null,
     onClearText: () -> Unit,
 ) {
     var showClearButton by remember { mutableStateOf(false) }
-    val keyboardController = LocalSoftwareKeyboardController.current
+    var textFieldValue by remember {
+        mutableStateOf(TextFieldValue(searchText, selection = TextRange(searchText.length)))
+    }
 
     TextField(
         modifier = modifier
@@ -78,11 +89,11 @@ internal fun SearchBarInputField(
             .padding(vertical = 2.dp)
             .onFocusChanged { showClearButton = it.isFocused }
             .focusRequester(focusRequester),
-        value = TextFieldValue(
-            text = searchText,
-            selection = TextRange(searchText.length)
-        ),
-        onValueChange = { value -> onSearchTextChanged(value.text) },
+        value = textFieldValue,
+        onValueChange = { value ->
+            textFieldValue = value
+            onSearchTextChanged(value.text)
+        },
         placeholder = { Text(text = placeholderText) },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
@@ -100,14 +111,23 @@ internal fun SearchBarInputField(
         trailingIcon = {
             SearchBarTrailingIcon(
                 visible = showClearButton,
-                onClick = onClearText
+                onClearText = {
+                    textFieldValue = TextFieldValue("")
+                    onClearText()
+                },
+                onSearch = onSearch
             )
         },
         singleLine = true,
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = {
-            keyboardController?.hide()
-        }
+        keyboardOptions = KeyboardOptions.Default.copy(imeAction = if (onSearch != null) ImeAction.Search else ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onSearch = {
+                keyboardController?.hide()
+                onSearch?.invoke()
+            },
+            onDone = {
+                keyboardController?.hide()
+            }
         )
     )
 }
@@ -118,7 +138,8 @@ internal fun SearchBarInputField(
 private fun SearchBarTrailingIcon(
     modifier: Modifier = Modifier,
     visible: Boolean,
-    onClick: () -> Unit
+    onClearText: () -> Unit,
+    onSearch: (() -> Unit)? = null,
 ) {
     AnimatedVisibility(
         modifier = modifier,
@@ -126,11 +147,21 @@ private fun SearchBarTrailingIcon(
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-        IconButton(onClick = onClick) {
-            Icon(
-                imageVector = Icons.Filled.Close,
-                contentDescription = "Clear"
-            )
+        Row {
+            IconButton(onClick = onClearText) {
+                Icon(
+                    imageVector = Icons.Filled.Close,
+                    contentDescription = "Clear"
+                )
+            }
+            if (onSearch != null) {
+                IconButton(onClick = onSearch) {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Search"
+                    )
+                }
+            }
         }
     }
 }
