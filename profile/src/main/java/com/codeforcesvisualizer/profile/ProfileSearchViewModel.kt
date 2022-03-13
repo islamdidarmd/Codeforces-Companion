@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.domain.usecase.GetUserInfoByHandleUseCase
+import com.codeforcesvisualizer.domain.usecase.GetUserRatingsByHandleUseCase
 import com.codeforcesvisualizer.domain.usecase.GetUserStatusByHandleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileSearchViewModel @Inject constructor(
     private val getUserInfoByHandleUseCase: GetUserInfoByHandleUseCase,
-    private val getUserStatusByHandleUseCase: GetUserStatusByHandleUseCase
+    private val getUserStatusByHandleUseCase: GetUserStatusByHandleUseCase,
+    private val getUserRatingByHandleUseCase: GetUserRatingsByHandleUseCase
 ) : ViewModel() {
     private val _searchTextState = MutableStateFlow("")
     val searchTextState: StateFlow<String> = _searchTextState
@@ -24,6 +26,9 @@ class ProfileSearchViewModel @Inject constructor(
 
     private val _userStatusState = MutableStateFlow(UserStatusUiState())
     val userStatusState: StateFlow<UserStatusUiState> = _userStatusState
+
+    private val _userRatingState = MutableStateFlow(UserRatingUiState())
+    val userRatingState: StateFlow<UserRatingUiState> = _userRatingState
 
     fun onSearchTextChanged(text: String) {
         _searchTextState.value = text
@@ -69,6 +74,29 @@ class ProfileSearchViewModel @Inject constructor(
                         loading = false,
                         userMessage = "",
                         userStatus = data.data
+                    )
+                }
+            }
+        }
+    }
+
+    fun getUserRatingByHandle(handle: String) {
+        _userRatingState.value = _userRatingState.value.copy(loading = true)
+        viewModelScope.launch {
+            when (val data = getUserRatingByHandleUseCase(handle)) {
+                is Either.Left -> {
+                    _userRatingState.value = _userRatingState.value.copy(
+                        loading = false,
+                        userMessage = data.data.message,
+                        userRatings = null
+                    )
+                }
+
+                is Either.Right -> {
+                    _userRatingState.value = _userRatingState.value.copy(
+                        loading = false,
+                        userMessage = "",
+                        userRatings = data.data
                     )
                 }
             }

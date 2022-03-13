@@ -1,6 +1,6 @@
 package com.codeforcesvisualizer.domain.entity
 
-data class UserExtra(
+data class UserRating(
     val contestId: Int,
     val rank: Int,
     val oldRating: Int,

@@ -20,6 +20,7 @@ fun ProfileSearchScreen(
     val searchTextState by viewModel.searchTextState.collectAsState()
     val userInfoUiState by viewModel.userInfoState.collectAsState()
     val userStatusUiState by viewModel.userStatusState.collectAsState()
+    val userRatingsUiState by viewModel.userRatingState.collectAsState()
 
     Scaffold(
         modifier = modifier,
@@ -33,6 +34,7 @@ fun ProfileSearchScreen(
                 onSearch = {
                     viewModel.getUserInfoByHandle(searchTextState)
                     viewModel.getUserStatusByHandle(searchTextState)
+                    viewModel.getUserRatingByHandle(searchTextState)
                 }
             )
         }
@@ -40,7 +42,8 @@ fun ProfileSearchScreen(
         ProfileSearchScreen(
             modifier = Modifier.padding(innerPadding),
             userInfoUiState = userInfoUiState,
-            userStatusUiState = userStatusUiState
+            userStatusUiState = userStatusUiState,
+            userRatingsUiState = userRatingsUiState
         )
     }
 }
@@ -68,7 +71,8 @@ private fun ProfileSearchBar(
 private fun ProfileSearchScreen(
     modifier: Modifier = Modifier,
     userInfoUiState: UserInfoUiState,
-    userStatusUiState: UserStatusUiState
+    userStatusUiState: UserStatusUiState,
+    userRatingsUiState: UserRatingUiState
 ) {
     LazyColumn(modifier = modifier) {
         if (userInfoUiState.loading
@@ -80,7 +84,7 @@ private fun ProfileSearchScreen(
         if (userStatusUiState.loading
             || userStatusUiState.userMessage.isNotBlank()
             || userStatusUiState.userStatus != null
-        ){
+        ) {
             item {
                 LanguageCard(userStatusUiState = userStatusUiState)
             }
@@ -95,6 +99,9 @@ private fun ProfileSearchScreen(
             }
             item {
                 UnsolvedCard(userStatusUiState = userStatusUiState)
+            }
+            item {
+                RatingsCard(userRatingUiState = userRatingsUiState)
             }
         }
     }

@@ -6,6 +6,7 @@ import com.codeforcesvisualizer.core.data.data.InvalidApiResponseError
 import com.codeforcesvisualizer.core.data.data.ServerConnectionResponseError
 import com.codeforcesvisualizer.data.model.ContestListResponseModel
 import com.codeforcesvisualizer.data.model.UserInfoResponseModel
+import com.codeforcesvisualizer.data.model.UserRatingResponseModel
 import com.codeforcesvisualizer.data.model.UserStatusResponseModel
 import com.codeforcesvisualizer.data.network.CFApiService
 import com.squareup.moshi.Moshi
@@ -18,6 +19,7 @@ interface CFRemoteDataSource {
     suspend fun getContestList(): Either<AppError, ContestListResponseModel>
     suspend fun getUserInfoByHandle(handle: String): Either<AppError, UserInfoResponseModel>
     suspend fun getUserStatusByHandle(handle: String): Either<AppError, UserStatusResponseModel>
+    suspend fun getUserRatingByHandle(handle: String): Either<AppError, UserRatingResponseModel>
 }
 
 class CFRemoteDataSourceImpl @Inject constructor(
@@ -31,7 +33,7 @@ class CFRemoteDataSourceImpl @Inject constructor(
                 if (response.isSuccessful && body != null) {
                     Either.Right(data = body)
                 } else {
-                    if(response.errorBody() == null){
+                    if (response.errorBody() == null) {
                         return@withContext Either.Left(data = InvalidApiResponseError())
                     }
 
@@ -55,7 +57,7 @@ class CFRemoteDataSourceImpl @Inject constructor(
                 if (response.isSuccessful && body != null) {
                     Either.Right(data = body)
                 } else {
-                    if(response.errorBody() == null){
+                    if (response.errorBody() == null) {
                         return@withContext Either.Left(data = InvalidApiResponseError())
                     }
 
@@ -79,12 +81,36 @@ class CFRemoteDataSourceImpl @Inject constructor(
                 if (response.isSuccessful && body != null) {
                     Either.Right(data = body)
                 } else {
-                    if(response.errorBody() == null){
+                    if (response.errorBody() == null) {
                         return@withContext Either.Left(data = InvalidApiResponseError())
                     }
 
                     val moshi = Moshi.Builder().build()
                     val adapter = moshi.adapter(UserStatusResponseModel::class.java)
+                    val errorBody = adapter.fromJson(response.errorBody()!!.source())
+                    Either.Left(data = AppError(message = errorBody?.comment ?: ""))
+                }
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                else Either.Left(data = ServerConnectionResponseError())
+            }
+        }
+    }
+
+    override suspend fun getUserRatingByHandle(handle: String): Either<AppError, UserRatingResponseModel> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = api.getUserRatingByHandle(handle)
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    Either.Right(data = body)
+                } else {
+                    if (response.errorBody() == null) {
+                        return@withContext Either.Left(data = InvalidApiResponseError())
+                    }
+
+                    val moshi = Moshi.Builder().build()
+                    val adapter = moshi.adapter(UserRatingResponseModel::class.java)
                     val errorBody = adapter.fromJson(response.errorBody()!!.source())
                     Either.Left(data = AppError(message = errorBody?.comment ?: ""))
                 }
