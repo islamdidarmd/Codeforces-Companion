@@ -19,7 +19,7 @@ interface CFRemoteDataSource {
     suspend fun getContestList(): Either<AppError, ContestListResponseModel>
     suspend fun getUserInfoByHandle(handle: String): Either<AppError, UserInfoResponseModel>
     suspend fun getUserStatusByHandle(handle: String): Either<AppError, UserStatusResponseModel>
-    suspend fun getUserRatingByHandle(handle: String): Either<AppError, UserStatusResponseModel>
+    suspend fun getUserRatingByHandle(handle: String): Either<AppError, UserRatingResponseModel>
 }
 
 class CFRemoteDataSourceImpl @Inject constructor(
