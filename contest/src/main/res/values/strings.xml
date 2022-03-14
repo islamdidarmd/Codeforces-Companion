@@ -9,4 +9,5 @@
     <string name="register">Register Now</string>
     <string name="contest_ended">Contest Ended</string>
     <string name="refresh">Refresh</string>
+    <string name="add_to_calender">Add to Calender</string>
 </resources>
