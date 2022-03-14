@@ -23,7 +23,8 @@ import com.google.accompanist.flowlayout.FlowRow
 @Composable
 fun UnsolvedCard(
     modifier: Modifier = Modifier,
-    userStatusUiState: UserStatusUiState
+    userStatusUiState: UserStatusUiState,
+    onOpenWebSite: (String) -> Unit
 ) {
     Card(
         modifier = modifier
@@ -47,7 +48,10 @@ fun UnsolvedCard(
             }
 
             userStatusUiState.userStatus != null ->
-                UnsolvedCard(userStatusList = userStatusUiState.userStatus)
+                UnsolvedCard(
+                    userStatusList = userStatusUiState.userStatus,
+                    onOpenWebSite = onOpenWebSite
+                )
         }
     }
 }
@@ -55,7 +59,8 @@ fun UnsolvedCard(
 @Composable
 private fun UnsolvedCard(
     modifier: Modifier = Modifier,
-    userStatusList: List<UserStatus>
+    userStatusList: List<UserStatus>,
+    onOpenWebSite: (String) -> Unit
 ) {
     val unsolvedMap = hashMapOf<String, Boolean>()
 
@@ -83,7 +88,9 @@ private fun UnsolvedCard(
             crossAxisSpacing = 4.dp
         ) {
             unsolvedMap.forEach { entry ->
-                if (!entry.value) Chip(label = entry.key, onClick = {})
+                if (!entry.value) Chip(label = entry.key, onClick = {
+                    onOpenWebSite(entry.key)
+                })
             }
         }
     }

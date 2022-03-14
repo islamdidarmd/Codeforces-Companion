@@ -6,4 +6,9 @@
     <string name="language">Language</string>
     <string name="tags">Tags</string>
     <string name="unsolved">Unsolved</string>
+    <string name="ratings">Ratings</string>
+    <string name="best_rank">Best Rank</string>
+    <string name="worst_rank">Worst Rank</string>
+    <string name="max_up">Max Up</string>
+    <string name="max_down">Max Down</string>
 </resources>

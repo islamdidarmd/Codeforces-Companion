@@ -115,7 +115,7 @@ private fun UserInfoCard(
                 HeightSpacer(height = 2.dp)
                 Chip(
                     label = user.lastOnlineTimeSeconds.convertTimeStampToDateString(),
-                    icon = Icons.Default.OnlinePrediction
+                    icon = Icons.Default.RemoveRedEye
                 )
             }
         }
