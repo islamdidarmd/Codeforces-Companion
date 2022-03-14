@@ -12,14 +12,8 @@ internal sealed class Screen(val route: String, val icon: @Composable () -> Unit
     object Profile :
         Screen("profile", { Icon(Icons.Default.Face, contentDescription = "Profile") })
 
-    object Compare : Screen(
-        "compare",
-        {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_compare_arrows_24),
-                contentDescription = "Compare"
-            )
-        })
+    object Compare :
+        Screen("compare", { Icon(Icons.Default.CompareArrows, contentDescription = "Compare") })
 
     object More : Screen("more", { Icon(Icons.Default.Menu, contentDescription = "More") })
 }
@@ -45,6 +39,7 @@ internal sealed class LeafScreen(val route: String) {
         override fun createRoute(root: Screen): String {
             return "${root.route}/$route?link={link}"
         }
+
         fun createRoute(root: Screen, link: String): String {
             return "${root.route}/webview?link=$link"
         }

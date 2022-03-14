@@ -57,10 +57,14 @@ dependencies {
     implementation project(":contest")
     implementation project(":webview")
     implementation project(":profile")
+    implementation project(":compare")
 
     implementation deps.compose_ui
     implementation deps.compose_material
     implementation deps.coil_compose
+
+    implementation deps.compose_material_icons_core
+    implementation deps.compose_material_icons_extended
 
     implementation deps.activity_compose
     implementation deps.viewmodel_compose
