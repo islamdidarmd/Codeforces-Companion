@@ -3,9 +3,12 @@ package com.codeforcesvisualizer.profile
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.codeforcesvisualizer.core.data.components.Center
 import com.codeforcesvisualizer.core.data.components.HeightSpacer
@@ -62,24 +65,30 @@ private fun RatingsCard(
         maxDown = minOf(maxDown, it.newRating - it.oldRating)
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(12.dp)) {
+        Text(
+            text = stringResource(R.string.ratings),
+            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
+        )
+        HeightSpacer(height = 8.dp)
+
         Row {
-            Text(modifier = Modifier.weight(1f), text = "Best Rank")
+            Text(modifier = Modifier.weight(1f), text = stringResource(R.string.best_rank))
             Text(text = "$bestRank")
         }
         HeightSpacer(height = 4.dp)
         Row {
-            Text(modifier = Modifier.weight(1f), text = "Worst Rank")
+            Text(modifier = Modifier.weight(1f), text = stringResource(R.string.worst_rank))
             Text(text = "$worstRank")
         }
         HeightSpacer(height = 4.dp)
         Row {
-            Text(modifier = Modifier.weight(1f), text = "Max Up")
+            Text(modifier = Modifier.weight(1f), text = stringResource(R.string.max_up))
             Text(text = "$maxUp")
         }
         HeightSpacer(height = 4.dp)
         Row {
-            Text(modifier = Modifier.weight(1f), text = "Max Down")
+            Text(modifier = Modifier.weight(1f), text = stringResource(R.string.max_down))
             Text(text = "$maxDown")
         }
     }
