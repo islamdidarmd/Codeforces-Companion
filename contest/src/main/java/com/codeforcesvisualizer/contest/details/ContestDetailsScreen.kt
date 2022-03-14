@@ -1,16 +1,20 @@
 package com.codeforcesvisualizer.contest.details
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.contest.R
+import com.codeforcesvisualizer.contest.list.addCalenderEvent
 import com.codeforcesvisualizer.core.data.components.*
 import com.codeforcesvisualizer.core.data.utils.convertTimeStampToDateString
+import com.codeforcesvisualizer.core.data.utils.convertToDHMS
 import com.codeforcesvisualizer.core.data.utils.convertToHMS
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.google.accompanist.flowlayout.FlowRow
@@ -79,6 +83,8 @@ private fun ContestDetailsScreen(
     if (!contest.scheduled) {
         onOpenWebSite(contest.id)
     } else {
+        val context = LocalContext.current
+
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -87,7 +93,7 @@ private fun ContestDetailsScreen(
         ) {
             Text(text = stringResource(R.string.before_start))
 
-            Text(text = remainingTime.convertToHMS(), style = MaterialTheme.typography.h6)
+            Text(text = remainingTime.convertToDHMS(), style = MaterialTheme.typography.h6)
 
             HeightSpacer(height = 16.dp)
             FlowRow(
@@ -97,6 +103,13 @@ private fun ContestDetailsScreen(
                 Chip(label = contest.type)
                 Chip(label = contest.durationSeconds.convertToHMS())
                 Chip(label = contest.startTimeSeconds.convertTimeStampToDateString())
+            }
+
+            HeightSpacer(height = 16.dp)
+            Button(
+                shape = RoundedCornerShape(percent = 50),
+                onClick = { addCalenderEvent(context = context, contest = contest) }) {
+                Text(text = stringResource(R.string.add_to_calender))
             }
         }
     }
