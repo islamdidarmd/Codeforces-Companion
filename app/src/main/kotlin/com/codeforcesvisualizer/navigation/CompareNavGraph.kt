@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import com.codeforcesvisualizer.compare.CompareHandlesScreen
 import com.codeforcesvisualizer.compare.CompareScreen
 import com.codeforcesvisualizer.data.config.BASE_URL
 import com.codeforcesvisualizer.profile.ProfileSearchScreen
@@ -19,11 +20,11 @@ internal fun NavGraphBuilder.addCompareTopLevel(
         route = Screen.Compare.route,
         startDestination = LeafScreen.Compare.createRoute(Screen.Compare)
     ) {
-        addCompareTopLevel(navController, Screen.Compare)
+        addCompare(navController, Screen.Compare)
     }
 }
 
-private fun NavGraphBuilder.addCompareTopLevel(
+private fun NavGraphBuilder.addCompare(
     navController: NavController,
     root: Screen
 ) {
@@ -33,9 +34,32 @@ private fun NavGraphBuilder.addCompareTopLevel(
         CompareScreen(
             modifier = Modifier,
             onNavigateBack = { navController.navigateUp() },
-            onCompare = { handle1, handle2 ->
-
+            onCompare = { handleOne, handleTwo ->
+                navController.navigate(
+                    LeafScreen.Compare.createRoute(
+                        root,
+                        handleOne = handleOne,
+                        handleTwo = handleTwo
+                    )
+                )
             }
+        )
+    }
+    composable(
+        route = LeafScreen.Compare.createCompareRoute(root),
+        arguments = listOf(
+            navArgument("handles") {
+                defaultValue = ""
+                type = NavType.StringType
+            }
+        )
+    ) { backStackEntry ->
+        val (handleOne, handleTwo) = backStackEntry.arguments?.getString("handles")!!.split(",")
+        CompareHandlesScreen(
+            modifier = Modifier,
+            onNavigateBack = { navController.navigateUp() },
+            handleOne = handleOne,
+            handleTwo = handleTwo
         )
     }
 }
