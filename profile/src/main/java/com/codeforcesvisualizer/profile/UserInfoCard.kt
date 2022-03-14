@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -24,6 +25,7 @@ import com.codeforcesvisualizer.core.data.components.HeightSpacer
 import com.codeforcesvisualizer.core.data.components.WidthSpacer
 import com.codeforcesvisualizer.core.data.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.domain.entity.User
+import com.google.accompanist.flowlayout.FlowColumn
 
 @Composable
 fun UserInfoCard(
@@ -61,14 +63,20 @@ private fun UserInfoCard(
     modifier: Modifier = Modifier,
     user: User
 ) {
-    Column(modifier = modifier.padding(12.dp)) {
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .padding(12.dp)) {
         Text(
             text = stringResource(R.string.profile),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             AsyncImage(
                 modifier = Modifier
                     .size(110.dp)
@@ -122,7 +130,9 @@ private fun UserInfoCard(
     }
 }
 
-@Preview
+@Preview(
+    device = Devices.NEXUS_7
+)
 @Composable
 private fun Preview() {
     UserInfoCard(
