@@ -33,6 +33,9 @@ private fun NavGraphBuilder.addCompareTopLevel(
         CompareScreen(
             modifier = Modifier,
             onNavigateBack = { navController.navigateUp() },
+            onCompare = { handle1, handle2 ->
+
+            }
         )
     }
 }

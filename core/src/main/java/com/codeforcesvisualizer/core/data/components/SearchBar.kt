@@ -52,9 +52,10 @@ fun SearchBar(
                 focusRequester = focusRequester,
                 keyboardController = keyboardController,
                 onSearchTextChanged = onSearchTextChanged,
-                onSearch = {
-                    keyboardController?.hide()
-                    onSearch?.invoke()
+                onSearch = if (onSearch == null) null else {
+                    {
+                        onSearch.invoke()
+                    }
                 },
                 onClearText = onClearText,
             )
