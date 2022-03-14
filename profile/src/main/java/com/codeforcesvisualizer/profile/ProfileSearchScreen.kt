@@ -15,6 +15,7 @@ import com.codeforcesvisualizer.core.data.components.SearchBar
 fun ProfileSearchScreen(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
+    onOpenWebSite: (String) -> Unit,
     viewModel: ProfileSearchViewModel = hiltViewModel()
 ) {
     val searchTextState by viewModel.searchTextState.collectAsState()
@@ -43,7 +44,8 @@ fun ProfileSearchScreen(
             modifier = Modifier.padding(innerPadding),
             userInfoUiState = userInfoUiState,
             userStatusUiState = userStatusUiState,
-            userRatingsUiState = userRatingsUiState
+            userRatingsUiState = userRatingsUiState,
+            onOpenWebSite = onOpenWebSite
         )
     }
 }
@@ -72,7 +74,8 @@ private fun ProfileSearchScreen(
     modifier: Modifier = Modifier,
     userInfoUiState: UserInfoUiState,
     userStatusUiState: UserStatusUiState,
-    userRatingsUiState: UserRatingUiState
+    userRatingsUiState: UserRatingUiState,
+    onOpenWebSite: (String) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
         if (userInfoUiState.loading
@@ -98,7 +101,10 @@ private fun ProfileSearchScreen(
                 TagsCard(userStatusUiState = userStatusUiState)
             }
             item {
-                UnsolvedCard(userStatusUiState = userStatusUiState)
+                UnsolvedCard(
+                    userStatusUiState = userStatusUiState,
+                    onOpenWebSite = onOpenWebSite
+                )
             }
             item {
                 RatingsCard(userRatingUiState = userRatingsUiState)

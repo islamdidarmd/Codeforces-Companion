@@ -3,9 +3,13 @@ package com.codeforcesvisualizer.navigation
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import androidx.navigation.compose.navigation
+import androidx.navigation.navArgument
+import com.codeforcesvisualizer.data.config.BASE_URL
 import com.codeforcesvisualizer.profile.ProfileSearchScreen
+import com.codeforcesvisualizer.webview.CFWebViewScreen
 
 internal fun NavGraphBuilder.addProfileTopLevel(
     navController: NavController
@@ -15,6 +19,7 @@ internal fun NavGraphBuilder.addProfileTopLevel(
         startDestination = LeafScreen.Profile.createRoute(Screen.Profile)
     ) {
         addProfileSearchScreen(navController, Screen.Profile)
+        addWebView(navController, Screen.Profile)
     }
 }
 
@@ -27,7 +32,30 @@ private fun NavGraphBuilder.addProfileSearchScreen(
     ) {
         ProfileSearchScreen(
             modifier = Modifier,
-            onNavigateBack = { navController.navigateUp() }
+            onNavigateBack = { navController.navigateUp() },
+            onOpenWebSite = { problem ->
+                val (contestId, problemIndex) = problem.split("-")
+                val url = "$BASE_URL/contest/$contestId/problem/$problemIndex"
+                navController.navigate(LeafScreen.WebView.createRoute(root = root, link = url))
+            }
+        )
+    }
+}
+
+private fun NavGraphBuilder.addWebView(
+    navController: NavController,
+    root: Screen
+) {
+    composable(
+        route = LeafScreen.WebView.createRoute(root = root),
+        arguments = listOf(navArgument("link") {
+            defaultValue = ""
+            type = NavType.StringType
+        })
+    ) { backStackEntry ->
+        CFWebViewScreen(
+            onNavigateBack = { navController.navigateUp() },
+            link = backStackEntry.arguments?.getString("link")!!
         )
     }
 }
