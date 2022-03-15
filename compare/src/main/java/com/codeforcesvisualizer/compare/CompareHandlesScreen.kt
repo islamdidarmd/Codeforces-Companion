@@ -14,7 +14,12 @@ fun CompareHandlesScreen(
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = { CFAppBar(title = "$handleOne,$handleTwo") }) {
+        topBar = {
+            CFAppBar(
+                title = "$handleOne,$handleTwo",
+                onNavigateBack = onNavigateBack
+            )
+        }) {
 
     }
 }
