@@ -15,13 +15,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codeforcesvisualizer.core.data.components.CFBarChart
-import com.codeforcesvisualizer.core.data.components.CFPieChart
 import com.codeforcesvisualizer.core.data.components.Center
 import com.codeforcesvisualizer.core.data.components.HeightSpacer
+import com.codeforcesvisualizer.core.data.components.getBarChartColorList
 import com.codeforcesvisualizer.domain.entity.UserStatus
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 
 @Composable
 fun LevelsCard(
@@ -67,6 +67,13 @@ private fun LevelsCard(
 
     var barIndex = 0f
     val entries = levelsMap.map { level -> BarEntry(++barIndex, level.value.toFloat()) }
+    val dataset = BarDataSet(entries, "").apply {
+        colors = getBarChartColorList()
+    }
+    val data = BarData(dataset).apply {
+        barWidth = 0.5f
+        setValueFormatter { value, _, _, _ -> value.toInt().toString() }
+    }
     val levelList = levelsMap.keys.toList()
 
     Column(modifier = modifier.padding(12.dp)) {
@@ -77,7 +84,7 @@ private fun LevelsCard(
         HeightSpacer(height = 8.dp)
 
         CFBarChart(
-            entries = entries,
+            data = data,
             itemCount = userStatusList.size,
             xAxisValueFormatter = { value, _ -> levelList[(value-1).toInt()]}
         )
