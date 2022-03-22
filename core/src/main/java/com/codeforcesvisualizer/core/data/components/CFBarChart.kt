@@ -17,7 +17,13 @@ fun CFBarChart(
     modifier: Modifier = Modifier,
     data: BarData,
     itemCount: Int,
-    xAxisValueFormatter: IAxisValueFormatter
+    xAxisValueFormatter: IAxisValueFormatter,
+    legendEnabled: Boolean = false,
+    xAxisGranularityEnabled: Boolean = false,
+    groupBars: Boolean = false,
+    groupFromX: Float = 0f,
+    groupSpace: Float = 0f,
+    barSpace: Float = 0f,
 ) {
     AndroidView(
         modifier = modifier
@@ -31,11 +37,13 @@ fun CFBarChart(
                     setDrawGridLines(false)
                     position = XAxis.XAxisPosition.BOTTOM
                     granularity = 1f
+                    isGranularityEnabled = xAxisGranularityEnabled
                     isGranularityEnabled = true
+                    granularity
                 }
 
                 description.isEnabled = false
-                legend.isEnabled = false
+                legend.isEnabled = legendEnabled
                 axisRight.isEnabled = false
                 setFitBars(true)
                 setPinchZoom(true)
@@ -43,6 +51,10 @@ fun CFBarChart(
                 axisLeft.axisMinimum = 0f
 
                 setData(data)
+                if(groupBars){
+                    groupBars(groupFromX, groupSpace, barSpace)
+                }
+                invalidate()
                 animateXY(2000, 2000)
             }
         }

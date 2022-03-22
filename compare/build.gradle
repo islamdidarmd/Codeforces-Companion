@@ -54,6 +54,8 @@ dependencies {
     implementation deps.compose_tooling_preview
     debugImplementation deps.compose_ui_tooling_debug
 
+    implementation deps.MPAndroidChart
+
     //di
     implementation deps.hilt_android
     implementation deps.hilt_navigation_compose

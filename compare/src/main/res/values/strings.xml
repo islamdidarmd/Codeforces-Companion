@@ -4,4 +4,5 @@
     <string name="first_handle">First Handle</string>
     <string name="second_handle">Second Handle</string>
     <string name="hanldles_can_not_be_empty">Handles can not be empty</string>
+    <string name="ratings">Ratings</string>
 </resources>
