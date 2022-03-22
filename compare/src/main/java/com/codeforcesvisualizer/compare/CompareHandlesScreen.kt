@@ -53,5 +53,12 @@ fun CompareHandleScreen(
                 handle2 = handle2
             )
         }
+        item {
+            ContestsCard(
+                userRatingUiState = userRatingUiState,
+                handle1 = handle1,
+                handle2 = handle2
+            )
+        }
     }
 }
