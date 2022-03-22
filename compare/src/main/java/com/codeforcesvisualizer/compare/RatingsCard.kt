@@ -73,18 +73,6 @@ private fun RatingsCard(
     var maxRating1 = -1
     var maxRating2 = -1
 
-    var maxUp1 = -1
-    var maxUp2 = -1
-
-    var maxDown1 = Int.MAX_VALUE
-    var maxDown2 = Int.MAX_VALUE
-
-    var bestRank1 = Int.MAX_VALUE
-    var bestRank2 = Int.MAX_VALUE
-
-    var worstRank1 = -1
-    var worstRank2 = -1
-
     var minRating1 = Int.MAX_VALUE
     var minRating2 = Int.MAX_VALUE
 
@@ -94,23 +82,11 @@ private fun RatingsCard(
     userRatingList1.forEach {
         maxRating1 = maxOf(maxRating1, it.newRating)
         minRating1 = minOf(minRating1, it.newRating)
-
-        maxUp1 = maxOf(maxUp1, it.newRating)
-        maxDown1 = minOf(maxDown1, it.newRating - it.oldRating)
-
-        bestRank1 = minOf(bestRank1, it.rank)
-        worstRank1 = maxOf(worstRank1, it.rank)
     }
 
     userRatingList2.forEach {
         maxRating2 = maxOf(maxRating2, it.newRating)
         minRating2 = minOf(minRating2, it.newRating)
-
-        maxUp2 = maxOf(maxUp2, it.oldRating)
-        maxDown2 = minOf(maxDown2, it.newRating - it.oldRating)
-
-        bestRank2 = minOf(bestRank2, it.rank)
-        worstRank2 = maxOf(worstRank2, it.rank)
     }
 
     val ratingChartEntries1 = listOf(

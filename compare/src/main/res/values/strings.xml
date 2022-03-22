@@ -6,4 +6,10 @@
     <string name="hanldles_can_not_be_empty">Handles can not be empty</string>
     <string name="ratings">Ratings</string>
     <string name="contests">Contests</string>
+    <string name="max_up_and_down">Max Up and Down</string>
+    <string name="max_up">Max Up</string>
+    <string name="max_down">Max Down</string>
+    <string name="rank">Rank</string>
+    <string name="best_rank">Best Rank</string>
+    <string name="worst_rank">Worst Rank</string>
 </resources>

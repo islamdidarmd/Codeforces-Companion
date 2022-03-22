@@ -60,5 +60,19 @@ fun CompareHandleScreen(
                 handle2 = handle2
             )
         }
+        item {
+            UpsAndDownCard(
+                userRatingUiState = userRatingUiState,
+                handle1 = handle1,
+                handle2 = handle2
+            )
+        }
+        item {
+            RanksCard(
+                userRatingUiState = userRatingUiState,
+                handle1 = handle1,
+                handle2 = handle2
+            )
+        }
     }
 }
