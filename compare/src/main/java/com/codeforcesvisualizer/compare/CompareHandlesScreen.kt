@@ -19,7 +19,10 @@ fun CompareHandlesScreen(
     handlesViewModel: CompareHandlesViewModel = hiltViewModel()
 ) {
     val userRatingsUiState by handlesViewModel.userRatingState.collectAsState()
+    val userStatusUiState by handlesViewModel.userStatusState.collectAsState()
+
     handlesViewModel.getUserRatingByHandle(handle1 = handleOne, handle2 = handleTwo)
+    handlesViewModel.getUserStatusByHandle(handle1 = handleOne, handle2 = handleTwo)
 
     Scaffold(
         modifier = modifier,
@@ -32,6 +35,7 @@ fun CompareHandlesScreen(
         CompareHandleScreen(
             modifier = Modifier.padding(innerPadding),
             userRatingUiState = userRatingsUiState,
+            userStatusUiState = userStatusUiState,
             handle1 = handleOne,
             handle2 = handleTwo,
         )
@@ -42,6 +46,7 @@ fun CompareHandlesScreen(
 fun CompareHandleScreen(
     modifier: Modifier = Modifier,
     userRatingUiState: UserRatingUiState,
+    userStatusUiState: UserStatusUiState,
     handle1: String,
     handle2: String,
 ) {
@@ -70,6 +75,14 @@ fun CompareHandleScreen(
         item {
             RanksCard(
                 userRatingUiState = userRatingUiState,
+                handle1 = handle1,
+                handle2 = handle2
+            )
+        }
+
+        item {
+            TriedAndSolved(
+                userStatusUiState = userStatusUiState,
                 handle1 = handle1,
                 handle2 = handle2
             )
