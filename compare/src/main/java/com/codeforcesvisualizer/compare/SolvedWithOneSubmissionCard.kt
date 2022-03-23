@@ -23,7 +23,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 
 @Composable
-fun TriedAndSolvedCard(
+fun SolvedWithOneSubmissionCard(
     modifier: Modifier = Modifier,
     userStatusUiState: UserStatusUiState,
     handle1: String,
@@ -51,7 +51,7 @@ fun TriedAndSolvedCard(
             }
 
             userStatusUiState.userStatus1 != null && userStatusUiState.userStatus2 != null ->
-                TriedAndSolvedCard(
+                SolvedWithOneSubmissionCard(
                     userStatusList1 = userStatusUiState.userStatus1,
                     userStatusList2 = userStatusUiState.userStatus2,
                     handle1 = handle1,
@@ -62,75 +62,61 @@ fun TriedAndSolvedCard(
 }
 
 @Composable
-private fun TriedAndSolvedCard(
+private fun SolvedWithOneSubmissionCard(
     modifier: Modifier = Modifier,
     userStatusList1: List<UserStatus>,
     userStatusList2: List<UserStatus>,
     handle1: String,
     handle2: String,
 ) {
-    val user1ProblemStatus = mutableMapOf<String, Boolean>()
-    val user2ProblemStatus = mutableMapOf<String, Boolean>()
 
-    userStatusList1.forEach { status ->
-        val problemName = status.problem.name
-        if (status.verdict == "OK") user1ProblemStatus[problemName] = true
-        else user1ProblemStatus.putIfAbsent(problemName, false)
-    }
+    val user1Count = userStatusList1
+        .filter { status ->
+            status.verdict == "OK" &&
+                    userStatusList1.count { it.problem.name == status.problem.name } == 1
+        }.count()
 
-    userStatusList2.forEach { status ->
-        val problemName = status.problem.name
-        if (status.verdict == "OK") user2ProblemStatus[problemName] = true
-        else user2ProblemStatus.putIfAbsent(problemName, false)
-    }
+    val user2Count = userStatusList1
+        .filter { status ->
+            status.verdict == "OK" &&
+                    userStatusList2.count { it.problem.name == status.problem.name } == 1
+        }.count()
 
-    val statusChartEntries1 = listOf(
-        BarEntry(0f, user1ProblemStatus.count().toFloat()),
-        BarEntry(1f,  user1ProblemStatus.count { it.value }.toFloat()),
+    val submissionChartEntries = listOf(
+        BarEntry(0f, user1Count.toFloat()),
+        BarEntry(1f, user2Count.toFloat()),
     )
 
-    val statusChartEntries2 = listOf(
-        BarEntry(0f, user2ProblemStatus.count().toFloat()),
-        BarEntry(1f,  user2ProblemStatus.count { it.value }.toFloat()),
-    )
+    val statusDataSet = BarDataSet(submissionChartEntries, "")
 
-    val statusDataSet1 = BarDataSet(statusChartEntries1, handle1)
-    val statusDataSet2 = BarDataSet(statusChartEntries2, handle2)
+    statusDataSet.color = Color.GREEN
 
-    statusDataSet1.color = Color.GREEN
-    statusDataSet2.color = Color.BLUE
-
-    val ratingData = BarData(statusDataSet1, statusDataSet2)
+    val statusData = BarData(statusDataSet)
         .apply {
-            barWidth = 0.3f
+            barWidth = 0.5f
             setValueFormatter { value, _, _, _ ->
                 return@setValueFormatter value.toInt().toString()
             }
         }
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = stringResource(R.string.tried_and_solved),
+            text = stringResource(R.string.solved_with_onr_submission),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
         CFBarChart(
             modifier = modifier,
-            data = ratingData,
+            data = statusData,
             itemCount = 2,
             xAxisValueFormatter = { value, _ ->
                 if (value >= 0f && value < 1f) {
-                    return@CFBarChart "Tried"
+                    return@CFBarChart handle1
                 } else if (value >= 1f && value < 2f) {
-                    return@CFBarChart "Solved"
+                    return@CFBarChart handle2
                 } else {
                     return@CFBarChart ""
                 }
-            },
-            legendEnabled = true,
-            groupBars = true,
-            groupFromX = -0.5f,
-            groupSpace = 0.4f,
-            barSpace = 0.02f
+            }
         )
     }
 }

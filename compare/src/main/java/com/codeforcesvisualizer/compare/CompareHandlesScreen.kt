@@ -81,7 +81,15 @@ fun CompareHandleScreen(
         }
 
         item {
-            TriedAndSolved(
+            TriedAndSolvedCard(
+                userStatusUiState = userStatusUiState,
+                handle1 = handle1,
+                handle2 = handle2
+            )
+        }
+
+        item {
+            SolvedWithOneSubmissionCard(
                 userStatusUiState = userStatusUiState,
                 handle1 = handle1,
                 handle2 = handle2

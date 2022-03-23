@@ -12,4 +12,6 @@
     <string name="rank">Rank</string>
     <string name="best_rank">Best Rank</string>
     <string name="worst_rank">Worst Rank</string>
+    <string name="tried_and_solved">Tried and Solved</string>
+    <string name="solved_with_onr_submission">Solved with One Submission</string>
 </resources>

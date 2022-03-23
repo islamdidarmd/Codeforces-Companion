@@ -77,7 +77,7 @@ private fun RatingsCard(
     var minRating2 = Int.MAX_VALUE
 
     val currentRating1 = userRatingList1.last().newRating
-    val currentRating2 = userRatingList1.last().newRating
+    val currentRating2 = userRatingList2.last().newRating
 
     userRatingList1.forEach {
         maxRating1 = maxOf(maxRating1, it.newRating)
