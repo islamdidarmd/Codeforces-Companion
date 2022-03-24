@@ -18,5 +18,6 @@ fun AppNavigator(
         addHomeTopLevel(navController)
         addProfileTopLevel(navController)
         addCompareTopLevel(navController)
+        addMoreTopLevel(navController)
     }
 }

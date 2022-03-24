@@ -58,6 +58,7 @@ dependencies {
     implementation project(":webview")
     implementation project(":profile")
     implementation project(":compare")
+    implementation project(":preference")
 
     implementation deps.compose_ui
     implementation deps.compose_material

@@ -40,6 +40,9 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     }
 }
 dependencies {
+    implementation project(":core")
+    implementation project(":domain")
+
     //UI
     implementation deps.compose_ui
     implementation deps.compose_material
