@@ -53,6 +53,11 @@ dependencies {
     implementation deps.compose_tooling_preview
     debugImplementation deps.compose_ui_tooling_debug
 
+    //di
+    implementation deps.hilt_android
+    implementation deps.hilt_navigation_compose
+    kapt deps.hilt_compiler
+
     testImplementation deps.junit
     androidTestImplementation deps.android_junit
     androidTestImplementation deps.espresso_core
