@@ -31,10 +31,6 @@ fun OtherSection(
         Text(text = "Others", style = MaterialTheme.typography.subtitle1)
         HeightSpacer(height = 16.dp)
 
-        TextButton(onClick = { /*TODO*/ }) {
-            Text(text = "Give Feedback")
-        }
-
         TextButton(onClick = {
             try {
                 context.startActivity(
@@ -55,7 +51,7 @@ fun OtherSection(
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Current Version: 1.0.2",
+            text = "Current Version: 2.0.0",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.body2
         )
