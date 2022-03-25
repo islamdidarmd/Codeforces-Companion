@@ -6,6 +6,7 @@ import com.codeforcesvisualizer.core.data.data.Either
 import com.codeforcesvisualizer.domain.usecase.GetUserRatingsByHandleUseCase
 import com.codeforcesvisualizer.domain.usecase.GetUserStatusByHandleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -25,11 +26,15 @@ class CompareHandlesViewModel @Inject constructor(
     fun getUserRatingByHandle(handle1: String, handle2: String) {
         _userRatingState.value = _userRatingState.value.copy(loading = true)
         viewModelScope.launch {
-            when (val data = getUserRatingsByHandleUseCase(handle1)) {
+            val data1 = getUserRatingsByHandleUseCase(handle1)
+            delay(2 * 1000)
+            val data2 = getUserRatingsByHandleUseCase(handle2)
+
+            when (data1) {
                 is Either.Left -> {
                     _userRatingState.value = _userRatingState.value.copy(
                         loading = false,
-                        userMessage = data.data.message,
+                        userMessage = data1.data.message,
                         userRatings1 = null
                     )
                 }
@@ -38,15 +43,15 @@ class CompareHandlesViewModel @Inject constructor(
                     _userRatingState.value = _userRatingState.value.copy(
                         loading = false,
                         userMessage = "",
-                        userRatings1 = data.data
+                        userRatings1 = data1.data
                     )
                 }
             }
-            when (val data = getUserRatingsByHandleUseCase(handle2)) {
+            when (data2) {
                 is Either.Left -> {
                     _userRatingState.value = _userRatingState.value.copy(
                         loading = false,
-                        userMessage = data.data.message,
+                        userMessage = data2.data.message,
                         userRatings2 = null
                     )
                 }
@@ -55,7 +60,7 @@ class CompareHandlesViewModel @Inject constructor(
                     _userRatingState.value = _userRatingState.value.copy(
                         loading = false,
                         userMessage = "",
-                        userRatings2 = data.data
+                        userRatings2 = data2.data
                     )
                 }
             }
@@ -65,11 +70,15 @@ class CompareHandlesViewModel @Inject constructor(
     fun getUserStatusByHandle(handle1: String, handle2: String) {
         _userStatusState.value = _userStatusState.value.copy(loading = true)
         viewModelScope.launch {
-            when (val data = getUserStatusByHandleUseCase(handle1)) {
+            val data1 = getUserStatusByHandleUseCase(handle1)
+            delay(2 * 1000)
+            val data2 = getUserStatusByHandleUseCase(handle2)
+
+            when (data1) {
                 is Either.Left -> {
                     _userStatusState.value = _userStatusState.value.copy(
                         loading = false,
-                        userMessage = data.data.message,
+                        userMessage = data1.data.message,
                         userStatus1 = null
                     )
                 }
@@ -78,15 +87,15 @@ class CompareHandlesViewModel @Inject constructor(
                     _userStatusState.value = _userStatusState.value.copy(
                         loading = false,
                         userMessage = "",
-                        userStatus1 = data.data
+                        userStatus1 = data1.data
                     )
                 }
             }
-            when (val data = getUserStatusByHandleUseCase(handle2)) {
+            when (data2) {
                 is Either.Left -> {
                     _userStatusState.value = _userStatusState.value.copy(
                         loading = false,
-                        userMessage = data.data.message,
+                        userMessage = data2.data.message,
                         userStatus2 = null
                     )
                 }
@@ -95,7 +104,7 @@ class CompareHandlesViewModel @Inject constructor(
                     _userStatusState.value = _userStatusState.value.copy(
                         loading = false,
                         userMessage = "",
-                        userStatus2 = data.data
+                        userStatus2 = data2.data
                     )
                 }
             }
