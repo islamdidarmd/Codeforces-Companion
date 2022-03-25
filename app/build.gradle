@@ -58,55 +58,31 @@ dependencies {
     implementation project(":webview")
     implementation project(":profile")
     implementation project(":compare")
+    implementation project(":preference")
+
+    implementation deps.app_compat
 
     implementation deps.compose_ui
+    implementation deps.material
     implementation deps.compose_material
-    implementation deps.coil_compose
-
     implementation deps.compose_material_icons_core
     implementation deps.compose_material_icons_extended
 
-    implementation deps.activity_compose
-    implementation deps.viewmodel_compose
-
-    implementation deps.compose_runtime_livedata
     implementation deps.compose_navigation
 
     implementation deps.compose_tooling_preview
     debugImplementation deps.compose_ui_tooling_debug
 
-    implementation deps.core_ktx
-    implementation deps.app_compat
+    implementation deps.compose_accompanist_systemuicontroller
 
-    implementation deps.constraintlayout
-    implementation deps.material
-    implementation deps.gson
-
+    //network
+    implementation deps.okhttp
     implementation deps.retrofit
-    implementation deps.converter_gson
-    implementation deps.coroutines_adapter
 
-    implementation deps.coil
-
-    implementation deps.lifecycle_extensions
-
-    implementation deps.MPAndroidChart
-
-    implementation deps.flowlayout
-
-    implementation deps.cardview
-
-    implementation deps.crashlytics
-    implementation deps.analytics
+    implementation deps.intellij_annotations
 
     //di
     implementation deps.hilt_android
     implementation deps.hilt_navigation_compose
     kapt deps.hilt_compiler
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }

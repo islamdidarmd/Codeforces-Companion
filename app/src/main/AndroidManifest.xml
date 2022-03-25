@@ -17,29 +17,13 @@
         <activity
             android:name=".home.HomeActivity"
             android:exported="true"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".view.activity.SearchActivity"
-            android:configChanges="screenSize|screenLayout|orientation"
-            android:launchMode="singleTask" />
-
-        <activity
-            android:name=".view.activity.CompareActivity"
-            android:configChanges="screenSize|screenLayout|orientation"
-            android:launchMode="singleTask" />
-
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="310e29bfe175437b07d913e23477e61ef845dc33" />
     </application>
 
 </manifest>

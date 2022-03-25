@@ -95,6 +95,7 @@ private fun HandleInputField(
     onGo: (() -> Unit)? = null
 ) {
     OutlinedTextField(
+        modifier = modifier,
         label = { Text(label) },
         value = text,
         onValueChange = onTextChange,

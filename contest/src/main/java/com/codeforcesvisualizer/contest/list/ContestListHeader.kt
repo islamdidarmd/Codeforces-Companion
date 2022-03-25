@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
 import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,7 +23,7 @@ internal fun Header(modifier: Modifier = Modifier, text: String) {
         Text(
             text = text,
             modifier = Modifier.padding(8.dp),
-            color = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary,
+            color = MaterialTheme.colors.contentColorFor(MaterialTheme.colors.primarySurface),
             style = MaterialTheme.typography.body2
         )
     }

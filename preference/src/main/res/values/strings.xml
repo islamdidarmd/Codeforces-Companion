@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preferences">Preferences</string>
+    <string name="google_play_store_not_found">Google Play Store Not Found</string>
+</resources>

@@ -5,9 +5,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 
 @Composable
-fun CFTheme(content: @Composable () -> Unit) {
+fun CFTheme(
+    isDarkTheme: Boolean,
+    content: @Composable () -> Unit
+) {
+
     MaterialTheme(
-        colors = if (isSystemInDarkTheme()) CFDarkColors else CFLightColors,
+        colors = if (isDarkTheme) CFDarkColors else CFLightColors,
         typography = CFTypography,
         content = content
     )
