@@ -47,8 +47,6 @@ dependencies {
     implementation deps.hilt_navigation_compose
     kapt deps.hilt_compiler
 
-
-
     //testing
     testImplementation deps.core_testing
     testImplementation deps.junit

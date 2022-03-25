@@ -9,6 +9,7 @@ fun CFTheme(
     isDarkTheme: Boolean,
     content: @Composable () -> Unit
 ) {
+
     MaterialTheme(
         colors = if (isDarkTheme) CFDarkColors else CFLightColors,
         typography = CFTypography,

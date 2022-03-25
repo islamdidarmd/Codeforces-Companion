@@ -20,7 +20,7 @@ fun AppearanceSection(
     themeMode: UiThemeMode,
     onThemeModeChanged: (UiThemeMode) -> Unit
 ) {
-    Column(Modifier.padding(16.dp)) {
+    Column(modifier.padding(16.dp)) {
         Text(text = "Appearance", style = MaterialTheme.typography.subtitle1)
         HeightSpacer(height = 16.dp)
 

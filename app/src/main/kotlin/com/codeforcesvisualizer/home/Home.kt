@@ -6,8 +6,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -16,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.codeforcesvisualizer.navigation.AppNavigator
 import com.codeforcesvisualizer.navigation.Screen
 import com.codeforcesvisualizer.preference.ThemeManagerViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun Home(
@@ -30,6 +34,16 @@ fun Home(
             themeManagerViewModel = themeManagerViewModel
         )
         BottomNavigation(navController)
+    }
+
+    val systemUiController = rememberSystemUiController()
+    val useDarkColors = !MaterialTheme.colors.isLight
+    val color = if (useDarkColors) MaterialTheme.colors.surface else MaterialTheme.colors.primary
+
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = color,
+        )
     }
 }
 

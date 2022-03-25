@@ -27,7 +27,7 @@ fun OtherSection(
 
     val gpNotFoundText = stringResource(R.string.google_play_store_not_found)
 
-    Column(Modifier.padding(16.dp)) {
+    Column(modifier.padding(16.dp)) {
         Text(text = "Others", style = MaterialTheme.typography.subtitle1)
         HeightSpacer(height = 16.dp)
 
