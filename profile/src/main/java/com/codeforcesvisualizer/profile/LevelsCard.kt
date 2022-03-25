@@ -14,10 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.codeforcesvisualizer.core.data.components.CFBarChart
-import com.codeforcesvisualizer.core.data.components.Center
-import com.codeforcesvisualizer.core.data.components.HeightSpacer
-import com.codeforcesvisualizer.core.data.components.getBarChartColorList
+import com.codeforcesvisualizer.core.components.CFBarChart
+import com.codeforcesvisualizer.core.components.Center
+import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.getBarChartColorList
 import com.codeforcesvisualizer.domain.entity.UserStatus
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet

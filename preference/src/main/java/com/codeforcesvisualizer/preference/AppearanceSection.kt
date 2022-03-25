@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.codeforcesvisualizer.core.data.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.domain.entity.UiThemeMode
 
 @Composable

@@ -2,8 +2,8 @@ package com.codeforcesvisualizer.contest.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codeforcesvisualizer.core.data.data.AppError
-import com.codeforcesvisualizer.core.data.data.Either
+import com.codeforcesvisualizer.core.data.AppError
+import com.codeforcesvisualizer.core.data.Either
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.codeforcesvisualizer.domain.usecase.GetContestListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

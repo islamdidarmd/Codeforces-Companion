@@ -1,9 +1,9 @@
 package com.codeforcesvisualizer.data.repository
 
-import com.codeforcesvisualizer.core.data.data.AppError
-import com.codeforcesvisualizer.core.data.data.DataNotFoundError
-import com.codeforcesvisualizer.core.data.data.Either
-import com.codeforcesvisualizer.core.data.data.MatchingDataNotFoundError
+import com.codeforcesvisualizer.core.data.AppError
+import com.codeforcesvisualizer.core.data.DataNotFoundError
+import com.codeforcesvisualizer.core.data.Either
+import com.codeforcesvisualizer.core.data.MatchingDataNotFoundError
 import com.codeforcesvisualizer.data.datasource.CFRemoteDataSource
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.codeforcesvisualizer.domain.entity.User

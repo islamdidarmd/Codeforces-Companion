@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.core.data.theme
+package com.codeforcesvisualizer.core.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

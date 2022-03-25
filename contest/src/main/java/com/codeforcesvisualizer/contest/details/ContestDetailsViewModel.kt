@@ -3,7 +3,7 @@ package com.codeforcesvisualizer.contest.details
 import android.os.CountDownTimer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codeforcesvisualizer.core.data.data.Either
+import com.codeforcesvisualizer.core.data.Either
 import com.codeforcesvisualizer.domain.usecase.GetContestByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.core.data.data
+package com.codeforcesvisualizer.core.data
 
 sealed class Either<E, V> {
     class Left<E, V>(val data: E) : Either<E, V>()

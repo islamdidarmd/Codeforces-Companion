@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.codeforcesvisualizer.core.data.components.CFAppBar
+import com.codeforcesvisualizer.core.components.CFAppBar
 
 @Composable
 fun CompareHandlesScreen(

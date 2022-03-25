@@ -11,10 +11,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.contest.R
-import com.codeforcesvisualizer.contest.list.ContestViewModel
-import com.codeforcesvisualizer.core.data.components.CFLoadingIndicator
-import com.codeforcesvisualizer.core.data.components.Center
-import com.codeforcesvisualizer.core.data.components.SearchBar
+import com.codeforcesvisualizer.core.components.Center
+import com.codeforcesvisualizer.core.components.SearchBar
 
 @Composable
 fun ContestSearchScreen(

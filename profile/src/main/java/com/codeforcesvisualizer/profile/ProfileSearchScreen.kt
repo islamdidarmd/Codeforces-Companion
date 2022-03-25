@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.codeforcesvisualizer.core.data.components.SearchBar
+import com.codeforcesvisualizer.core.components.SearchBar
 
 @Composable
 fun ProfileSearchScreen(

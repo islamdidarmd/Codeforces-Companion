@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.core.data.data
+package com.codeforcesvisualizer.core.data
 
 sealed class Result<out T : Any> {
     object InProgress : Result<Nothing>()

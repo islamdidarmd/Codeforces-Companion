@@ -16,8 +16,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.codeforcesvisualizer.core.data.components.CFAppBar
-import com.codeforcesvisualizer.core.data.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.CFAppBar
+import com.codeforcesvisualizer.core.components.HeightSpacer
 import kotlinx.coroutines.launch
 
 @Composable

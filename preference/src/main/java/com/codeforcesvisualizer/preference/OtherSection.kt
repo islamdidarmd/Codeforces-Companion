@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.codeforcesvisualizer.core.data.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.HeightSpacer
 import kotlinx.coroutines.launch
 
 @Composable

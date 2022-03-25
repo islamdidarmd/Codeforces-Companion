@@ -10,10 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.codeforcesvisualizer.core.data.components.Center
-import com.codeforcesvisualizer.core.data.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.Center
+import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.domain.entity.UserRating
-import com.codeforcesvisualizer.domain.entity.UserStatus
 
 @Composable
 fun RatingsCard(

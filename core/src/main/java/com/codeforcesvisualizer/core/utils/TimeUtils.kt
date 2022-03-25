@@ -1,6 +1,6 @@
-package com.codeforcesvisualizer.core.data.utils
+package com.codeforcesvisualizer.core.utils
 
-import com.codeforcesvisualizer.core.data.DefaultAppDateFormat
+import com.codeforcesvisualizer.core.DefaultAppDateFormat
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*

@@ -11,7 +11,7 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import com.codeforcesvisualizer.core.data.components.CFAppBar
+import com.codeforcesvisualizer.core.components.CFAppBar
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
 

@@ -1,9 +1,9 @@
 package com.codeforcesvisualizer.data.datasource
 
-import com.codeforcesvisualizer.core.data.data.AppError
-import com.codeforcesvisualizer.core.data.data.Either
-import com.codeforcesvisualizer.core.data.data.InvalidApiResponseError
-import com.codeforcesvisualizer.core.data.data.ServerConnectionResponseError
+import com.codeforcesvisualizer.core.data.AppError
+import com.codeforcesvisualizer.core.data.Either
+import com.codeforcesvisualizer.core.data.InvalidApiResponseError
+import com.codeforcesvisualizer.core.data.ServerConnectionResponseError
 import com.codeforcesvisualizer.data.model.ContestListResponseModel
 import com.codeforcesvisualizer.data.model.UserInfoResponseModel
 import com.codeforcesvisualizer.data.model.UserRatingResponseModel

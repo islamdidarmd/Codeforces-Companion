@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.core.data.components
+package com.codeforcesvisualizer.core.components
 
 import android.annotation.SuppressLint
 import android.widget.Toast

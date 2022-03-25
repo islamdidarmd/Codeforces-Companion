@@ -1,7 +1,7 @@
 package com.codeforcesvisualizer.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.codeforcesvisualizer.core.data.data.Either
+import com.codeforcesvisualizer.core.data.Either
 
 import com.codeforcesvisualizer.data.config.BASE_URL
 import com.codeforcesvisualizer.data.datasource.CFRemoteDataSourceImpl

@@ -2,12 +2,11 @@ package com.codeforcesvisualizer.contest.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codeforcesvisualizer.core.data.data.AppError
-import com.codeforcesvisualizer.core.data.data.Either
+import com.codeforcesvisualizer.core.data.AppError
+import com.codeforcesvisualizer.core.data.Either
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.codeforcesvisualizer.domain.usecase.FilterContestListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

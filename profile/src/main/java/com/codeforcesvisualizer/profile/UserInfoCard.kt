@@ -19,13 +19,12 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.codeforcesvisualizer.core.data.components.Center
-import com.codeforcesvisualizer.core.data.components.Chip
-import com.codeforcesvisualizer.core.data.components.HeightSpacer
-import com.codeforcesvisualizer.core.data.components.WidthSpacer
-import com.codeforcesvisualizer.core.data.utils.convertTimeStampToDateString
+import com.codeforcesvisualizer.core.components.Center
+import com.codeforcesvisualizer.core.components.Chip
+import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.WidthSpacer
+import com.codeforcesvisualizer.core.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.domain.entity.User
-import com.google.accompanist.flowlayout.FlowColumn
 
 @Composable
 fun UserInfoCard(

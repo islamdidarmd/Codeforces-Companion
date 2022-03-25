@@ -1,6 +1,5 @@
-package com.codeforcesvisualizer.core.data.theme
+package com.codeforcesvisualizer.core.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 

@@ -14,10 +14,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.codeforcesvisualizer.contest.R
-import com.codeforcesvisualizer.core.data.components.Chip
-import com.codeforcesvisualizer.core.data.components.HeightSpacer
-import com.codeforcesvisualizer.core.data.utils.convertTimeStampToDateString
-import com.codeforcesvisualizer.core.data.utils.convertToHMS
+import com.codeforcesvisualizer.core.components.Chip
+import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.codeforcesvisualizer.core.utils.convertTimeStampToDateString
+import com.codeforcesvisualizer.core.utils.convertToHMS
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.google.accompanist.flowlayout.FlowRow
 

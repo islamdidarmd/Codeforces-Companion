@@ -1,7 +1,5 @@
 package com.codeforcesvisualizer.compare
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
@@ -13,10 +11,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.codeforcesvisualizer.core.data.components.Center
-import com.codeforcesvisualizer.core.data.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.Center
+import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.domain.entity.UserRating
-import com.codeforcesvisualizer.domain.entity.UserStatus
 
 @Composable
 fun UpsAndDownCard(

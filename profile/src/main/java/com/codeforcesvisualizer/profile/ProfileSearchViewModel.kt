@@ -2,7 +2,7 @@ package com.codeforcesvisualizer.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codeforcesvisualizer.core.data.data.Either
+import com.codeforcesvisualizer.core.data.Either
 import com.codeforcesvisualizer.domain.usecase.GetUserInfoByHandleUseCase
 import com.codeforcesvisualizer.domain.usecase.GetUserRatingsByHandleUseCase
 import com.codeforcesvisualizer.domain.usecase.GetUserStatusByHandleUseCase

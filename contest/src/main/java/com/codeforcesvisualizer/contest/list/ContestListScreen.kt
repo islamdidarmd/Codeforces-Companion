@@ -1,8 +1,6 @@
 package com.codeforcesvisualizer.contest.list
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -13,9 +11,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.contest.R
-import com.codeforcesvisualizer.core.data.components.CFAppBar
-import com.codeforcesvisualizer.core.data.components.CFLoadingIndicator
-import com.codeforcesvisualizer.core.data.components.Center
+import com.codeforcesvisualizer.core.components.CFAppBar
+import com.codeforcesvisualizer.core.components.CFLoadingIndicator
+import com.codeforcesvisualizer.core.components.Center
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 

@@ -12,10 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.contest.R
 import com.codeforcesvisualizer.contest.list.addCalenderEvent
-import com.codeforcesvisualizer.core.data.components.*
-import com.codeforcesvisualizer.core.data.utils.convertTimeStampToDateString
-import com.codeforcesvisualizer.core.data.utils.convertToDHMS
-import com.codeforcesvisualizer.core.data.utils.convertToHMS
+import com.codeforcesvisualizer.core.components.*
+import com.codeforcesvisualizer.core.utils.convertTimeStampToDateString
+import com.codeforcesvisualizer.core.utils.convertToDHMS
+import com.codeforcesvisualizer.core.utils.convertToHMS
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.google.accompanist.flowlayout.FlowRow
 

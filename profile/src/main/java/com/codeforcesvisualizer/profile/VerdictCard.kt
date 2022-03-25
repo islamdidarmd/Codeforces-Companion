@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.codeforcesvisualizer.core.data.components.CFPieChart
-import com.codeforcesvisualizer.core.data.components.Center
-import com.codeforcesvisualizer.core.data.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.CFPieChart
+import com.codeforcesvisualizer.core.components.Center
+import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.domain.entity.UserStatus
 import com.github.mikephil.charting.data.PieEntry
 
