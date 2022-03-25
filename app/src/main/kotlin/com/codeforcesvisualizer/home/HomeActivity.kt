@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
             CFTheme(
                 isDarkTheme = isDarkTheme
             ) {
-                Home()
+                Home(themeManagerViewModel = themeManagerViewModel)
             }
         }
     }
@@ -41,6 +41,6 @@ class HomeActivity : AppCompatActivity() {
 @Composable
 fun Preview() {
     CFTheme(isDarkTheme = false) {
-        Home()
+        Home(themeManagerViewModel = hiltViewModel())
     }
 }

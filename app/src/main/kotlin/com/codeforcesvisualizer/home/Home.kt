@@ -15,14 +15,19 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.codeforcesvisualizer.navigation.AppNavigator
 import com.codeforcesvisualizer.navigation.Screen
+import com.codeforcesvisualizer.preference.ThemeManagerViewModel
 
 @Composable
-fun Home(modifier: Modifier = Modifier) {
+fun Home(
+    modifier: Modifier = Modifier,
+    themeManagerViewModel: ThemeManagerViewModel
+) {
     val navController = rememberNavController()
     Column(modifier = modifier) {
         AppNavigator(
             modifier = Modifier.weight(1f),
-            navController = navController
+            navController = navController,
+            themeManagerViewModel = themeManagerViewModel
         )
         BottomNavigation(navController)
     }

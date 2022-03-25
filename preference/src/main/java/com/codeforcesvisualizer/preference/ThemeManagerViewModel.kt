@@ -26,6 +26,7 @@ class ThemeManagerViewModel @Inject constructor(
     }
 
     fun setUiThemeMode(themeMode: UiThemeMode) {
+        if (_themeModeFlow.value.themeMode == themeMode) return
         _themeModeFlow.value = _themeModeFlow.value.copy(themeMode = themeMode)
         setUiThemeModeUseCase(themeMode)
     }
