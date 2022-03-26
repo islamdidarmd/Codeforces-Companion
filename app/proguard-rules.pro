@@ -22,9 +22,10 @@
 
 -keepattributes Signature
 -keepattributes *Annotation*
--keep class com.codeforcesvisualizer.model.** {
+-keep class com.codeforcesvisualizer.data.model.** {
 *;
 }
+
 #fabric
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
@@ -38,18 +39,6 @@
 -dontwarn okio**
 -dontwarn org.conscrypt.**
 -dontwarn okhttp3.**
-
--dontwarn javax.annotation.**
--dontwarn com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool
--dontwarn com.bumptech.glide.load.resource.bitmap.Downsampler
--dontwarn com.bumptech.glide.load.resource.bitmap.HardwareConfigState
--keepattributes *Annotation*
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public class * extends com.bumptech.glide.GeneratedAppGlideModule
--keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
-    **[] $VALUES;
-    public *;
-}
 
 -keepclassmembers class * extends java.lang.Enum {
     <fields>;

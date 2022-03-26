@@ -8,7 +8,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.SearchBar
 
 @Composable
@@ -36,6 +38,12 @@ fun ProfileSearchScreen(
                     viewModel.getUserInfoByHandle(searchTextState)
                     viewModel.getUserStatusByHandle(searchTextState)
                     viewModel.getUserRatingByHandle(searchTextState)
+                    EventLogger.logEvent(
+                        event = "Search User",
+                        param = bundleOf(
+                            "Handle" to searchTextState
+                        )
+                    )
                 }
             )
         }

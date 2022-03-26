@@ -14,4 +14,5 @@
     <string name="worst_rank">Worst Rank</string>
     <string name="tried_and_solved">Tried and Solved</string>
     <string name="solved_with_onr_submission">Solved with One Submission</string>
+    <string name="compare_users">Compare Users</string>
 </resources>

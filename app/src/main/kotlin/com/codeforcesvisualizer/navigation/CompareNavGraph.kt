@@ -1,65 +1,61 @@
 package com.codeforcesvisualizer.navigation
 
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import androidx.navigation.navArgument
 import com.codeforcesvisualizer.compare.CompareHandlesScreen
-import com.codeforcesvisualizer.compare.CompareScreen
-import com.codeforcesvisualizer.data.config.BASE_URL
-import com.codeforcesvisualizer.profile.ProfileSearchScreen
-import com.codeforcesvisualizer.webview.CFWebViewScreen
+import com.codeforcesvisualizer.compare.CompareHandlesViewModel
+import com.codeforcesvisualizer.compare.CompareScreenHandleInput
 
 internal fun NavGraphBuilder.addCompareTopLevel(
     navController: NavController
 ) {
     navigation(
         route = Screen.Compare.route,
-        startDestination = LeafScreen.Compare.createRoute(Screen.Compare)
+        startDestination = LeafScreen.CompareHandleInput.createRoute(Screen.Compare)
     ) {
-        addCompare(navController, Screen.Compare)
+        addCompareHandleInput(navController, Screen.Compare)
+        addCompareResult(navController, Screen.Compare)
     }
 }
 
-private fun NavGraphBuilder.addCompare(
+private fun NavGraphBuilder.addCompareHandleInput(
     navController: NavController,
     root: Screen
 ) {
     composable(
-        route = LeafScreen.Compare.createRoute(root)
-    ) {
-        CompareScreen(
+        route = LeafScreen.CompareHandleInput.createRoute(root)
+    ) { backStackEntry ->
+        val compareHandlesViewModel: CompareHandlesViewModel = hiltViewModel(backStackEntry)
+        CompareScreenHandleInput(
             modifier = Modifier,
             onNavigateBack = { navController.navigateUp() },
-            onCompare = { handleOne, handleTwo ->
-                navController.navigate(
-                    LeafScreen.Compare.createRoute(
-                        root,
-                        handleOne = handleOne,
-                        handleTwo = handleTwo
-                    )
-                )
-            }
+            openCompare = { navController.navigate(LeafScreen.CompareViewResult.createRoute(root)) },
+            viewModel = compareHandlesViewModel
         )
     }
+}
+
+private fun NavGraphBuilder.addCompareResult(
+    navController: NavController,
+    root: Screen
+) {
     composable(
-        route = LeafScreen.Compare.createCompareRoute(root),
-        arguments = listOf(
-            navArgument("handles") {
-                defaultValue = ""
-                type = NavType.StringType
-            }
-        )
-    ) { backStackEntry ->
-        val (handleOne, handleTwo) = backStackEntry.arguments?.getString("handles")!!.split(",")
+        route = LeafScreen.CompareViewResult.createRoute(root)
+    ) {
+        val parentEntry = remember {
+            navController.getBackStackEntry(LeafScreen.CompareHandleInput.createRoute(root))
+        }
+        val compareHandlesViewModel: CompareHandlesViewModel = hiltViewModel(parentEntry)
+
         CompareHandlesScreen(
             modifier = Modifier,
             onNavigateBack = { navController.navigateUp() },
-            handleOne = handleOne,
-            handleTwo = handleTwo
+            viewModel = compareHandlesViewModel
         )
     }
 }

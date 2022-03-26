@@ -9,9 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.contest.R
 import com.codeforcesvisualizer.contest.list.addCalenderEvent
+import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.*
 import com.codeforcesvisualizer.core.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.core.utils.convertToDHMS
@@ -39,7 +41,15 @@ fun ContestDetailsScreen(
         floatingActionButton = {
             if (uiState.contest?.scheduled == true) ExtendedFloatingActionButton(
                 text = { Text(stringResource(R.string.register)) },
-                onClick = { onOpenWebSite(contestId) }
+                onClick = {
+                    onOpenWebSite(contestId)
+                    EventLogger.logEvent(
+                        event = "Register For Contest",
+                        param = bundleOf(
+                            "ContestId" to contestId
+                        )
+                    )
+                }
             )
         }
     ) { innerPadding ->
@@ -108,7 +118,13 @@ private fun ContestDetailsScreen(
             HeightSpacer(height = 16.dp)
             Button(
                 shape = RoundedCornerShape(percent = 50),
-                onClick = { addCalenderEvent(context = context, contest = contest) }) {
+                onClick = {
+                    addCalenderEvent(context = context, contest = contest)
+                    EventLogger.logEvent(
+                        event = "Add to Calender",
+                        param = bundleOf("from" to "Contest Details")
+                    )
+                }) {
                 Text(text = stringResource(R.string.add_to_calender))
             }
         }

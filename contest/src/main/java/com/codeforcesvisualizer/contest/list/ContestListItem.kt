@@ -13,7 +13,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import com.codeforcesvisualizer.contest.R
+import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.Chip
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.core.utils.convertTimeStampToDateString
@@ -34,8 +36,19 @@ internal fun ContestListItem(
             .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .clickable {
-                if (contest.scheduled) openContestDetails(contest.id)
-                else onOpenWebSite(contest.id)
+                if (contest.scheduled) {
+                    openContestDetails(contest.id)
+                    EventLogger.logScreenView(
+                        screen = "Contest Details",
+                        param = bundleOf("ContestId" to contest.id)
+                    )
+                } else {
+                    onOpenWebSite(contest.id)
+                    EventLogger.logScreenView(
+                        screen = "Contest In Webview",
+                        param = bundleOf("ContestId" to contest.id)
+                    )
+                }
             },
         elevation = 2.dp
     ) {
@@ -69,6 +82,12 @@ internal fun ContestListItem(
                     .align(alignment = Alignment.CenterVertically),
                 onClick = {
                     addCalenderEvent(context = context, contest = contest)
+                    EventLogger.logEvent(
+                        event = "Add To Calender",
+                        param = bundleOf(
+                            "ContestId" to contest.id
+                        )
+                    )
                 }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_event_24),
