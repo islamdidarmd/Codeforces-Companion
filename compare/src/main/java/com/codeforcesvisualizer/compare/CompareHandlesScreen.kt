@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -14,15 +15,13 @@ import com.codeforcesvisualizer.core.components.CFAppBar
 fun CompareHandlesScreen(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
-    handleOne: String,
-    handleTwo: String,
-    handlesViewModel: CompareHandlesViewModel = hiltViewModel()
+    viewModel: CompareHandlesViewModel = hiltViewModel()
 ) {
-    val userRatingsUiState by handlesViewModel.userRatingState.collectAsState()
-    val userStatusUiState by handlesViewModel.userStatusState.collectAsState()
+    val handleOne by viewModel.handle1State.collectAsState()
+    val handleTwo by viewModel.handle2State.collectAsState()
 
-    handlesViewModel.getUserRatingByHandle(handle1 = handleOne, handle2 = handleTwo)
-    handlesViewModel.getUserStatusByHandle(handle1 = handleOne, handle2 = handleTwo)
+    val userRatingsUiState by viewModel.userRatingState.collectAsState()
+    val userStatusUiState by viewModel.userStatusState.collectAsState()
 
     Scaffold(
         modifier = modifier,

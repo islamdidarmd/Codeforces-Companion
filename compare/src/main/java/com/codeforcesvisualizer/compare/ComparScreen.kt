@@ -16,19 +16,24 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.core.components.CFAppBar
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import kotlinx.coroutines.launch
 
 @Composable
-fun CompareScreen(
+fun CompareScreenHandleInput(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
-    onCompare: (String, String) -> Unit
+    openCompare: () -> Unit,
+    viewModel: CompareHandlesViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+
+    val handleOne by viewModel.handle1State.collectAsState()
+    val handleTwo by viewModel.handle2State.collectAsState()
 
     Scaffold(
         modifier = modifier,
@@ -40,9 +45,6 @@ fun CompareScreen(
             )
         }
     ) { innerPadding ->
-        var handleOne by remember { mutableStateOf("") }
-        var handleTwo by remember { mutableStateOf("") }
-
         fun onCompare() {
             if (handleOne.isBlank() || handleTwo.isBlank()) {
                 coroutineScope.launch {
@@ -50,7 +52,8 @@ fun CompareScreen(
                 }
                 return
             }
-            onCompare(handleOne, handleTwo)
+            viewModel.compare(handleOne, handleTwo)
+            openCompare()
         }
 
         Column(
@@ -64,14 +67,14 @@ fun CompareScreen(
                 text = handleOne,
                 label = stringResource(R.string.first_handle),
                 imeAction = ImeAction.Next,
-                onTextChange = { text -> handleOne = text }
+                onTextChange = { text -> viewModel.onHandle1Change(text) }
             )
             HeightSpacer(height = 16.dp)
             HandleInputField(
                 text = handleTwo,
                 label = stringResource(R.string.second_handle),
                 imeAction = ImeAction.Go,
-                onTextChange = { text -> handleTwo = text },
+                onTextChange = { text -> viewModel.onHandle2Change(text) },
                 onGo = { onCompare() }
             )
             HeightSpacer(height = 16.dp)
@@ -79,7 +82,7 @@ fun CompareScreen(
                 shape = RoundedCornerShape(percent = 50),
                 onClick = { onCompare() },
             ) {
-                Text(text = "Compare Users")
+                Text(text = stringResource(R.string.compare_users))
             }
         }
     }
@@ -116,5 +119,5 @@ private fun HandleInputField(
 @Preview
 @Composable
 private fun Preview() {
-    CompareScreen(onNavigateBack = {}, onCompare = { _, _ -> })
+    CompareScreenHandleInput(onNavigateBack = {}, openCompare = { })
 }

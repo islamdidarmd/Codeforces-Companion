@@ -31,15 +31,8 @@ internal sealed class LeafScreen(val route: String) {
 
     object Profile : LeafScreen("profile")
 
-    object Compare : LeafScreen("compare") {
-        fun createCompareRoute(root: Screen): String {
-            return "${root.route}/$route?handles={handles}"
-        }
-
-        fun createRoute(root: Screen, handleOne: String, handleTwo: String): String {
-            return "${root.route}/$route?handles=$handleOne,$handleTwo"
-        }
-    }
+    object CompareHandleInput : LeafScreen("compare/handle-input")
+    object CompareViewResult : LeafScreen("compare/view-result")
 
     object More : LeafScreen("more")
 
