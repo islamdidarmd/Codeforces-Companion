@@ -9,13 +9,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.contest.R
+import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.CFAppBar
 import com.codeforcesvisualizer.core.components.CFLoadingIndicator
 import com.codeforcesvisualizer.core.components.Center
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.google.firebase.analytics.FirebaseAnalytics
 
 @Composable
 fun ContestListScreen(
@@ -49,10 +52,18 @@ private fun ContestListScreen(
 
     Scaffold(
         modifier = modifier,
-        topBar = { TopBar(openSearch = openSearch) },
+        topBar = {
+            TopBar(openSearch = {
+                openSearch()
+                EventLogger.logScreenView("Contest Search")
+            })
+        },
         floatingActionButton = {
             if (state.value.userMessage.isNotEmpty()) FloatingActionButton(
-                onClick = onRefresh
+                onClick = {
+                    onRefresh()
+                    EventLogger.logEvent("Refresh Contest List")
+                }
             ) {
                 Icon(imageVector = Icons.Default.Refresh, contentDescription = "Refresh")
             }

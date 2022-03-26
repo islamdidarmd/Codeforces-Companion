@@ -11,15 +11,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.navigation.AppNavigator
 import com.codeforcesvisualizer.navigation.Screen
 import com.codeforcesvisualizer.preference.ThemeManagerViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun Home(
@@ -64,6 +68,8 @@ fun BottomNavigation(navController: NavController) {
                 icon = screen.icon,
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = {
+                    EventLogger.logScreenView(screen.route)
+
                     navController.navigate(screen.route) {
                         // Pop up to the start destination of the graph to
                         // avoid building up a large stack of destinations

@@ -16,9 +16,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.CFAppBar
 import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.launch
 
 @Composable
@@ -54,6 +57,13 @@ fun CompareScreenHandleInput(
             }
             viewModel.compare(handleOne, handleTwo)
             openCompare()
+            EventLogger.logScreenView(
+                screen = "Compare",
+                param = bundleOf(
+                    "Handle1" to handleOne,
+                    "Handle2" to handleTwo
+                )
+            )
         }
 
         Column(

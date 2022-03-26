@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
+import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.Chip
 import com.codeforcesvisualizer.core.components.HeightSpacer
@@ -89,6 +91,12 @@ private fun UnsolvedCard(
             unsolvedMap.forEach { entry ->
                 if (!entry.value) Chip(label = entry.key, onClick = {
                     onOpenWebSite(entry.key)
+                    EventLogger.logEvent(
+                        event = "Open Unsolved",
+                        param = bundleOf(
+                            "Problem" to entry.key
+                        )
+                    )
                 })
             }
         }

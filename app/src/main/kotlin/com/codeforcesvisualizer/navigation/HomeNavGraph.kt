@@ -1,8 +1,5 @@
 package com.codeforcesvisualizer.navigation
 
-import android.content.Intent
-import android.net.Uri
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.codeforcesvisualizer.contest.details.ContestDetailsScreen

@@ -55,6 +55,11 @@ dependencies {
     implementation deps.compose_tooling_preview
     debugImplementation deps.compose_ui_tooling_debug
 
+    //firebase
+    api platform(deps.firebase_bom)
+    api deps.crashlytics
+    api deps.analytics
+
     testImplementation deps.junit
     androidTestImplementation deps.android_junit
     androidTestImplementation deps.espresso_core
