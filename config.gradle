@@ -1,0 +1,124 @@
+ext.versions = [
+        //root project
+        kotlin_version                 : '1.6.10',
+        gradle_plugin_version          : '7.1.2',
+        google_services_version        : '4.3.10',
+        firebase_crashlytics_version   : '2.8.1',
+
+        //app config
+        compileSdk                     : 31,
+        minSdk                         : 21,
+        targetSdk                      : 31,
+        versionCode                    : 5,
+        versionName                    : "2.0.0",
+
+        /*dependencies*/
+        appcompat_version              : '1.4.1',
+        intellij_annotations           : '12.0',
+
+        //extensions
+        ktx_version                    : '1.7.0',
+        lifecycle_runtime_ktx_version  : '2.4.1',
+        lifecycle_viewmodel_ktx_version: '2.4.1',
+        lifecycle_extention_version    : '2.2.0',
+
+        //UI
+        compose_version                : '1.2.0-alpha04',
+        compose_viewmodel_version      : '2.4.1',
+        compose_activity_version       : '1.5.0-alpha04',
+        compose_navigation             : '2.4.1',
+        compose_accompanist            : '0.24.3-alpha',
+        material_version               : '1.5.0',
+        coil_version                   : '2.0.0-rc01',
+        mpa_chart_version              : 'v3.0.3',
+        flowlayout_version             : '0.4.0',
+
+        //networking
+        retrofit_version               : '2.9.0',
+        okhttp_version                 : '4.9.3',
+
+        //firebase
+        firebase_bom                   : '29.3.0',
+
+        //di
+        dagger_hilt_version            : '2.38.1',
+        hilt_navigation_compose        : '1.0.0',
+
+        //testing
+        core_testing_version           : '2.1.0',
+        junit_version                  : '4.13.2',
+        android_junit_version          : '1.1.3',
+        espresso_core_version          : '3.4.0',
+        mockk_version                  : '1.12.1'
+]
+ext.classpaths = [
+        gradle            : "com.android.tools.build:gradle:$versions.gradle_plugin_version",
+        kotlin_gradle     : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin_version",
+        hilt_gradle_plugin: "com.google.dagger:hilt-android-gradle-plugin:$versions.dagger_hilt_version",
+        google_services   : "com.google.gms:google-services:$versions.google_services_version",
+        crashlytics       : "com.google.firebase:firebase-crashlytics-gradle:$versions.firebase_crashlytics_version",
+]
+
+ext.deps = [
+        app_compat                              : "androidx.appcompat:appcompat:$versions.appcompat_version",
+        intellij_annotations                    : "com.intellij:annotations:$versions.intellij_annotations",
+
+        //extensions
+        core_ktx                                : "androidx.core:core-ktx:$versions.ktx_version",
+        lifecycle_runtime_ktx                   : "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle_runtime_ktx_version",
+        lifecycle_viewmodel_ktx                 : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle_viewmodel_ktx_version",
+        lifecycle_extensions                    : "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle_extention_version",
+
+        //UI
+        material                                : "com.google.android.material:material:$versions.material_version",
+        coil                                    : "io.coil-kt:coil:$versions.coil_version",
+        MPAndroidChart                          : "com.github.PhilJay:MPAndroidChart:$versions.mpa_chart_version",
+        flowlayout                              : "com.wefika:flowlayout:$versions.flowlayout_version",
+
+        compose_ui                              : "androidx.compose.ui:ui:$versions.compose_version",
+        compose_foundation                      : "androidx.compose.foundation:foundation:$versions.compose_version",
+
+        coil_compose                            : "io.coil-kt:coil-compose:$versions.coil_version",
+
+        compose_material_icons_core             : "androidx.compose.material:material-icons-core:$versions.compose_version",
+        compose_material_icons_extended         : "androidx.compose.material:material-icons-extended:$versions.compose_version",
+        compose_material                        : "androidx.compose.material:material:$versions.compose_version",
+
+        compose_runtime_livedata                : "androidx.compose.runtime:runtime-livedata:$versions.compose_version",
+        compose_navigation                      : "androidx.navigation:navigation-compose:$versions.compose_navigation",
+
+        compose_accompanist_flowlayout          : "com.google.accompanist:accompanist-flowlayout:$versions.compose_accompanist",
+        compose_accompanist_placeholder_material: "com.google.accompanist:accompanist-placeholder-material:$versions.compose_accompanist",
+        compose_accompanist_webview             : "com.google.accompanist:accompanist-webview:$versions.compose_accompanist",
+        compose_accompanist_swiperefresh        : "com.google.accompanist:accompanist-swiperefresh:$versions.compose_accompanist",
+        compose_accompanist_systemuicontroller  : "com.google.accompanist:accompanist-systemuicontroller:$versions.compose_accompanist",
+
+        activity_compose                        : "androidx.activity:activity-compose:$versions.compose_activity_version",
+        viewmodel_compose                       : "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose_viewmodel_version",
+
+        compose_ui_tooling_debug                : "androidx.compose.ui:ui-tooling:$versions.compose_version",
+        compose_tooling_preview                 : "androidx.compose.ui:ui-tooling-preview:$versions.compose_version",
+
+        //networking
+        retrofit                                : "com.squareup.retrofit2:retrofit:$versions.retrofit_version",
+        okhttp                                  : "com.squareup.okhttp3:okhttp:$versions.okhttp_version",
+        logging_interceptor                     : "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_version",
+        converter_moshi                         : "com.squareup.retrofit2:converter-moshi:$versions.retrofit_version",
+
+        //analytics
+        firebase_bom                            : "com.google.firebase:firebase-bom:$versions.firebase_bom",
+        crashlytics                             : "com.google.firebase:firebase-crashlytics-ktx",
+        analytics                               : "com.google.firebase:firebase-analytics-ktx",
+
+        //di
+        hilt_android                            : "com.google.dagger:hilt-android:$versions.dagger_hilt_version",
+        hilt_compiler                           : "com.google.dagger:hilt-compiler:$versions.dagger_hilt_version",
+        hilt_navigation_compose                 : "androidx.hilt:hilt-navigation-compose:$versions.hilt_navigation_compose",
+
+        //testing
+        core_testing                            : "androidx.arch.core:core-testing:$versions.core_testing_version",
+        junit                                   : "junit:junit:$versions.junit_version",
+        android_junit                           : "androidx.test.ext:junit:$versions.android_junit_version",
+        espresso_core                           : "androidx.test.espresso:espresso-core:$versions.espresso_core_version",
+        mockk                                   : "io.mockk:mockk: $versions.mockk_version"
+]

@@ -2,42 +2,14 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textViewStyle">@style/CustomFontTextView</item>
-        <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar.Translucent">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-    </style>
-
-    <style name="CollapsingToolbarLayoutExpandedTextStyle" parent="AppTheme">
-        <item name="android:textColor">@android:color/transparent</item>
-        <item name="android:textSize">0.1sp</item>
-    </style>
-
-    <style name="CustomFontTextView" parent="Widget.MaterialComponents.TextView">
-        <item name="android:fontFamily">@font/lato</item>
-    </style>
-
-    <style name="BottomSheetDialogTheme" parent="Theme.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/ModalStyle</item>
-        <item name="android:navigationBarColor">@color/colorWhite</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowIsFloating">false</item>
-    </style>
-
-    <style name="ModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_bottom_sheet</item>
     </style>
 
 </resources>

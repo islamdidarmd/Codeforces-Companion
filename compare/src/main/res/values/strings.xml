@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="compare">Compare</string>
+    <string name="first_handle">First Handle</string>
+    <string name="second_handle">Second Handle</string>
+    <string name="hanldles_can_not_be_empty">Handles can not be empty</string>
+    <string name="ratings">Ratings</string>
+    <string name="contests">Contests</string>
+    <string name="max_up_and_down">Max Up and Down</string>
+    <string name="max_up">Max Up</string>
+    <string name="max_down">Max Down</string>
+    <string name="rank">Rank</string>
+    <string name="best_rank">Best Rank</string>
+    <string name="worst_rank">Worst Rank</string>
+    <string name="tried_and_solved">Tried and Solved</string>
+    <string name="solved_with_onr_submission">Solved with One Submission</string>
+    <string name="compare_users">Compare Users</string>
+</resources>

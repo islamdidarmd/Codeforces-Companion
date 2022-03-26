@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="enter_handle_hint">Enter Handle</string>
+    <string name="profile">Profile</string>
+    <string name="levels">Levels</string>
+    <string name="language">Language</string>
+    <string name="tags">Tags</string>
+    <string name="unsolved">Unsolved</string>
+    <string name="ratings">Ratings</string>
+    <string name="best_rank">Best Rank</string>
+    <string name="worst_rank">Worst Rank</string>
+    <string name="max_up">Max Up</string>
+    <string name="max_down">Max Down</string>
+</resources>

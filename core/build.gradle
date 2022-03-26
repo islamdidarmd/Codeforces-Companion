@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk versions.compileSdk
+
+    defaultConfig {
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion versions.compose_version
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    }
+}
+dependencies {
+    //UI
+    implementation deps.compose_ui
+    implementation deps.compose_material
+    implementation deps.coil_compose
+
+    implementation deps.MPAndroidChart
+
+    implementation deps.compose_runtime_livedata
+
+    implementation deps.activity_compose
+    implementation deps.viewmodel_compose
+
+    implementation deps.compose_tooling_preview
+    debugImplementation deps.compose_ui_tooling_debug
+
+    //firebase
+    api platform(deps.firebase_bom)
+    api deps.crashlytics
+    api deps.analytics
+
+    testImplementation deps.junit
+    androidTestImplementation deps.android_junit
+    androidTestImplementation deps.espresso_core
+}

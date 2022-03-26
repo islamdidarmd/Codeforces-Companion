@@ -1,0 +1,69 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id "dagger.hilt.android.plugin"
+}
+
+android {
+    compileSdk versions.compileSdk
+
+    defaultConfig {
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion versions.compose_version
+    }
+}
+
+dependencies {
+    implementation project(":core")
+    implementation project(":domain")
+
+    //UI
+    implementation deps.compose_ui
+    implementation deps.compose_foundation
+    implementation deps.compose_material
+
+    implementation deps.compose_material_icons_core
+    implementation deps.compose_material_icons_extended
+
+    implementation deps.MPAndroidChart
+
+    implementation deps.compose_accompanist_flowlayout
+
+    implementation deps.coil_compose
+
+    implementation deps.viewmodel_compose
+
+    implementation deps.compose_tooling_preview
+    debugImplementation deps.compose_ui_tooling_debug
+
+    //di
+    implementation deps.hilt_android
+    implementation deps.hilt_navigation_compose
+    kapt deps.hilt_compiler
+
+    testImplementation deps.junit
+    androidTestImplementation deps.android_junit
+    androidTestImplementation deps.espresso_core
+}
