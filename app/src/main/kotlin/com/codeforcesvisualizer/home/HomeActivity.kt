@@ -25,9 +25,9 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalytics = Firebase.analytics
 
         if (!BuildConfig.DEBUG) {
-            firebaseAnalytics = Firebase.analytics
             EventLogger.initialize(::logEvent)
         }
 
