@@ -25,6 +25,7 @@ ext.versions = [
         //UI
         compose_version                : '1.2.0-alpha04',
         compose_viewmodel_version      : '2.4.1',
+        compose_activity_version       : '1.5.0-alpha04',
         compose_navigation             : '2.4.1',
         compose_accompanist            : '0.24.3-alpha',
         material_version               : '1.5.0',
@@ -92,7 +93,7 @@ ext.deps = [
         compose_accompanist_swiperefresh        : "com.google.accompanist:accompanist-swiperefresh:$versions.compose_accompanist",
         compose_accompanist_systemuicontroller  : "com.google.accompanist:accompanist-systemuicontroller:$versions.compose_accompanist",
 
-        activity_compose                        : "androidx.activity:activity-compose:$versions.compose_version",
+        activity_compose                        : "androidx.activity:activity-compose:$versions.compose_activity_version",
         viewmodel_compose                       : "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose_viewmodel_version",
 
         compose_ui_tooling_debug                : "androidx.compose.ui:ui-tooling:$versions.compose_version",
