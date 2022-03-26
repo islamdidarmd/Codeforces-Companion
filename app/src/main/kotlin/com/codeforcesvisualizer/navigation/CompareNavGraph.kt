@@ -29,12 +29,8 @@ private fun NavGraphBuilder.addCompareHandleInput(
 ) {
     composable(
         route = LeafScreen.CompareHandleInput.createRoute(root)
-    ) {
-        val parentEntry = remember {
-            navController.getBackStackEntry(LeafScreen.CompareHandleInput.createRoute(root))
-        }
-        val compareHandlesViewModel: CompareHandlesViewModel = hiltViewModel(parentEntry)
-
+    ) { backStackEntry ->
+        val compareHandlesViewModel: CompareHandlesViewModel = hiltViewModel(backStackEntry)
         CompareScreenHandleInput(
             modifier = Modifier,
             onNavigateBack = { navController.navigateUp() },
