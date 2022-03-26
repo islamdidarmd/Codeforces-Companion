@@ -36,9 +36,8 @@ ext.versions = [
         retrofit_version               : '2.9.0',
         okhttp_version                 : '4.9.3',
 
-        //analytics
-        crashlytics_version            : '18.2.8',
-        analytics_version              : '20.0.2',
+        //firebase
+        firebase_bom                   : '29.3.0',
 
         //di
         dagger_hilt_version            : '2.38.1',
@@ -106,8 +105,9 @@ ext.deps = [
         converter_moshi                         : "com.squareup.retrofit2:converter-moshi:$versions.retrofit_version",
 
         //analytics
-        crashlytics                             : "com.google.firebase:firebase-crashlytics:$versions.crashlytics_version",
-        analytics                               : "com.google.firebase:firebase-analytics:$versions.analytics_version",
+        firebase_bom                            : "com.google.firebase:firebase-bom:$versions.firebase_bom",
+        crashlytics                             : "com.google.firebase:firebase-crashlytics-ktx",
+        analytics                               : "com.google.firebase:firebase-analytics-ktx",
 
         //di
         hilt_android                            : "com.google.dagger:hilt-android:$versions.dagger_hilt_version",

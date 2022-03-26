@@ -3,8 +3,8 @@ plugins {
     id "com.android.application"
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
-    //   id "com.google.gms.google-services"
-    //   id "com.google.firebase.crashlytics"
+    id "com.google.gms.google-services"
+    id "com.google.firebase.crashlytics"
 }
 
 android {
@@ -73,6 +73,11 @@ dependencies {
     //network
     implementation deps.okhttp
     implementation deps.retrofit
+
+    //firebase
+    implementation platform(deps.firebase_bom)
+    implementation deps.crashlytics
+    implementation deps.analytics
 
     //di
     implementation deps.hilt_android
