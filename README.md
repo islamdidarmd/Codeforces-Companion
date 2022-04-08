@@ -13,8 +13,9 @@ In this app you can :<br>
  
 <br><h2>Screenshots</h2><br>
 <p align="center">
-  <img src="https://lh3.googleusercontent.com/KaojpxIEvA4T6_a0vrKhYIX-OdR8VnrIp0iayd-eZ787N1equfcRjjVX1CfOeTWZR_0=w720-h310-rw">
-  <img src="https://lh3.googleusercontent.com/tSwv89HPVmAwT403uIh1BRNLX7K_xRHmmCB8fI-jxEFdH-MJN23tBDnNDHaqkGPoQlg=w720-h310-rw">
-  <img src="https://lh3.googleusercontent.com/Uazqz4Ml9JxadeTU4uEwpUUGjzGCUeTJXn2GETzszKWeMYgESATjxAW0kKga2EsJ2MTY=w720-h310-rw">
-  <img src="https://lh3.googleusercontent.com/ucudk79Ifl6uDNmlBLx2wQdY-WwYFSY9WbCNIc_sxDm5p6ptC0ugJ8KxFKyVTrpQDrA=w720-h310-rw">
+  <img src="https://user-images.githubusercontent.com/27812028/162456852-72d8871e-f71f-4ed2-bfa9-d5cca7257aaf.png" width="220" height="400">
+  <img src="https://user-images.githubusercontent.com/27812028/162458461-1965b54c-cf98-4a49-940e-b9ff01acdab2.png" width="220" height="400">
+  <img src="https://user-images.githubusercontent.com/27812028/162458749-d94fe820-95e4-4382-b584-cf1087d17f4b.png" width="220" height="400">
+  <img src="https://user-images.githubusercontent.com/27812028/162458771-deae3350-a413-49b1-bc84-12afce9da048.png" width="220" height="400">
+  <img src="https://user-images.githubusercontent.com/27812028/162458778-4644542d-66cd-4804-b84b-c9f52d2649aa.png" width="220" height="400">
 </p>
