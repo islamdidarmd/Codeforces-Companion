@@ -11,6 +11,9 @@ In this app you can :<br>
  - You can compare two users using their handle<br>
  - From contest list you can directly go to contest page<br>
  
+ <br><h2>Screenshots</h2><br>
+ <a href="https://play.google.com/store/apps/details?id=com.codeforcesvisualizer">Download</a> from Google Play
+ 
 <br><h2>Screenshots</h2><br>
 <p align="center">
   <img src="https://user-images.githubusercontent.com/27812028/162456852-72d8871e-f71f-4ed2-bfa9-d5cca7257aaf.png" width="220" height="400">
