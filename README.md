@@ -1,11 +1,13 @@
-# Codeforces-Visualizer
-A visualizer app for codeforces that runs on Android. It's created using kotlin language. Used MVVM architecture.
+# Codeforces-Companion
+A Companion app for codeforces that runs on Android. It's created using kotlin language. Used MVVM architecture.
 
 This app is made using codeforces api.
 
 In this app you can :<br>
  - View upcoming contest list<br>
  - View previous contest list<br>
+ - Add Contest Date and Time to calender
+ - Register for a contest
  - Analyze single user profile<br>
  - Language chart, tags list, unsolved list and other charts are available<br>
  - You can compare two users using their handle<br>
