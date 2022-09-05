@@ -1,5 +1,8 @@
 # Codeforces-Companion
-A Companion app for codeforces that runs on Android. It's created using kotlin language. Used MVVM architecture.
+A Companion app for codeforces that runs on Android.
+
+
+Used Clean Code Multi Module architecture. UI is built with jetpack compose
 
 This app is made using codeforces api.
 
