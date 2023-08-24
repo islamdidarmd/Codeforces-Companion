@@ -6,11 +6,11 @@ ext.versions = [
         firebase_crashlytics_version   : '2.8.1',
 
         //app config
-        compileSdk                     : 31,
+        compileSdk                     : 34,
         minSdk                         : 21,
-        targetSdk                      : 31,
-        versionCode                    : 5,
-        versionName                    : "2.0.0",
+        targetSdk                      : 34,
+        versionCode                    : 6,
+        versionName                    : "2.0.1",
 
         /*dependencies*/
         appcompat_version              : '1.4.1',
