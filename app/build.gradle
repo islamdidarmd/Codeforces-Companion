@@ -41,6 +41,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion versions.compose_version
     }
+    namespace 'com.codeforcesvisualizer'
 }
 
 dependencies {
