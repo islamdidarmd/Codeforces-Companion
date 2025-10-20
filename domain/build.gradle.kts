@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.kspModule)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.google.dagger.hilt)
     alias(libs.plugins.composeCompiler)
@@ -38,7 +39,7 @@ dependencies {
     implementation(project(":core"))
 
     implementation(libs.com.google.dagger.hilt.android)
-    implementation(libs.com.google.dagger.hilt.compiler)
+    ksp(libs.com.google.dagger.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.core.ktx)
 
