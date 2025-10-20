@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "449542197560",
+    "project_id": "codeforces-companion",
+    "storage_bucket": "codeforces-companion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449542197560:android:aa1c602a47c61519ad31cd",
+        "android_client_info": {
+          "package_name": "com.codeforcesvisualizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449542197560-p2lihbhbscc809ojgb20ur82npft3goc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7qJUj27Yk8J4e-sxADfp-EttKHp-sqc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449542197560-p2lihbhbscc809ojgb20ur82npft3goc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
