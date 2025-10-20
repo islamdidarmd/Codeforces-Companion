@@ -1,18 +1,18 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.google.dagger.hilt)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinAndroid)
 }
 
 android {
-    compileSdk = AppConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = AppConfig.minSdk
-        targetSdk = AppConfig.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -34,37 +34,35 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
-    }
-
     namespace = "com.codeforcesvisualizer.preference"
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
-    }
+
 }
 
 dependencies {
     implementation(project(":core"))
     implementation(project(":domain"))
 
-    implementation(Libs.composeUi)
-    implementation(Libs.composeMaterial)
-    implementation(Libs.coilCompose)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.io.coil.kt.coil.compose)
 
-    implementation(Libs.viewModelCompose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    implementation(Libs.composeUiToolingPreview)
-    debugImplementation(Libs.composeUiTooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.core.ktx)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
-    implementation(Libs.hiltAndroid)
-    implementation(Libs.hiltNavigationCompose)
-    kapt(Libs.hiltCompiler)
+    implementation(libs.com.google.dagger.hilt.android)
+    implementation(libs.com.google.dagger.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
-    testImplementation(Libs.junit)
-    androidTestImplementation(Libs.androidJunit)
-    androidTestImplementation(Libs.espressoCore)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
 }

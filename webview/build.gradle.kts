@@ -1,17 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinAndroid)
 }
 
 android {
-    compileSdk = AppConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = AppConfig.minSdk
-        targetSdk = AppConfig.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -33,35 +32,32 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
-    }
-
     namespace = "com.codeforcesvisualizer.webview"
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
-    }
 }
 
 dependencies {
     implementation(project(":core"))
     implementation(project(":domain"))
 
-    implementation(Libs.composeUi)
-    implementation(Libs.composeFoundation)
-    implementation(Libs.composeMaterial)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material)
 
-    implementation(Libs.composeAccompanistWebView)
+    implementation(libs.com.google.accompanist.webview)
 
-    implementation(Libs.composeRuntimeLiveData)
+    implementation(libs.androidx.compose.runtime.livedata)
 
-    implementation(Libs.composeUiToolingPreview)
-    debugImplementation(Libs.composeUiTooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.core.ktx)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
-    testImplementation(Libs.junit)
-    androidTestImplementation(Libs.androidJunit)
-    androidTestImplementation(Libs.espressoCore)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
 }

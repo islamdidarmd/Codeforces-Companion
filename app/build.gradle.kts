@@ -1,21 +1,20 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.google.dagger.hilt)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinAndroid)
 }
-
 android {
-    compileSdk = AppConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = AppConfig.applicationId
-        minSdk = AppConfig.minSdk
-        targetSdk = AppConfig.targetSdk
-        versionCode = AppConfig.versionCode
-        versionName = AppConfig.versionName
+        applicationId = "com.codeforcesvisualizer"
+        minSdk = libs.versions.minSdk.get().toInt()
+        
+        versionCode = libs.versions.versionCode.get().toInt()
+        versionName = libs.versions.versionName.get()
     }
 
     buildTypes {
@@ -42,11 +41,17 @@ android {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
+    namespace = "com.codeforcesvisualizer"
+    kotlinOptions {
+        jvmTarget = "11"
     }
 
-    namespace = "com.codeforcesvisualizer"
+    // Exclude duplicate metadata from annotation processors
+    packaging {
+        resources {
+            excludes += "META-INF/gradle/incremental.annotation.processors"
+        }
+    }
 }
 
 dependencies {
@@ -61,25 +66,26 @@ dependencies {
     implementation(project(":compare"))
     implementation(project(":preference"))
 
-    implementation(Libs.appCompat)
+    implementation(libs.androidx.appcompat)
 
-    implementation(Libs.composeUi)
-    implementation(Libs.material)
-    implementation(Libs.composeMaterial)
-    implementation(Libs.composeMaterialIconsCore)
-    implementation(Libs.composeMaterialIconsExtended)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.com.google.android.material)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
 
-    implementation(Libs.composeNavigation)
+    implementation(libs.androidx.navigation.compose)
 
-    implementation(Libs.composeUiToolingPreview)
-    debugImplementation(Libs.composeUiTooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.core.ktx)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
-    implementation(Libs.composeAccompanistSystemUiController)
+    implementation(libs.com.google.accompanist.systemuicontroller)
 
-    implementation(Libs.okhttp)
-    implementation(Libs.retrofit)
+    implementation(libs.com.squareup.okhttp3)
+    implementation(libs.com.squareup.retrofit2)
 
-    implementation(Libs.hiltAndroid)
-    implementation(Libs.hiltNavigationCompose)
-    kapt(Libs.hiltCompiler)
+    implementation(libs.com.google.dagger.hilt.android)
+    debugImplementation(libs.com.google.dagger.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 }

@@ -1,5 +1,5 @@
 # Codeforces-Companion
-A Companion app for codeforces that runs on Android.
+A Companion app for codeforces.
 
 
 Used Clean Code Multi Module architecture. UI is built with jetpack compose
