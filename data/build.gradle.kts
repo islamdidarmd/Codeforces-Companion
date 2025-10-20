@@ -1,16 +1,16 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.google.dagger.hilt)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinAndroid)
 }
 
 android {
-    compileSdk = AppConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = AppConfig.minSdk
-        targetSdk = AppConfig.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -29,28 +29,33 @@ android {
     }
 
     namespace = "com.codeforcesvisualizer.data"
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }
 
 dependencies {
     implementation(project(":core"))
     implementation(project(":domain"))
 
-    implementation(Libs.lifecycleRuntimeKtx)
-    implementation(Libs.lifecycleExtensions)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.extensions)
 
-    implementation(Libs.okhttp)
-    implementation(Libs.loggingInterceptor)
-    implementation(Libs.retrofit)
-    implementation(Libs.converterMoshi)
+    implementation(libs.com.squareup.okhttp3)
+    implementation(libs.com.squareup.okhttp3.logging.interceptor)
+    implementation(libs.com.squareup.retrofit2)
+    implementation(libs.com.squareup.retrofit2.converter.moshi)
 
-    implementation(Libs.hiltAndroid)
-    implementation(Libs.hiltNavigationCompose)
-    kapt(Libs.hiltCompiler)
+    implementation(libs.com.google.dagger.hilt.android)
+    implementation(libs.com.google.dagger.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
 
-    testImplementation(Libs.coreTesting)
-    testImplementation(Libs.junit)
-    // testImplementation(Libs.mockk)
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.junit)
+    // testImplementation(libs.io.mockk)
 
-    androidTestImplementation(Libs.androidJunit)
-    androidTestImplementation(Libs.espressoCore)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
 }
