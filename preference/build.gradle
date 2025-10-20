@@ -33,6 +33,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion versions.compose_version
     }
+    namespace 'com.codeforcesvisualizer.preference'
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
