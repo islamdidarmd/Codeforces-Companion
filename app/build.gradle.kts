@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.kspModule)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.google.dagger.hilt)
     alias(libs.plugins.google.services)
@@ -45,13 +46,6 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-
-    // Exclude duplicate metadata from annotation processors
-    packaging {
-        resources {
-            excludes += "META-INF/gradle/incremental.annotation.processors"
-        }
-    }
 }
 
 dependencies {
@@ -86,6 +80,6 @@ dependencies {
     implementation(libs.com.squareup.retrofit2)
 
     implementation(libs.com.google.dagger.hilt.android)
-    debugImplementation(libs.com.google.dagger.hilt.compiler)
+    ksp(libs.com.google.dagger.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 }

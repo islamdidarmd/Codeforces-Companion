@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    alias(libs.plugins.kspModule)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.google.dagger.hilt)
     alias(libs.plugins.composeCompiler)
@@ -66,7 +67,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.extensions)
 
     implementation(libs.com.google.dagger.hilt.android)
-    implementation(libs.com.google.dagger.hilt.compiler)
+    ksp(libs.com.google.dagger.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     testImplementation(libs.junit)
