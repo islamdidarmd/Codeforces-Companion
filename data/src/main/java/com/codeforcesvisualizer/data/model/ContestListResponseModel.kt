@@ -1,16 +1,18 @@
 package com.codeforcesvisualizer.data.model
 
 import com.codeforcesvisualizer.domain.entity.Contest
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ContestListResponseModel(
-    @field:Json(name = "status")
-    val statusModel: StatusModel,
-    @field:Json(name = "result")
-    val result: List<ContestModel>?,
-    @field:Json(name = "comment")
-    val comment: String?
-) {
+    @SerialName("status")
+    override val statusModel: StatusModel,
+    @SerialName("result")
+    val result: List<ContestModel>? = null,
+    @SerialName("comment")
+    override val comment: String? = null
+) : BaseResponseModel {
     fun toEntity(): List<Contest> {
         return result?.map { it.toEntity() } ?: emptyList()
     }

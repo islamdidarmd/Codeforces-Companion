@@ -1,18 +1,20 @@
 package com.codeforcesvisualizer.data.model
 
 import com.codeforcesvisualizer.domain.entity.UserRating
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UserRatingResponseModel(
-    @field:Json(name = "status")
-    val statusModel: StatusModel,
+    @SerialName("status")
+    override val statusModel: StatusModel,
 
-    @field:Json(name = "result")
-    val result: List<UserRatingModel>?,
+    @SerialName("result")
+    val result: List<UserRatingModel>? = null,
 
-    @field:Json(name = "comment")
-    val comment: String?
-) {
+    @SerialName("comment")
+    override val comment: String? = null
+) : BaseResponseModel {
     fun toEntity(): List<UserRating> {
         return result?.map { it.toEntity() } ?: emptyList()
     }

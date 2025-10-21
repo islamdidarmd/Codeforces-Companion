@@ -2,21 +2,18 @@ package com.codeforcesvisualizer.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.codeforcesvisualizer.core.data.Either
-
-import com.codeforcesvisualizer.data.config.BASE_URL
 import com.codeforcesvisualizer.data.datasource.CFRemoteDataSourceImpl
 import com.codeforcesvisualizer.data.network.CFApiService
-import com.codeforcesvisualizer.data.network.ApiClient.getOkHttpClient
-import com.codeforcesvisualizer.data.network.ApiClient.getRetrofit
+import com.codeforcesvisualizer.data.network.ApiClient
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertTrue
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 
 class CFRemoteDataSourceTest {
-    private val apiService = getRetrofit(
-        baseUrl = BASE_URL,
-        okHttpClient = getOkHttpClient()
-    ).create(CFApiService::class.java)
+    private val httpClient = ApiClient.getHttpClient()
+    private val apiService = CFApiService(httpClient)
     private val cfRemoteDataSource = CFRemoteDataSourceImpl(apiService)
 
     @get:Rule
@@ -27,6 +24,11 @@ class CFRemoteDataSourceTest {
         val response = runBlocking {
             return@runBlocking cfRemoteDataSource.getContestList()
         }
-        assert(response is Either.Right)
+        assertTrue(response is Either.Right<*, *>)
+    }
+
+    @After
+    fun tearDown() {
+        httpClient.close()
     }
 }

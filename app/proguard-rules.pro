@@ -33,12 +33,8 @@
 -printmapping build/outputs/mapping/release/mapping.txt
 -keep class com.crashlytics.** { *; }
 -dontwarn com.crashlytics.**
-
-
--dontwarn retrofit2.Platform**
 -dontwarn okio**
 -dontwarn org.conscrypt.**
--dontwarn okhttp3.**
 
 -keepclassmembers class * extends java.lang.Enum {
     <fields>;

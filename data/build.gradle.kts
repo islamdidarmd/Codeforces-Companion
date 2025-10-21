@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.google.dagger.hilt)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -42,10 +43,12 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.extensions)
 
-    implementation(libs.com.squareup.okhttp3)
-    implementation(libs.com.squareup.okhttp3.logging.interceptor)
-    implementation(libs.com.squareup.retrofit2)
-    implementation(libs.com.squareup.retrofit2.converter.moshi)
+    implementation(libs.io.ktor.client.core)
+    implementation(libs.io.ktor.client.cio)
+    implementation(libs.io.ktor.client.logging)
+    implementation(libs.io.ktor.client.content.negotiation)
+    implementation(libs.io.ktor.serialization.kotlinx.json)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.com.google.dagger.hilt.android)
     ksp(libs.com.google.dagger.hilt.compiler)
