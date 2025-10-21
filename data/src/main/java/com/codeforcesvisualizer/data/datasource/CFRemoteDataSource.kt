@@ -4,8 +4,8 @@ import com.codeforcesvisualizer.core.data.AppError
 import com.codeforcesvisualizer.core.data.Either
 import com.codeforcesvisualizer.core.data.InvalidApiResponseError
 import com.codeforcesvisualizer.core.data.ServerConnectionResponseError
-import com.codeforcesvisualizer.data.model.ContestListResponseModel
 import com.codeforcesvisualizer.data.model.BaseResponseModel
+import com.codeforcesvisualizer.data.model.ContestListResponseModel
 import com.codeforcesvisualizer.data.model.StatusModel
 import com.codeforcesvisualizer.data.model.UserInfoResponseModel
 import com.codeforcesvisualizer.data.model.UserRatingResponseModel
@@ -16,7 +16,6 @@ import io.ktor.http.isSuccess
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 interface CFRemoteDataSource {
     suspend fun getContestList(): Either<AppError, ContestListResponseModel>
@@ -25,7 +24,7 @@ interface CFRemoteDataSource {
     suspend fun getUserRatingByHandle(handle: String): Either<AppError, UserRatingResponseModel>
 }
 
-class CFRemoteDataSourceImpl @Inject constructor(
+class CFRemoteDataSourceImpl(
     private val api: CFApiService
 ) : CFRemoteDataSource {
     override suspend fun getContestList(): Either<AppError, ContestListResponseModel> {

@@ -10,7 +10,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.contest.R
 import com.codeforcesvisualizer.contest.list.addCalenderEvent
 import com.codeforcesvisualizer.core.EventLogger
@@ -20,6 +19,7 @@ import com.codeforcesvisualizer.core.utils.convertToDHMS
 import com.codeforcesvisualizer.core.utils.convertToHMS
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.google.accompanist.flowlayout.FlowRow
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ContestDetailsScreen(
@@ -27,7 +27,7 @@ fun ContestDetailsScreen(
     contestId: Int,
     onNavigateBack: () -> Unit,
     onOpenWebSite: (Int) -> Unit,
-    viewModel: ContestDetailsViewModel = hiltViewModel()
+    viewModel: ContestDetailsViewModel = koinViewModel()
 ) {
     var title by remember { mutableStateOf("Details") }
     val uiState by viewModel.uiState.collectAsState()

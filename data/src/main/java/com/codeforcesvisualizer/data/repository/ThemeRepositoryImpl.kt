@@ -3,9 +3,8 @@ package com.codeforcesvisualizer.data.repository
 import android.content.SharedPreferences
 import com.codeforcesvisualizer.domain.entity.UiThemeMode
 import com.codeforcesvisualizer.domain.repository.ThemeRepository
-import javax.inject.Inject
 
-class ThemeRepositoryImpl @Inject constructor() : ThemeRepository {
+class ThemeRepositoryImpl : ThemeRepository {
     private val _themeModeKey = "theme_mode"
 
     override fun getUiThemeMode(sharedPreferences: SharedPreferences): UiThemeMode {

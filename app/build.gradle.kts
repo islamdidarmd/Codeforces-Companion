@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.kspModule)
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.google.dagger.hilt)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.composeCompiler)
@@ -77,7 +76,6 @@ dependencies {
     implementation(libs.com.google.accompanist.systemuicontroller)
     implementation(libs.io.ktor.client.core)
 
-    implementation(libs.com.google.dagger.hilt.android)
-    ksp(libs.com.google.dagger.hilt.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 }

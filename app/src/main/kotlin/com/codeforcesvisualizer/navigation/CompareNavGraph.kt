@@ -2,7 +2,6 @@ package com.codeforcesvisualizer.navigation
 
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -10,6 +9,7 @@ import androidx.navigation.compose.navigation
 import com.codeforcesvisualizer.compare.CompareHandlesScreen
 import com.codeforcesvisualizer.compare.CompareHandlesViewModel
 import com.codeforcesvisualizer.compare.CompareScreenHandleInput
+import org.koin.androidx.compose.koinViewModel
 
 internal fun NavGraphBuilder.addCompareTopLevel(
     navController: NavController
@@ -30,7 +30,7 @@ private fun NavGraphBuilder.addCompareHandleInput(
     composable(
         route = LeafScreen.CompareHandleInput.createRoute(root)
     ) { backStackEntry ->
-        val compareHandlesViewModel: CompareHandlesViewModel = hiltViewModel(backStackEntry)
+        val compareHandlesViewModel: CompareHandlesViewModel = koinViewModel(viewModelStoreOwner = backStackEntry)
         CompareScreenHandleInput(
             modifier = Modifier,
             onNavigateBack = { navController.navigateUp() },
@@ -50,7 +50,7 @@ private fun NavGraphBuilder.addCompareResult(
         val parentEntry = remember {
             navController.getBackStackEntry(LeafScreen.CompareHandleInput.createRoute(root))
         }
-        val compareHandlesViewModel: CompareHandlesViewModel = hiltViewModel(parentEntry)
+        val compareHandlesViewModel: CompareHandlesViewModel = koinViewModel(viewModelStoreOwner = parentEntry)
 
         CompareHandlesScreen(
             modifier = Modifier,

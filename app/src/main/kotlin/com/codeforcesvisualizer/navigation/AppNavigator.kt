@@ -4,13 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.codeforcesvisualizer.preference.ThemeManagerViewModel
+import com.codeforcesvisualizer.preference.ThemeManager
 
 @Composable
 fun AppNavigator(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    themeManagerViewModel: ThemeManagerViewModel
+    themeManager: ThemeManager
 ) {
     NavHost(
         navController = navController,
@@ -20,6 +20,6 @@ fun AppNavigator(
         addHomeTopLevel(navController)
         addProfileTopLevel(navController)
         addCompareTopLevel(navController)
-        addMoreTopLevel(navController, themeManagerViewModel = themeManagerViewModel)
+        addMoreTopLevel(navController, themeManager = themeManager)
     }
 }

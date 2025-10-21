@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.kspModule)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.google.dagger.hilt)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinAndroid)
 }
@@ -53,9 +52,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
-    implementation(libs.com.google.dagger.hilt.android)
-    ksp(libs.com.google.dagger.hilt.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.koin.androidx.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

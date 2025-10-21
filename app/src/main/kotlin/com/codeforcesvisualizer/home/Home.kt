@@ -20,21 +20,21 @@ import androidx.navigation.compose.rememberNavController
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.navigation.AppNavigator
 import com.codeforcesvisualizer.navigation.Screen
-import com.codeforcesvisualizer.preference.ThemeManagerViewModel
+import com.codeforcesvisualizer.preference.ThemeManager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.analytics.FirebaseAnalytics
 
 @Composable
 fun Home(
     modifier: Modifier = Modifier,
-    themeManagerViewModel: ThemeManagerViewModel
+    themeManager: ThemeManager
 ) {
     val navController = rememberNavController()
     Column(modifier = modifier) {
         AppNavigator(
             modifier = Modifier.weight(1f),
             navController = navController,
-            themeManagerViewModel = themeManagerViewModel
+            themeManager = themeManager
         )
         BottomNavigation(navController)
     }

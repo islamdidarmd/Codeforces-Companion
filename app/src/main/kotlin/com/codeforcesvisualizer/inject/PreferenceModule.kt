@@ -2,19 +2,12 @@ package com.codeforcesvisualizer.inject
 
 import android.content.Context
 import android.content.SharedPreferences
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
-@InstallIn(SingletonComponent::class)
-@Module
-class PreferenceModule {
-    @Provides
-    @Singleton
-    fun providesSharedPreference(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+val preferenceModule = module {
+    single<SharedPreferences> {
+        val context: Context = androidContext()
+        context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
     }
 }

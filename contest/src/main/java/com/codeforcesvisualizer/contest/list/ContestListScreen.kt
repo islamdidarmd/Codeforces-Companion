@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.codeforcesvisualizer.contest.R
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.CFAppBar
@@ -19,11 +18,12 @@ import com.codeforcesvisualizer.core.components.Center
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.firebase.analytics.FirebaseAnalytics
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ContestListScreen(
     modifier: Modifier = Modifier,
-    viewModel: ContestViewModel = hiltViewModel(),
+    viewModel: ContestViewModel = koinViewModel(),
     openSearch: () -> Unit,
     openContestDetails: (Int) -> Unit,
     onOpenWebSite: (Int) -> Unit,

@@ -15,9 +15,8 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
-import javax.inject.Inject
 
-class CFApiService @Inject constructor(
+class CFApiService(
     private val httpClient: HttpClient
 ) {
     suspend fun getContestList(): CFApiResponse<ContestListResponseModel> {
