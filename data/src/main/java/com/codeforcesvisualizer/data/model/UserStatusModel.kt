@@ -1,16 +1,18 @@
 package com.codeforcesvisualizer.data.model
 
 import com.codeforcesvisualizer.domain.entity.UserStatus
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UserStatusModel(
-    @field:Json(name = "programmingLanguage")
+    @SerialName("programmingLanguage")
     val programmingLanguage: String,
 
-    @field:Json(name = "verdict")
+    @SerialName("verdict")
     val verdict: String,
 
-    @field:Json(name = "problem")
+    @SerialName("problem")
     val problemModel: ProblemModel
 ) {
     fun toEntity(): UserStatus {

@@ -75,9 +75,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(libs.com.google.accompanist.systemuicontroller)
-
-    implementation(libs.com.squareup.okhttp3)
-    implementation(libs.com.squareup.retrofit2)
+    implementation(libs.io.ktor.client.core)
 
     implementation(libs.com.google.dagger.hilt.android)
     ksp(libs.com.google.dagger.hilt.compiler)

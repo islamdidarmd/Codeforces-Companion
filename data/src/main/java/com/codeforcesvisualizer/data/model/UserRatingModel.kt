@@ -1,19 +1,21 @@
 package com.codeforcesvisualizer.data.model
 
 import com.codeforcesvisualizer.domain.entity.UserRating
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UserRatingModel(
-    @field:Json(name = "contestId")
+    @SerialName("contestId")
     val contestId: Int,
 
-    @field:Json(name = "rank")
+    @SerialName("rank")
     val rank: Int,
 
-    @field:Json(name = "oldRating")
+    @SerialName("oldRating")
     val oldRating: Int,
 
-    @field:Json(name = "newRating")
+    @SerialName("newRating")
     val newRating: Int
 ) {
     fun toEntity(): UserRating {

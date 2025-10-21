@@ -1,41 +1,43 @@
 package com.codeforcesvisualizer.data.model
 
 import com.codeforcesvisualizer.domain.entity.Contest
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ContestModel(
-    @field:Json(name = "id")
+    @SerialName("id")
     val id: Int,
-    @field:Json(name = "name")
+    @SerialName("name")
     val name: String,
-    @field:Json(name = "type")
+    @SerialName("type")
     val type: Type,
-    @field:Json(name = "phase")
+    @SerialName("phase")
     val phase: Phase,
-    @field:Json(name = "frozen")
+    @SerialName("frozen")
     val frozen: Boolean,
-    @field:Json(name = "durationSeconds")
+    @SerialName("durationSeconds")
     val durationSeconds: Int,
-    @field:Json(name = "startTimeSeconds")
+    @SerialName("startTimeSeconds")
     val startTimeSeconds: Int,
-    @field:Json(name = "relativeTimeSeconds")
+    @SerialName("relativeTimeSeconds")
     val relativeTimeSeconds: Int,
-    @field:Json(name = "preparedBy")
-    val preparedBy: String?,
-    @field:Json(name = "websiteUrl")
-    val websiteUrl: String?,
-    @field:Json(name = "description")
-    val description: String?,
-    @field:Json(name = "difficulty")
-    val difficulty: Int?,
-    @field:Json(name = "kind")
-    val kind: String?,
-    @field:Json(name = "icpcRegion")
-    val icpcRegion: String?,
-    @field:Json(name = "country")
-    val country: String?,
-    @field:Json(name = "season")
-    val season: String?,
+    @SerialName("preparedBy")
+    val preparedBy: String? = null,
+    @SerialName("websiteUrl")
+    val websiteUrl: String? = null,
+    @SerialName("description")
+    val description: String? = null,
+    @SerialName("difficulty")
+    val difficulty: Int? = null,
+    @SerialName("kind")
+    val kind: String? = null,
+    @SerialName("icpcRegion")
+    val icpcRegion: String? = null,
+    @SerialName("country")
+    val country: String? = null,
+    @SerialName("season")
+    val season: String? = null,
 ) {
     fun toEntity(): Contest {
         return Contest(
@@ -72,6 +74,7 @@ object PhaseMapper {
     }
 }
 
+@Serializable
 enum class Phase {
     BEFORE,
     CODING,
@@ -80,6 +83,7 @@ enum class Phase {
     FINISHED
 }
 
+@Serializable
 enum class Type {
     CF,
     IOI,

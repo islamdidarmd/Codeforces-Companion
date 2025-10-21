@@ -5,11 +5,14 @@ import com.codeforcesvisualizer.core.data.Either
 import com.codeforcesvisualizer.core.data.InvalidApiResponseError
 import com.codeforcesvisualizer.core.data.ServerConnectionResponseError
 import com.codeforcesvisualizer.data.model.ContestListResponseModel
+import com.codeforcesvisualizer.data.model.BaseResponseModel
+import com.codeforcesvisualizer.data.model.StatusModel
 import com.codeforcesvisualizer.data.model.UserInfoResponseModel
 import com.codeforcesvisualizer.data.model.UserRatingResponseModel
 import com.codeforcesvisualizer.data.model.UserStatusResponseModel
+import com.codeforcesvisualizer.data.network.CFApiResponse
 import com.codeforcesvisualizer.data.network.CFApiService
-import com.squareup.moshi.Moshi
+import io.ktor.http.isSuccess
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -26,97 +29,62 @@ class CFRemoteDataSourceImpl @Inject constructor(
     private val api: CFApiService
 ) : CFRemoteDataSource {
     override suspend fun getContestList(): Either<AppError, ContestListResponseModel> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = api.getContestList()
-                val body = response.body()
-                if (response.isSuccessful && body != null) {
-                    Either.Right(data = body)
-                } else {
-                    if (response.errorBody() == null) {
-                        return@withContext Either.Left(data = InvalidApiResponseError())
-                    }
-
-                    val moshi = Moshi.Builder().build()
-                    val adapter = moshi.adapter(ContestListResponseModel::class.java)
-                    val errorBody = adapter.fromJson(response.errorBody()!!.source())
-                    Either.Left(data = AppError(message = errorBody?.comment ?: ""))
-                }
-            } catch (e: Exception) {
-                if (e is CancellationException) throw e
-                else Either.Left(data = ServerConnectionResponseError())
-            }
-        }
+        return executeRequest(
+            request = { api.getContestList() },
+            hasValidResult = { it.result != null }
+        )
     }
 
     override suspend fun getUserInfoByHandle(handle: String): Either<AppError, UserInfoResponseModel> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = api.getUserInfoByHandle(handle)
-                val body = response.body()
-                if (response.isSuccessful && body != null) {
-                    Either.Right(data = body)
-                } else {
-                    if (response.errorBody() == null) {
-                        return@withContext Either.Left(data = InvalidApiResponseError())
-                    }
-
-                    val moshi = Moshi.Builder().build()
-                    val adapter = moshi.adapter(UserInfoResponseModel::class.java)
-                    val errorBody = adapter.fromJson(response.errorBody()!!.source())
-                    Either.Left(data = AppError(message = errorBody?.comment ?: ""))
-                }
-            } catch (e: Exception) {
-                if (e is CancellationException) throw e
-                else Either.Left(data = ServerConnectionResponseError())
-            }
-        }
+        return executeRequest(
+            request = { api.getUserInfoByHandle(handle) },
+            hasValidResult = { !it.result.isNullOrEmpty() }
+        )
     }
 
     override suspend fun getUserStatusByHandle(handle: String): Either<AppError, UserStatusResponseModel> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = api.getUserStatusByHandle(handle)
-                val body = response.body()
-                if (response.isSuccessful && body != null) {
-                    Either.Right(data = body)
-                } else {
-                    if (response.errorBody() == null) {
-                        return@withContext Either.Left(data = InvalidApiResponseError())
-                    }
-
-                    val moshi = Moshi.Builder().build()
-                    val adapter = moshi.adapter(UserStatusResponseModel::class.java)
-                    val errorBody = adapter.fromJson(response.errorBody()!!.source())
-                    Either.Left(data = AppError(message = errorBody?.comment ?: ""))
-                }
-            } catch (e: Exception) {
-                if (e is CancellationException) throw e
-                else Either.Left(data = ServerConnectionResponseError())
-            }
-        }
+        return executeRequest(
+            request = { api.getUserStatusByHandle(handle) },
+            hasValidResult = { it.result != null }
+        )
     }
 
     override suspend fun getUserRatingByHandle(handle: String): Either<AppError, UserRatingResponseModel> {
+        return executeRequest(
+            request = { api.getUserRatingByHandle(handle) },
+            hasValidResult = { it.result != null }
+        )
+    }
+
+    private suspend inline fun <reified T : BaseResponseModel> executeRequest(
+        crossinline request: suspend () -> CFApiResponse<T>,
+        crossinline hasValidResult: (T) -> Boolean
+    ): Either<AppError, T> {
         return withContext(Dispatchers.IO) {
             try {
-                val response = api.getUserRatingByHandle(handle)
-                val body = response.body()
-                if (response.isSuccessful && body != null) {
-                    Either.Right(data = body)
-                } else {
-                    if (response.errorBody() == null) {
-                        return@withContext Either.Left(data = InvalidApiResponseError())
-                    }
+                val response = request()
+                if (!response.statusCode.isSuccess()) {
+                    return@withContext Either.Left(
+                        response.body?.comment?.takeIf { it.isNotBlank() }?.let { AppError(it) }
+                            ?: ServerConnectionResponseError()
+                    )
+                }
 
-                    val moshi = Moshi.Builder().build()
-                    val adapter = moshi.adapter(UserRatingResponseModel::class.java)
-                    val errorBody = adapter.fromJson(response.errorBody()!!.source())
-                    Either.Left(data = AppError(message = errorBody?.comment ?: ""))
+                val body = response.body ?: return@withContext Either.Left(InvalidApiResponseError())
+
+                when (body.statusModel) {
+                    StatusModel.OK if hasValidResult(body) -> {
+                        Either.Right(body)
+                    }
+                    StatusModel.FAILED -> {
+                        Either.Left(body.comment?.takeIf { it.isNotBlank() }
+                            ?.let { AppError(it) } ?: InvalidApiResponseError())
+                    }
+                    else -> Either.Left(InvalidApiResponseError())
                 }
             } catch (e: Exception) {
                 if (e is CancellationException) throw e
-                else Either.Left(data = ServerConnectionResponseError())
+                Either.Left(ServerConnectionResponseError())
             }
         }
     }

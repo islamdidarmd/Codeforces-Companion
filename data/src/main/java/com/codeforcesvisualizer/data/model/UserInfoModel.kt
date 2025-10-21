@@ -1,58 +1,60 @@
 package com.codeforcesvisualizer.data.model
 
 import com.codeforcesvisualizer.domain.entity.User
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UserInfoModel(
-    @field:Json(name = "handle")
+    @SerialName("handle")
     val handle: String,
 
-    @field:Json(name = "email")
-    val email: String?,
+    @SerialName("email")
+    val email: String? = null,
 
-    @field:Json(name = "firstName")
-    val firstName: String?,
+    @SerialName("firstName")
+    val firstName: String? = null,
 
-    @field:Json(name = "lastName")
-    val lastName: String?,
+    @SerialName("lastName")
+    val lastName: String? = null,
 
-    @field:Json(name = "country")
-    val country: String?,
+    @SerialName("country")
+    val country: String? = null,
 
-    @field:Json(name = "city")
-    val city: String?,
+    @SerialName("city")
+    val city: String? = null,
 
-    @field:Json(name = "organization")
-    val organization: String?,
+    @SerialName("organization")
+    val organization: String? = null,
 
-    @field:Json(name = "contribution")
+    @SerialName("contribution")
     val contribution: Int,
 
-    @field:Json(name = "rank")
-    val rank: String?,
+    @SerialName("rank")
+    val rank: String? = null,
 
-    @field:Json(name = "rating")
-    val rating: Int?,
+    @SerialName("rating")
+    val rating: Int? = null,
 
-    @field:Json(name = "maxRank")
-    val maxRank: String?,
+    @SerialName("maxRank")
+    val maxRank: String? = null,
 
-    @field:Json(name = "maxRating")
-    val maxRating: Int?,
+    @SerialName("maxRating")
+    val maxRating: Int? = null,
 
-    @field:Json(name = "lastOnlineTimeSeconds")
+    @SerialName("lastOnlineTimeSeconds")
     val lastOnlineTimeSeconds: Int,
 
-    @field:Json(name = "registrationTimeSeconds")
+    @SerialName("registrationTimeSeconds")
     val registrationTimeSeconds: Int,
 
-    @field:Json(name = "friendOfCount")
+    @SerialName("friendOfCount")
     val friendOfCount: Int,
 
-    @field:Json(name = "avatar")
+    @SerialName("avatar")
     val avatar: String,
 
-    @field:Json(name = "titlePhoto")
+    @SerialName("titlePhoto")
     val titlePhoto: String,
 ) {
     fun toEntity(): User {

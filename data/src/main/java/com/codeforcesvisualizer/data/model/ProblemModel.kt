@@ -1,19 +1,21 @@
 package com.codeforcesvisualizer.data.model
 
 import com.codeforcesvisualizer.domain.entity.Problem
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ProblemModel(
-    @field:Json(name = "contestId")
+    @SerialName("contestId")
     val contestId: Int,
 
-    @field:Json(name = "index")
+    @SerialName("index")
     val index: String,
 
-    @field:Json(name = "tags")
-    val tags: List<String>,
+    @SerialName("tags")
+    val tags: List<String> = emptyList(),
 
-    @field:Json(name = "name")
+    @SerialName("name")
     val name: String
 ) {
     fun toEntity(): Problem {
