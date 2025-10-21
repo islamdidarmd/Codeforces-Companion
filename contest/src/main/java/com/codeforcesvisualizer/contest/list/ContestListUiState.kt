@@ -1,6 +1,6 @@
 package com.codeforcesvisualizer.contest.list
 
-import com.codeforcesvisualizer.domain.entity.Contest
+import com.codeforcesvisualizer.shared.domain.entity.Contest
 
 data class ContestListUiState(
     val refreshing: Boolean = false,

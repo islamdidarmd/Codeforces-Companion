@@ -1,6 +1,6 @@
 package com.codeforcesvisualizer.profile
 
-import com.codeforcesvisualizer.domain.entity.UserRating
+import com.codeforcesvisualizer.shared.domain.entity.UserRating
 
 data class UserRatingUiState(
     val loading: Boolean = false,

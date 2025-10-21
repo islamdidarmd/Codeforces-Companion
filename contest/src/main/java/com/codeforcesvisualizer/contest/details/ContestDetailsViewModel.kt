@@ -3,8 +3,8 @@ package com.codeforcesvisualizer.contest.details
 import android.os.CountDownTimer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codeforcesvisualizer.core.data.Either
-import com.codeforcesvisualizer.domain.usecase.GetContestByIdUseCase
+import com.codeforcesvisualizer.shared.core.Either
+import com.codeforcesvisualizer.shared.domain.usecase.GetContestByIdUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

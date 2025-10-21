@@ -6,6 +6,6 @@ const val USER_INFO_URL = "api/user.info"
 const val USER_STATUS_URL = "api/user.status"
 const val USER_RATINGS_URL = "api/user.rating"
 
-const val NETWORK_READ_TIMEOUT = 30L
-const val NETWORK_CONNECT_TIMEOUT = 30L
-const val NETWORK_WRITE_TIMEOUT = 30L
+const val NETWORK_READ_TIMEOUT = 30_000L
+const val NETWORK_CONNECT_TIMEOUT = 30_000L
+const val NETWORK_WRITE_TIMEOUT = 30_000L

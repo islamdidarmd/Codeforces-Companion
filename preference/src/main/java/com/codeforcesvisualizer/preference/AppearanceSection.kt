@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.codeforcesvisualizer.core.components.HeightSpacer
-import com.codeforcesvisualizer.domain.entity.UiThemeMode
+import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
 
 @Composable
 fun AppearanceSection(

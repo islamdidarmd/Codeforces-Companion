@@ -1,4 +1,4 @@
-package com.codeforcesvisualizer.core.data
+package com.codeforcesvisualizer.shared.core
 
 open class AppError(val message: String)
 open class ApiError(message: String) : AppError(message = message)

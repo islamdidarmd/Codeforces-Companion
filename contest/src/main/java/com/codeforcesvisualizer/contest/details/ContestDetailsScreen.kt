@@ -17,7 +17,7 @@ import com.codeforcesvisualizer.core.components.*
 import com.codeforcesvisualizer.core.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.core.utils.convertToDHMS
 import com.codeforcesvisualizer.core.utils.convertToHMS
-import com.codeforcesvisualizer.domain.entity.Contest
+import com.codeforcesvisualizer.shared.domain.entity.Contest
 import com.google.accompanist.flowlayout.FlowRow
 import org.koin.androidx.compose.koinViewModel
 

@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
-import com.codeforcesvisualizer.domain.entity.UserRating
+import com.codeforcesvisualizer.shared.domain.entity.UserRating
 
 @Composable
 fun UpsAndDownCard(

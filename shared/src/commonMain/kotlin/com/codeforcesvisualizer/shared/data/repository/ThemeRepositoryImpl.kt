@@ -1,8 +1,8 @@
 package com.codeforcesvisualizer.shared.data.repository
 
 import android.content.SharedPreferences
-import com.codeforcesvisualizer.domain.entity.UiThemeMode
-import com.codeforcesvisualizer.domain.repository.ThemeRepository
+import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
+import com.codeforcesvisualizer.shared.domain.repository.ThemeRepository
 
 class ThemeRepositoryImpl : ThemeRepository {
     private val _themeModeKey = "theme_mode"

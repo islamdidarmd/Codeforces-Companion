@@ -1,6 +1,6 @@
 package com.codeforcesvisualizer.compare
 
-import com.codeforcesvisualizer.domain.entity.UserStatus
+import com.codeforcesvisualizer.shared.domain.entity.UserStatus
 
 data class UserStatusUiState(
     val loading: Boolean = false,

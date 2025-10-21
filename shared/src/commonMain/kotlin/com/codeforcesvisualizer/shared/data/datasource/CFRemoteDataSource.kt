@@ -1,20 +1,21 @@
 package com.codeforcesvisualizer.shared.data.datasource
 
-import com.codeforcesvisualizer.core.data.AppError
-import com.codeforcesvisualizer.core.data.Either
-import com.codeforcesvisualizer.core.data.InvalidApiResponseError
-import com.codeforcesvisualizer.core.data.ServerConnectionResponseError
-import com.codeforcesvisualizer.data.model.BaseResponseModel
-import com.codeforcesvisualizer.data.model.ContestListResponseModel
-import com.codeforcesvisualizer.data.model.StatusModel
-import com.codeforcesvisualizer.data.model.UserInfoResponseModel
-import com.codeforcesvisualizer.data.model.UserRatingResponseModel
-import com.codeforcesvisualizer.data.model.UserStatusResponseModel
-import com.codeforcesvisualizer.data.network.CFApiResponse
-import com.codeforcesvisualizer.data.network.CFApiService
+import com.codeforcesvisualizer.shared.core.AppError
+import com.codeforcesvisualizer.shared.core.Either
+import com.codeforcesvisualizer.shared.core.InvalidApiResponseError
+import com.codeforcesvisualizer.shared.core.ServerConnectionResponseError
+import com.codeforcesvisualizer.shared.data.model.BaseResponseModel
+import com.codeforcesvisualizer.shared.data.model.ContestListResponseModel
+import com.codeforcesvisualizer.shared.data.model.StatusModel
+import com.codeforcesvisualizer.shared.data.model.UserInfoResponseModel
+import com.codeforcesvisualizer.shared.data.model.UserRatingResponseModel
+import com.codeforcesvisualizer.shared.data.model.UserStatusResponseModel
+import com.codeforcesvisualizer.shared.data.network.CFApiResponse
+import com.codeforcesvisualizer.shared.data.network.CFApiService
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 
 interface CFRemoteDataSource {

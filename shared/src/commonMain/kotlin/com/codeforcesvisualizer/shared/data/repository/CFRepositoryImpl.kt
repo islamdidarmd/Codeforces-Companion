@@ -1,16 +1,17 @@
 package com.codeforcesvisualizer.shared.data.repository
 
-import com.codeforcesvisualizer.core.data.AppError
-import com.codeforcesvisualizer.core.data.DataNotFoundError
-import com.codeforcesvisualizer.core.data.Either
-import com.codeforcesvisualizer.core.data.MatchingDataNotFoundError
-import com.codeforcesvisualizer.data.datasource.CFRemoteDataSource
-import com.codeforcesvisualizer.domain.entity.Contest
-import com.codeforcesvisualizer.domain.entity.User
-import com.codeforcesvisualizer.domain.entity.UserRating
-import com.codeforcesvisualizer.domain.entity.UserStatus
-import com.codeforcesvisualizer.domain.repository.CFRepository
+import com.codeforcesvisualizer.shared.core.DataNotFoundError
+import com.codeforcesvisualizer.shared.core.Either
+import com.codeforcesvisualizer.shared.core.MatchingDataNotFoundError
+import com.codeforcesvisualizer.shared.core.AppError
+import com.codeforcesvisualizer.shared.data.datasource.CFRemoteDataSource
+import com.codeforcesvisualizer.shared.domain.entity.Contest
+import com.codeforcesvisualizer.shared.domain.entity.User
+import com.codeforcesvisualizer.shared.domain.entity.UserRating
+import com.codeforcesvisualizer.shared.domain.entity.UserStatus
+import com.codeforcesvisualizer.shared.domain.repository.CFRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 
 class CFRepositoryImpl(

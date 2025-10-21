@@ -1,6 +1,6 @@
 package com.codeforcesvisualizer.shared.data.model
 
-import com.codeforcesvisualizer.domain.entity.Contest
+import com.codeforcesvisualizer.shared.domain.entity.Contest
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
