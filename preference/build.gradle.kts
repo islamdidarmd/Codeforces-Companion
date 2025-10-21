@@ -40,7 +40,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":domain"))
+    implementation(project(":shared"))
 
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material)

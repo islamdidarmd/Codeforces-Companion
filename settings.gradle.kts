@@ -20,10 +20,9 @@ dependencyResolutionManagement {
 rootProject.name = "Codeforces-Visualizer"
 
 include(
-    ":app",
+    ":composeApp",
+    ":shared",
     ":core",
-    ":domain",
-    ":data",
     ":contest",
     ":webview",
     ":profile",
