@@ -7,8 +7,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.codeforcesvisualizer.data.config.BASE_URL
 import com.codeforcesvisualizer.profile.ProfileSearchScreen
+import com.codeforcesvisualizer.shared.data.config.BASE_URL
 import com.codeforcesvisualizer.webview.CFWebViewScreen
 
 internal fun NavGraphBuilder.addProfileTopLevel(

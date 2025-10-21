@@ -1,6 +1,6 @@
 package com.codeforcesvisualizer.shared.data.model
 
-import com.codeforcesvisualizer.domain.entity.UserRating
+import com.codeforcesvisualizer.shared.domain.entity.UserRating
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

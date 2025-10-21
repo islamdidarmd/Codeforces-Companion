@@ -1,9 +1,9 @@
 package com.codeforcesvisualizer.preference
 
 import androidx.lifecycle.ViewModel
-import com.codeforcesvisualizer.domain.entity.UiThemeMode
-import com.codeforcesvisualizer.domain.usecase.GetUiThemeModeUseCase
-import com.codeforcesvisualizer.domain.usecase.SetUiThemeModeUseCase
+import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
+import com.codeforcesvisualizer.shared.domain.usecase.GetUiThemeModeUseCase
+import com.codeforcesvisualizer.shared.domain.usecase.SetUiThemeModeUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

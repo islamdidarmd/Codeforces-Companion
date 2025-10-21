@@ -2,10 +2,10 @@ package com.codeforcesvisualizer.contest.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codeforcesvisualizer.core.data.AppError
-import com.codeforcesvisualizer.core.data.Either
-import com.codeforcesvisualizer.domain.entity.Contest
-import com.codeforcesvisualizer.domain.usecase.GetContestListUseCase
+import com.codeforcesvisualizer.shared.core.AppError
+import com.codeforcesvisualizer.shared.core.Either
+import com.codeforcesvisualizer.shared.domain.entity.Contest
+import com.codeforcesvisualizer.shared.domain.usecase.GetContestListUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

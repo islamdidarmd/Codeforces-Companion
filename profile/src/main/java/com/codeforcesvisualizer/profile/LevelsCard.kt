@@ -18,7 +18,7 @@ import com.codeforcesvisualizer.core.components.CFBarChart
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.core.components.getBarChartColorList
-import com.codeforcesvisualizer.domain.entity.UserStatus
+import com.codeforcesvisualizer.shared.domain.entity.UserStatus
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry

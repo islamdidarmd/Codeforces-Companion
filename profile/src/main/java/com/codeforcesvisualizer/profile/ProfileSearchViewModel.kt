@@ -2,10 +2,10 @@ package com.codeforcesvisualizer.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codeforcesvisualizer.core.data.Either
-import com.codeforcesvisualizer.domain.usecase.GetUserInfoByHandleUseCase
-import com.codeforcesvisualizer.domain.usecase.GetUserRatingsByHandleUseCase
-import com.codeforcesvisualizer.domain.usecase.GetUserStatusByHandleUseCase
+import com.codeforcesvisualizer.shared.core.Either
+import com.codeforcesvisualizer.shared.domain.usecase.GetUserInfoByHandleUseCase
+import com.codeforcesvisualizer.shared.domain.usecase.GetUserRatingsByHandleUseCase
+import com.codeforcesvisualizer.shared.domain.usecase.GetUserStatusByHandleUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

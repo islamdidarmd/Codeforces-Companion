@@ -24,7 +24,7 @@ import com.codeforcesvisualizer.core.components.Chip
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.core.components.WidthSpacer
 import com.codeforcesvisualizer.core.utils.convertTimeStampToDateString
-import com.codeforcesvisualizer.domain.entity.User
+import com.codeforcesvisualizer.shared.domain.entity.User
 
 @Composable
 fun UserInfoCard(

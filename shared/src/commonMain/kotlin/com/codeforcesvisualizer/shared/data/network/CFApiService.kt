@@ -1,14 +1,15 @@
 package com.codeforcesvisualizer.shared.data.network
 
-import com.codeforcesvisualizer.data.config.CONTEST_LIST_URL
-import com.codeforcesvisualizer.data.config.USER_INFO_URL
-import com.codeforcesvisualizer.data.config.USER_RATINGS_URL
-import com.codeforcesvisualizer.data.config.USER_STATUS_URL
-import com.codeforcesvisualizer.data.model.BaseResponseModel
-import com.codeforcesvisualizer.data.model.ContestListResponseModel
-import com.codeforcesvisualizer.data.model.UserInfoResponseModel
-import com.codeforcesvisualizer.data.model.UserRatingResponseModel
-import com.codeforcesvisualizer.data.model.UserStatusResponseModel
+import com.codeforcesvisualizer.shared.data.config.CONTEST_LIST_URL
+import com.codeforcesvisualizer.shared.data.config.USER_INFO_URL
+import com.codeforcesvisualizer.shared.data.config.USER_RATINGS_URL
+import com.codeforcesvisualizer.shared.data.config.USER_STATUS_URL
+import com.codeforcesvisualizer.shared.data.model.BaseResponseModel
+import com.codeforcesvisualizer.shared.data.model.UserInfoResponseModel
+import com.codeforcesvisualizer.shared.data.model.UserRatingResponseModel
+import com.codeforcesvisualizer.shared.data.model.UserStatusResponseModel
+import com.codeforcesvisualizer.shared.data.config.CONTEST_LIST_URL
+import com.codeforcesvisualizer.shared.data.model.ContestListResponseModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

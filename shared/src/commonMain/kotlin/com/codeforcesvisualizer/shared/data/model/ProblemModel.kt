@@ -1,6 +1,6 @@
 package com.codeforcesvisualizer.shared.data.model
 
-import com.codeforcesvisualizer.domain.entity.Problem
+import com.codeforcesvisualizer.shared.domain.entity.Problem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

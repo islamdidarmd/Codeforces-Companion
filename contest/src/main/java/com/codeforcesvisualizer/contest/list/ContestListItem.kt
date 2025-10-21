@@ -20,7 +20,7 @@ import com.codeforcesvisualizer.core.components.Chip
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.core.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.core.utils.convertToHMS
-import com.codeforcesvisualizer.domain.entity.Contest
+import com.codeforcesvisualizer.shared.domain.entity.Contest
 import com.google.accompanist.flowlayout.FlowRow
 
 @Composable

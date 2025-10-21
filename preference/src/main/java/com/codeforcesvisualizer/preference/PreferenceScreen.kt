@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
-import com.codeforcesvisualizer.domain.entity.UiThemeMode
+import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.koin.androidx.compose.koinViewModel

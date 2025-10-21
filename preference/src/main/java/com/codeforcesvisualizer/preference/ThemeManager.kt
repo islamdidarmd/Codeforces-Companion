@@ -1,6 +1,6 @@
 package com.codeforcesvisualizer.preference
 
-import com.codeforcesvisualizer.domain.entity.UiThemeMode
+import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
 import kotlinx.coroutines.flow.StateFlow
 
 interface ThemeManager {

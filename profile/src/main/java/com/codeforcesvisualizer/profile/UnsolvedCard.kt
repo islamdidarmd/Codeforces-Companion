@@ -18,7 +18,7 @@ import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.Chip
 import com.codeforcesvisualizer.core.components.HeightSpacer
-import com.codeforcesvisualizer.domain.entity.UserStatus
+import com.codeforcesvisualizer.shared.domain.entity.UserStatus
 import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
