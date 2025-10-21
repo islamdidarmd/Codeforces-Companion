@@ -4,18 +4,15 @@ import androidx.lifecycle.ViewModel
 import com.codeforcesvisualizer.domain.entity.UiThemeMode
 import com.codeforcesvisualizer.domain.usecase.GetUiThemeModeUseCase
 import com.codeforcesvisualizer.domain.usecase.SetUiThemeModeUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Inject
 
-@HiltViewModel
-class ThemeManagerViewModel @Inject constructor(
+class ThemeManagerViewModel(
     private val getUiThemeModeUseCase: GetUiThemeModeUseCase,
     private val setUiThemeModeUseCase: SetUiThemeModeUseCase
-) : ViewModel() {
+) : ViewModel(), ThemeManager {
     private val _themeModeFlow = MutableStateFlow(ThemeModeUiState())
-    val themeModeFlow: StateFlow<ThemeModeUiState> = _themeModeFlow
+    override val themeModeFlow: StateFlow<ThemeModeUiState> = _themeModeFlow
 
     init {
         getUiThemeMode()
@@ -25,7 +22,7 @@ class ThemeManagerViewModel @Inject constructor(
         _themeModeFlow.value = _themeModeFlow.value.copy(themeMode = getUiThemeModeUseCase())
     }
 
-    fun setUiThemeMode(themeMode: UiThemeMode) {
+    override fun setUiThemeMode(themeMode: UiThemeMode) {
         if (_themeModeFlow.value.themeMode == themeMode) return
         _themeModeFlow.value = _themeModeFlow.value.copy(themeMode = themeMode)
         setUiThemeModeUseCase(themeMode)

@@ -5,14 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codeforcesvisualizer.core.data.Either
 import com.codeforcesvisualizer.domain.usecase.GetContestByIdUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class ContestDetailsViewModel @Inject constructor(
+class ContestDetailsViewModel(
     val getContestByIdUseCase: GetContestByIdUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(ContestDetailsUiState())

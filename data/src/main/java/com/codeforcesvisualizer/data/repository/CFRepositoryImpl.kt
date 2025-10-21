@@ -12,9 +12,8 @@ import com.codeforcesvisualizer.domain.entity.UserStatus
 import com.codeforcesvisualizer.domain.repository.CFRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class CFRepositoryImpl @Inject constructor(
+class CFRepositoryImpl(
     private val cfRemoteDataSource: CFRemoteDataSource
 ) : CFRepository {
     private val _contestList = mutableListOf<Contest>()

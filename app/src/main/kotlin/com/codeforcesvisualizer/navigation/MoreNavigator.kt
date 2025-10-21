@@ -6,11 +6,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.codeforcesvisualizer.preference.PreferenceScreen
-import com.codeforcesvisualizer.preference.ThemeManagerViewModel
+import com.codeforcesvisualizer.preference.ThemeManager
 
 internal fun NavGraphBuilder.addMoreTopLevel(
     navController: NavController,
-    themeManagerViewModel: ThemeManagerViewModel
+    themeManager: ThemeManager
 ) {
     navigation(
         route = Screen.More.route,
@@ -19,7 +19,7 @@ internal fun NavGraphBuilder.addMoreTopLevel(
         addPreferenceScreen(
             navController,
             Screen.More,
-            themeManagerViewModel = themeManagerViewModel
+            themeManager = themeManager
         )
     }
 }
@@ -27,14 +27,14 @@ internal fun NavGraphBuilder.addMoreTopLevel(
 private fun NavGraphBuilder.addPreferenceScreen(
     navController: NavController,
     root: Screen,
-    themeManagerViewModel: ThemeManagerViewModel
+    themeManager: ThemeManager
 ) {
     composable(
         route = LeafScreen.More.createRoute(root)
     ) {
         PreferenceScreen(
             modifier = Modifier,
-            themeManagerViewModel = themeManagerViewModel,
+            themeManager = themeManager,
             onNavigateBack = { navController.navigateUp() }
         )
     }

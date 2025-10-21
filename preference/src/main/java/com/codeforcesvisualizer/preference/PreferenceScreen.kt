@@ -10,7 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.codeforcesvisualizer.domain.entity.UiThemeMode
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import org.koin.androidx.compose.koinViewModel
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.CFAppBar
 
@@ -18,9 +21,9 @@ import com.codeforcesvisualizer.core.components.CFAppBar
 fun PreferenceScreen(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
-    themeManagerViewModel: ThemeManagerViewModel
+    themeManager: ThemeManager = koinViewModel<ThemeManagerViewModel>()
 ) {
-    val themeModeUiState by themeManagerViewModel.themeModeFlow.collectAsState()
+    val themeModeUiState by themeManager.themeModeFlow.collectAsState()
 
     Scaffold(
         modifier = modifier,
@@ -36,7 +39,7 @@ fun PreferenceScreen(
                 AppearanceSection(
                     themeMode = themeModeUiState.themeMode,
                     onThemeModeChanged = { selectedThemeMode ->
-                        themeManagerViewModel.setUiThemeMode(selectedThemeMode)
+                        themeManager.setUiThemeMode(selectedThemeMode)
                         EventLogger.logEvent(
                             event = "Theme Changed",
                             param = bundleOf(
@@ -61,6 +64,15 @@ fun PreferenceScreen(
 private fun Preview() {
     PreferenceScreen(
         onNavigateBack = {},
-        themeManagerViewModel = hiltViewModel()
+        themeManager = PreviewThemeManager()
     )
+}
+
+private class PreviewThemeManager : ThemeManager {
+    private val state = MutableStateFlow(ThemeModeUiState())
+    override val themeModeFlow: StateFlow<ThemeModeUiState> = state
+
+    override fun setUiThemeMode(themeMode: UiThemeMode) {
+        state.value = state.value.copy(themeMode = themeMode)
+    }
 }

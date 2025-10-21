@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.kspModule)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.google.dagger.hilt)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlin.serialization)
@@ -50,9 +49,6 @@ dependencies {
     implementation(libs.io.ktor.serialization.kotlinx.json)
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.com.google.dagger.hilt.android)
-    ksp(libs.com.google.dagger.hilt.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
 

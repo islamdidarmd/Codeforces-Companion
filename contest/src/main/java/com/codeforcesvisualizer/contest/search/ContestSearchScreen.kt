@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import com.codeforcesvisualizer.contest.R
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.SearchBar
@@ -17,7 +17,7 @@ import com.codeforcesvisualizer.core.components.SearchBar
 @Composable
 fun ContestSearchScreen(
     modifier: Modifier = Modifier,
-    contestSearchViewModel: ContestSearchViewModel = hiltViewModel(),
+    contestSearchViewModel: ContestSearchViewModel = koinViewModel(),
     onNavigateBack: () -> Unit,
     openContestDetails: (Int) -> Unit,
     onOpenWebSite: (Int) -> Unit,

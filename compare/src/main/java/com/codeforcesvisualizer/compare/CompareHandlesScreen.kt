@@ -8,14 +8,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import com.codeforcesvisualizer.core.components.CFAppBar
 
 @Composable
 fun CompareHandlesScreen(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
-    viewModel: CompareHandlesViewModel = hiltViewModel()
+    viewModel: CompareHandlesViewModel = koinViewModel()
 ) {
     val handleOne by viewModel.handle1State.collectAsState()
     val handleTwo by viewModel.handle2State.collectAsState()

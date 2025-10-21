@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
-import androidx.hilt.navigation.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.CFAppBar
 import com.codeforcesvisualizer.core.components.HeightSpacer
@@ -29,7 +29,7 @@ fun CompareScreenHandleInput(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
     openCompare: () -> Unit,
-    viewModel: CompareHandlesViewModel = hiltViewModel()
+    viewModel: CompareHandlesViewModel = koinViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()

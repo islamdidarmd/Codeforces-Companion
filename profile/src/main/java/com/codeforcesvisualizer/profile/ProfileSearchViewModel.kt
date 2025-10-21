@@ -6,14 +6,11 @@ import com.codeforcesvisualizer.core.data.Either
 import com.codeforcesvisualizer.domain.usecase.GetUserInfoByHandleUseCase
 import com.codeforcesvisualizer.domain.usecase.GetUserRatingsByHandleUseCase
 import com.codeforcesvisualizer.domain.usecase.GetUserStatusByHandleUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class ProfileSearchViewModel @Inject constructor(
+class ProfileSearchViewModel(
     private val getUserInfoByHandleUseCase: GetUserInfoByHandleUseCase,
     private val getUserStatusByHandleUseCase: GetUserStatusByHandleUseCase,
     private val getUserRatingByHandleUseCase: GetUserRatingsByHandleUseCase

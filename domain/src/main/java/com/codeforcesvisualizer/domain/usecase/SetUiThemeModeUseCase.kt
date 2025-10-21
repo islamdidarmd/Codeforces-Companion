@@ -3,9 +3,8 @@ package com.codeforcesvisualizer.domain.usecase
 import android.content.SharedPreferences
 import com.codeforcesvisualizer.domain.entity.UiThemeMode
 import com.codeforcesvisualizer.domain.repository.ThemeRepository
-import javax.inject.Inject
 
-class SetUiThemeModeUseCase @Inject constructor(
+class SetUiThemeModeUseCase(
     private val themeRepository: ThemeRepository,
     private val sharedPreferences: SharedPreferences,
 ) {

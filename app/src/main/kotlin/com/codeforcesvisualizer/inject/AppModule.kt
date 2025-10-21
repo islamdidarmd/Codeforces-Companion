@@ -6,24 +6,10 @@ import com.codeforcesvisualizer.data.repository.CFRepositoryImpl
 import com.codeforcesvisualizer.data.repository.ThemeRepositoryImpl
 import com.codeforcesvisualizer.domain.repository.CFRepository
 import com.codeforcesvisualizer.domain.repository.ThemeRepository
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.dsl.module
 
-@InstallIn(SingletonComponent::class)
-@Module
-abstract class AppModule {
-    @Binds
-    @Singleton
-    abstract fun bindCFRepository(repositoryImpl: CFRepositoryImpl): CFRepository
-
-    @Binds
-    @Singleton
-    abstract fun bindThemeRepository(themeRepository: ThemeRepositoryImpl): ThemeRepository
-
-    @Binds
-    @Singleton
-    abstract fun bindCFRemoteDataSource(dataSourceImpl: CFRemoteDataSourceImpl): CFRemoteDataSource
+val appModule = module {
+    single<CFRemoteDataSource> { CFRemoteDataSourceImpl(get()) }
+    single<CFRepository> { CFRepositoryImpl(get()) }
+    single<ThemeRepository> { ThemeRepositoryImpl() }
 }

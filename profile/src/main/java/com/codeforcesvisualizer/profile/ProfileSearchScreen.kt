@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.core.os.bundleOf
-import androidx.hilt.navigation.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.SearchBar
 
@@ -18,7 +18,7 @@ fun ProfileSearchScreen(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
     onOpenWebSite: (String) -> Unit,
-    viewModel: ProfileSearchViewModel = hiltViewModel()
+    viewModel: ProfileSearchViewModel = koinViewModel()
 ) {
     val searchTextState by viewModel.searchTextState.collectAsState()
     val userInfoUiState by viewModel.userInfoState.collectAsState()

@@ -6,14 +6,11 @@ import com.codeforcesvisualizer.core.data.AppError
 import com.codeforcesvisualizer.core.data.Either
 import com.codeforcesvisualizer.domain.entity.Contest
 import com.codeforcesvisualizer.domain.usecase.FilterContestListUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class ContestSearchViewModel @Inject constructor(
+class ContestSearchViewModel(
     private val filterContestListUseCase: FilterContestListUseCase
 ) : ViewModel() {
     private val _searchTextFlow = MutableStateFlow("")
