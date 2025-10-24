@@ -1,27 +1,32 @@
 package com.codeforcesvisualizer.shared.data.repository
 
-import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
 import com.codeforcesvisualizer.shared.domain.repository.ThemeRepository
+import kotlinx.coroutines.flow.first
 
 class ThemeRepositoryImpl : ThemeRepository {
-    private val _themeModeKey = "theme_mode"
+    private val _themeModeKey = intPreferencesKey("theme_mode")
 
-    override fun getUiThemeMode(sharedPreferences: SharedPreferences): UiThemeMode {
-        return when (sharedPreferences.getInt(_themeModeKey, 0)) {
+    override suspend fun getUiThemeMode(sharedPreferences: DataStore<Preferences>): UiThemeMode {
+        return when (sharedPreferences.data.first()[_themeModeKey]) {
             1 -> UiThemeMode.Light
             2 -> UiThemeMode.Dark
             else -> UiThemeMode.System
         }
     }
 
-    override fun setUiThemeMode(sharedPreferences: SharedPreferences, uiThemeMode: UiThemeMode) {
-        val editor = sharedPreferences.edit()
-        when (uiThemeMode) {
-            UiThemeMode.System -> editor.putInt(_themeModeKey, 0)
-            UiThemeMode.Light -> editor.putInt(_themeModeKey, 1)
-            UiThemeMode.Dark -> editor.putInt(_themeModeKey, 2)
+    override suspend fun setUiThemeMode(sharedPreferences: DataStore<Preferences>, uiThemeMode: UiThemeMode) {
+        val mode = when (uiThemeMode) {
+            UiThemeMode.System -> 0
+            UiThemeMode.Light -> 1
+            UiThemeMode.Dark -> 2
         }
-        editor.apply()
+        sharedPreferences.edit { store ->
+            store[_themeModeKey] = mode
+        }
     }
 }

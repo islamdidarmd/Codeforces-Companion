@@ -46,6 +46,9 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.io.coil.kt.coil.compose)
 
+    api(libs.androidx.datastore)
+    api(libs.androidx.datastore.preferences)
+
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(libs.androidx.compose.ui.tooling.preview)
