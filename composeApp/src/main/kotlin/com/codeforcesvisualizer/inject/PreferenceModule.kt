@@ -1,13 +1,20 @@
 package com.codeforcesvisualizer.inject
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import okio.Path.Companion.toPath
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val preferenceModule = module {
-    single<SharedPreferences> {
+    val dataStoreFileName = "cfv.preferences_pb"
+    single<DataStore<Preferences>> {
         val context: Context = androidContext()
-        context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+        val path = context.filesDir.resolve(dataStoreFileName).absolutePath
+        PreferenceDataStoreFactory.createWithPath(
+            produceFile = { path.toPath() }
+        )
     }
 }

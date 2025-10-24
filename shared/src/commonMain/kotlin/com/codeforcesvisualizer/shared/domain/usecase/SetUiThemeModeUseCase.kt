@@ -1,14 +1,15 @@
 package com.codeforcesvisualizer.shared.domain.usecase
 
-import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
 import com.codeforcesvisualizer.shared.domain.repository.ThemeRepository
 
 class SetUiThemeModeUseCase(
     private val themeRepository: ThemeRepository,
-    private val sharedPreferences: SharedPreferences,
+    private val sharedPreferences: DataStore<Preferences>,
 ) {
-    operator fun invoke(uiThemeMode: UiThemeMode) {
+    suspend operator fun invoke(uiThemeMode: UiThemeMode) {
         return themeRepository.setUiThemeMode(sharedPreferences, uiThemeMode)
     }
 }

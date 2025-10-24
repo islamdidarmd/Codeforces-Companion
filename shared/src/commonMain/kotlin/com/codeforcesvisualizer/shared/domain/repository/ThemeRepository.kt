@@ -1,9 +1,10 @@
 package com.codeforcesvisualizer.shared.domain.repository
 
-import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
 
 interface ThemeRepository {
-    fun getUiThemeMode(sharedPreferences: SharedPreferences): UiThemeMode
-    fun setUiThemeMode(sharedPreferences: SharedPreferences, uiThemeMode: UiThemeMode)
+    suspend fun getUiThemeMode(sharedPreferences: DataStore<Preferences>): UiThemeMode
+    suspend fun setUiThemeMode(sharedPreferences: DataStore<Preferences>, uiThemeMode: UiThemeMode)
 }
