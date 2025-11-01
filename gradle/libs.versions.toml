@@ -7,18 +7,19 @@ compileSdk = "36"
 composeAccompanist = "0.36.0"
 composeActivity = "1.11.0"
 composeBom = "2025.10.00"
-composeNavigation = "2.9.5"
+composeNavigation = "2.9.1"
 composeViewmodel = "2.9.4"
+composeMultiplatform = "1.9.0"
 core = "1.7.0"
 coreKtx = "1.17.0"
 coreTesting = "2.2.0"
 espressoCore = "3.7.0"
 datastore = "1.1.7"
-firebaseBom = "34.4.0"
+firebaseBom = "34.5.0"
 firebaseCrashlyticsGradle = "3.0.6"
 googleServices = "4.4.4"
 junit = "4.13.2"
-koin = "3.5.6"
+koin = "4.1.1"
 kotlin = "2.2.10"
 kotlinxSerialization = "1.7.3"
 kspVersion = "2.2.10-2.0.2"
@@ -54,7 +55,7 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycleExtensions" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "composeViewmodel" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
+navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidJunit" }
@@ -66,7 +67,6 @@ com-google-accompanist-webview = { module = "com.google.accompanist:accompanist-
 com-google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 io-coil-kt-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 io-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 io-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
@@ -74,8 +74,9 @@ io-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor
 io-ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 io-ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 junit = { module = "junit:junit", version.ref = "junit" }
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-viewmodel-navigation", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
@@ -89,6 +90,7 @@ android-lint = { id = "com.android.lint", version.ref = "agp" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsGradle" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
