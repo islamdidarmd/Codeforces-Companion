@@ -22,10 +22,4 @@ rootProject.name = "Codeforces-Visualizer"
 include(
     ":composeApp",
     ":shared",
-    ":core",
-    ":contest",
-    ":webview",
-    ":profile",
-    ":compare",
-    ":preference"
 )

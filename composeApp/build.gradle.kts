@@ -1,11 +1,70 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.kspModule)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.kotlinAndroid)
 }
+
+kotlin {
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
+
+    listOf(
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "ComposeApp"
+            isStatic = true
+        }
+    }
+
+    sourceSets {
+        androidMain.dependencies {
+            implementation(libs.androidx.compose.ui.tooling.preview)
+            implementation(libs.androidx.activity.compose)
+        }
+        commonMain.dependencies {
+            implementation(project(":shared"))
+
+            implementation(compose.runtime)
+
+            implementation(compose.foundation)
+            implementation(compose.ui)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+
+            implementation(libs.navigation.compose)
+
+            implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.datastore)
+            implementation(libs.androidx.datastore.preferences)
+
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.analytics)
+
+            implementation(libs.io.ktor.client.core)
+
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.viewmodel.navigation)
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
+    }
+}
+
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -42,39 +101,7 @@ android {
     }
 
     namespace = "com.codeforcesvisualizer"
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
-    implementation(project(":core"))
-    implementation(project(":shared"))
-    implementation(project(":contest"))
-    implementation(project(":webview"))
-    implementation(project(":profile"))
-    implementation(project(":compare"))
-    implementation(project(":preference"))
-
-    implementation(libs.androidx.appcompat)
-
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.com.google.android.material)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.material.icons.core)
-    implementation(libs.androidx.compose.material.icons.extended)
-
-    implementation(libs.androidx.navigation.compose)
-
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.core.ktx)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-
-    implementation(libs.com.google.accompanist.systemuicontroller)
-    implementation(libs.io.ktor.client.core)
-
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidx.compose)
 }
