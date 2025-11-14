@@ -10,15 +10,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.language
 import com.codeforcesvisualizer.core.components.CFPieChart
+import com.codeforcesvisualizer.core.components.CFPieChartData
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.PieChartSlice
+import com.codeforcesvisualizer.core.components.getPieChartColorList
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
-import com.github.mikephil.charting.data.PieEntry
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LanguageCard(
@@ -62,28 +65,24 @@ private fun LanguageCard(
         languageCounterMap[it.programmingLanguage] =
             (languageCounterMap[it.programmingLanguage] ?: 0) + 1
     }
-    val entries = languageCounterMap.map { PieEntry(it.value.toFloat(), it.key) }
+    val palette = getPieChartColorList()
+    val slices = languageCounterMap.entries.mapIndexed { index, entry ->
+        PieChartSlice(
+            label = entry.key,
+            value = entry.value.toFloat(),
+            color = palette[index % palette.size]
+        )
+    }
 
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = stringResource(R.string.language),
+            text = stringResource(Res.string.language),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
         CFPieChart(
-            entries = entries,
-            itemCount = userStatusList.size,
-            minSizePercentToDrawLabel = 10
+            data = CFPieChartData(slices),
+            minPercentToShowLabel = 10
         )
     }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    LanguageCard(
-        userStatusUiState = UserStatusUiState(
-            userStatus = listOf()
-        )
-    )
 }

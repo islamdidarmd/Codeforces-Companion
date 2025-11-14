@@ -1,6 +1,5 @@
 package com.codeforcesvisualizer.compare
 
-import android.graphics.Color
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,16 +10,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.solved_with_onr_submission
+import com.codeforcesvisualizer.core.components.BarChartSeries
 import com.codeforcesvisualizer.core.components.CFBarChart
+import com.codeforcesvisualizer.core.components.CFBarChartData
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.getBarChartColorList
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SolvedWithOneSubmissionCard(
@@ -76,47 +77,31 @@ private fun SolvedWithOneSubmissionCard(
                     userStatusList1.count { it.problem.name == status.problem.name } == 1
         }.count()
 
-    val user2Count = userStatusList1
+    val user2Count = userStatusList2
         .filter { status ->
             status.verdict == "OK" &&
                     userStatusList2.count { it.problem.name == status.problem.name } == 1
         }.count()
 
-    val submissionChartEntries = listOf(
-        BarEntry(0f, user1Count.toFloat()),
-        BarEntry(1f, user2Count.toFloat()),
+    val palette = getBarChartColorList()
+    val chartData = CFBarChartData(
+        groupLabels = listOf(handle1, handle2),
+        series = listOf(
+            BarChartSeries(
+                label = stringResource(Res.string.solved_with_onr_submission),
+                values = listOf(user1Count.toFloat(), user2Count.toFloat()),
+                color = palette.first()
+            )
+        )
     )
-
-    val statusDataSet = BarDataSet(submissionChartEntries, "")
-
-    statusDataSet.color = Color.GREEN
-
-    val statusData = BarData(statusDataSet)
-        .apply {
-            barWidth = 0.5f
-            setValueFormatter { value, _, _, _ ->
-                return@setValueFormatter value.toInt().toString()
-            }
-        }
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = stringResource(R.string.solved_with_onr_submission),
+            text = stringResource(Res.string.solved_with_onr_submission),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
         CFBarChart(
-            modifier = modifier,
-            data = statusData,
-            itemCount = 2,
-            xAxisValueFormatter = { value, _ ->
-                if (value >= 0f && value < 1f) {
-                    return@CFBarChart handle1
-                } else if (value >= 1f && value < 2f) {
-                    return@CFBarChart handle2
-                } else {
-                    return@CFBarChart ""
-                }
-            }
+            data = chartData
         )
     }
 }

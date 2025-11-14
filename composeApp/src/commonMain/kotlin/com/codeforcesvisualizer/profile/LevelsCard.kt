@@ -10,18 +10,19 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.levels
+import com.codeforcesvisualizer.core.components.BarChartSeries
 import com.codeforcesvisualizer.core.components.CFBarChart
+import com.codeforcesvisualizer.core.components.CFBarChartData
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.core.components.getBarChartColorList
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LevelsCard(
@@ -65,28 +66,28 @@ private fun LevelsCard(
         }
     }
 
-    var barIndex = 0f
-    val entries = levelsMap.map { level -> BarEntry(++barIndex, level.value.toFloat()) }
-    val dataset = BarDataSet(entries, "").apply {
-        colors = getBarChartColorList()
-    }
-    val data = BarData(dataset).apply {
-        barWidth = 0.5f
-        setValueFormatter { value, _, _, _ -> value.toInt().toString() }
-    }
+    val palette = getBarChartColorList()
     val levelList = levelsMap.keys.toList()
+    val data = CFBarChartData(
+        groupLabels = levelList,
+        series = listOf(
+            BarChartSeries(
+                label = stringResource(Res.string.levels),
+                values = levelsMap.values.map { it.toFloat() },
+                color = palette.first()
+            )
+        )
+    )
 
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = stringResource(R.string.levels),
+            text = stringResource(Res.string.levels),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
 
         CFBarChart(
-            data = data,
-            itemCount = userStatusList.size,
-            xAxisValueFormatter = { value, _ -> levelList[(value-1).toInt()]}
+            data = data
         )
     }
 }

@@ -1,6 +1,5 @@
 package com.codeforcesvisualizer.compare
 
-import android.graphics.Color
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,16 +10,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.ratings
+import com.codeforcesvisualizer.core.components.BarChartSeries
 import com.codeforcesvisualizer.core.components.CFBarChart
+import com.codeforcesvisualizer.core.components.CFBarChartData
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.getBarChartColorList
 import com.codeforcesvisualizer.shared.domain.entity.UserRating
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RatingsCard(
@@ -88,56 +89,32 @@ private fun RatingsCard(
         minRating2 = minOf(minRating2, it.newRating)
     }
 
-    val ratingChartEntries1 = listOf(
-        BarEntry(0f, currentRating1.toFloat()),
-        BarEntry(1f, maxRating1.toFloat()),
-        BarEntry(2f, minRating1.toFloat())
+    val palette = getBarChartColorList()
+    val groupLabels = listOf("Current", "Max", "Min")
+    val data = CFBarChartData(
+        groupLabels = groupLabels,
+        series = listOf(
+            BarChartSeries(
+                label = handle1,
+                values = listOf(currentRating1, maxRating1, minRating1).map { it.toFloat() },
+                color = palette[0 % palette.size]
+            ),
+            BarChartSeries(
+                label = handle2,
+                values = listOf(currentRating2, maxRating2, minRating2).map { it.toFloat() },
+                color = palette[1 % palette.size]
+            )
+        )
     )
-    val ratingChartEntries2 = listOf(
-        BarEntry(0f, currentRating2.toFloat()),
-        BarEntry(1f, maxRating2.toFloat()),
-        BarEntry(2f, minRating2.toFloat())
-    )
-
-    val ratingDataSet1 = BarDataSet(ratingChartEntries1, handle1)
-    val ratingDataSet2 = BarDataSet(ratingChartEntries2, handle2)
-
-    ratingDataSet1.color = Color.GREEN
-    ratingDataSet2.color = Color.BLUE
-
-    val ratingData = BarData(ratingDataSet1, ratingDataSet2)
-        .apply {
-            barWidth = 0.3f
-            setValueFormatter { value, _, _, _ ->
-                return@setValueFormatter value.toInt().toString()
-            }
-        }
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = stringResource(R.string.ratings),
+            text = stringResource(Res.string.ratings),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
         CFBarChart(
-            modifier = modifier,
-            data = ratingData,
-            itemCount = 3,
-            xAxisValueFormatter = { value, _ ->
-                if (value >= 0f && value < 1f) {
-                    return@CFBarChart "Current Rating"
-                } else if (value >= 1f && value < 2f) {
-                    return@CFBarChart "Max Rating"
-                } else if (value >= 2f && value < 3f) {
-                    return@CFBarChart "Min Rating"
-                } else {
-                    return@CFBarChart ""
-                }
-            },
-            legendEnabled = true,
-            groupBars = true,
-            groupFromX = -0.5f,
-            groupSpace = 0.4f,
-            barSpace = 0.02f
+            data = data,
+            showLegend = true
         )
     }
 }

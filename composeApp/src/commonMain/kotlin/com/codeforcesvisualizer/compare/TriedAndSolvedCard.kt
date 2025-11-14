@@ -1,6 +1,5 @@
 package com.codeforcesvisualizer.compare
 
-import android.graphics.Color
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,16 +10,19 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.tried_and_solved
+import com.codeforcesvisualizer.core.components.BarChartSeries
 import com.codeforcesvisualizer.core.components.CFBarChart
+import com.codeforcesvisualizer.core.components.CFBarChartData
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.getBarChartColorList
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TriedAndSolvedCard(
@@ -84,53 +86,38 @@ private fun TriedAndSolvedCard(
         else user2ProblemStatus.putIfAbsent(problemName, false)
     }
 
-    val statusChartEntries1 = listOf(
-        BarEntry(0f, user1ProblemStatus.count().toFloat()),
-        BarEntry(1f,  user1ProblemStatus.count { it.value }.toFloat()),
+    val palette = getBarChartColorList()
+    val groupLabels = listOf("Tried", "Solved")
+    val chartData = CFBarChartData(
+        groupLabels = groupLabels,
+        series = listOf(
+            BarChartSeries(
+                label = handle1,
+                values = listOf(
+                    user1ProblemStatus.count().toFloat(),
+                    user1ProblemStatus.count { it.value }.toFloat()
+                ),
+                color = palette[0 % palette.size]
+            ),
+            BarChartSeries(
+                label = handle2,
+                values = listOf(
+                    user2ProblemStatus.count().toFloat(),
+                    user2ProblemStatus.count { it.value }.toFloat()
+                ),
+                color = palette[1 % palette.size]
+            )
+        )
     )
-
-    val statusChartEntries2 = listOf(
-        BarEntry(0f, user2ProblemStatus.count().toFloat()),
-        BarEntry(1f,  user2ProblemStatus.count { it.value }.toFloat()),
-    )
-
-    val statusDataSet1 = BarDataSet(statusChartEntries1, handle1)
-    val statusDataSet2 = BarDataSet(statusChartEntries2, handle2)
-
-    statusDataSet1.color = Color.GREEN
-    statusDataSet2.color = Color.BLUE
-
-    val ratingData = BarData(statusDataSet1, statusDataSet2)
-        .apply {
-            barWidth = 0.3f
-            setValueFormatter { value, _, _, _ ->
-                return@setValueFormatter value.toInt().toString()
-            }
-        }
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = stringResource(R.string.tried_and_solved),
+            text = stringResource(Res.string.tried_and_solved),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
         CFBarChart(
-            modifier = modifier,
-            data = ratingData,
-            itemCount = 2,
-            xAxisValueFormatter = { value, _ ->
-                if (value >= 0f && value < 1f) {
-                    return@CFBarChart "Tried"
-                } else if (value >= 1f && value < 2f) {
-                    return@CFBarChart "Solved"
-                } else {
-                    return@CFBarChart ""
-                }
-            },
-            legendEnabled = true,
-            groupBars = true,
-            groupFromX = -0.5f,
-            groupSpace = 0.4f,
-            barSpace = 0.02f
+            data = chartData,
+            showLegend = true
         )
     }
 }
