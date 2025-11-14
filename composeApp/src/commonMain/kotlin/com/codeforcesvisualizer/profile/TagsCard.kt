@@ -1,23 +1,25 @@
 package com.codeforcesvisualizer.profile
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.*
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.tags
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.Chip
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
-import com.google.accompanist.flowlayout.FlowRow
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TagsCard(
@@ -51,24 +53,25 @@ fun TagsCard(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TagsCard(
     modifier: Modifier = Modifier,
     userStatusList: List<UserStatus>
 ) {
-    val tags = sortedSetOf<String>()
+    val tags = mutableSetOf<String>()
     userStatusList.forEach { status -> tags.addAll(status.problem.tags) }
 
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = stringResource(R.string.tags),
-            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
+            text = stringResource(Res.string.tags),
+            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
 
         FlowRow(
-            mainAxisSpacing = 4.dp,
-            crossAxisSpacing = 4.dp
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             tags.forEach { tag -> Chip(label = tag) }
         }

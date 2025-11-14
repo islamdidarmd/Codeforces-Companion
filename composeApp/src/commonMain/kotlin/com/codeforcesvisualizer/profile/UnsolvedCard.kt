@@ -1,25 +1,25 @@
 package com.codeforcesvisualizer.profile
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.os.bundleOf
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.unsolved
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.Chip
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
-import com.google.accompanist.flowlayout.FlowRow
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun UnsolvedCard(
@@ -57,6 +57,7 @@ fun UnsolvedCard(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun UnsolvedCard(
     modifier: Modifier = Modifier,
@@ -79,21 +80,21 @@ private fun UnsolvedCard(
 
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = stringResource(R.string.unsolved),
-            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
+            text = stringResource(Res.string.unsolved),
+            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
 
         FlowRow(
-            mainAxisSpacing = 4.dp,
-            crossAxisSpacing = 4.dp
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             unsolvedMap.forEach { entry ->
                 if (!entry.value) Chip(label = entry.key, onClick = {
                     onOpenWebSite(entry.key)
                     EventLogger.logEvent(
                         event = "Open Unsolved",
-                        param = bundleOf(
+                        param = mapOf(
                             "Problem" to entry.key
                         )
                     )

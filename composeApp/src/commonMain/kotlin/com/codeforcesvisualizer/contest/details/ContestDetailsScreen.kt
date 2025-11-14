@@ -1,25 +1,44 @@
 package com.codeforcesvisualizer.contest.details
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.os.bundleOf
-import com.codeforcesvisualizer.contest.R
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.add_to_calender
+import codeforces_visualizer.composeapp.generated.resources.before_start
+import codeforces_visualizer.composeapp.generated.resources.register
 import com.codeforcesvisualizer.contest.list.addCalenderEvent
 import com.codeforcesvisualizer.core.EventLogger
-import com.codeforcesvisualizer.core.components.*
+import com.codeforcesvisualizer.core.components.CFAppBar
+import com.codeforcesvisualizer.core.components.CFLoadingIndicator
+import com.codeforcesvisualizer.core.components.Center
+import com.codeforcesvisualizer.core.components.Chip
+import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.core.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.core.utils.convertToDHMS
 import com.codeforcesvisualizer.core.utils.convertToHMS
 import com.codeforcesvisualizer.shared.domain.entity.Contest
-import com.google.accompanist.flowlayout.FlowRow
-import org.koin.androidx.compose.koinViewModel
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ContestDetailsScreen(
@@ -39,13 +58,13 @@ fun ContestDetailsScreen(
             CFAppBar(title = title, onNavigateBack = onNavigateBack)
         },
         floatingActionButton = {
-            if (uiState.contest?.scheduled == true) ExtendedFloatingActionButton(
-                text = { Text(stringResource(R.string.register)) },
+            if (uiState.contest?.scheduled == true) FloatingActionButton(
+                content = { Text(stringResource(Res.string.register)) },
                 onClick = {
                     onOpenWebSite(contestId)
                     EventLogger.logEvent(
                         event = "Register For Contest",
-                        param = bundleOf(
+                        param = mapOf(
                             "ContestId" to contestId
                         )
                     )
@@ -83,6 +102,7 @@ fun ContestDetailsScreen(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ContestDetailsScreen(
     modifier: Modifier,
@@ -93,22 +113,20 @@ private fun ContestDetailsScreen(
     if (!contest.scheduled) {
         onOpenWebSite(contest.id)
     } else {
-        val context = LocalContext.current
-
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text = stringResource(R.string.before_start))
+            Text(text = stringResource(Res.string.before_start))
 
-            Text(text = remainingTime.convertToDHMS(), style = MaterialTheme.typography.h6)
+            Text(text = remainingTime.convertToDHMS(), style = MaterialTheme.typography.headlineMedium)
 
             HeightSpacer(height = 16.dp)
             FlowRow(
-                mainAxisSpacing = 4.dp,
-                crossAxisSpacing = 4.dp
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Chip(label = contest.type)
                 Chip(label = contest.durationSeconds.convertToHMS())
@@ -119,13 +137,13 @@ private fun ContestDetailsScreen(
             Button(
                 shape = RoundedCornerShape(percent = 50),
                 onClick = {
-                    addCalenderEvent(context = context, contest = contest)
+                    //addCalenderEvent(context = context, contest = contest)
                     EventLogger.logEvent(
                         event = "Add to Calender",
-                        param = bundleOf("from" to "Contest Details")
+                        param = mapOf("from" to "Contest Details")
                     )
                 }) {
-                Text(text = stringResource(R.string.add_to_calender))
+                Text(text = stringResource(Res.string.add_to_calender))
             }
         }
     }
