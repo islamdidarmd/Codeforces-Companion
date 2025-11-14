@@ -5,17 +5,23 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.contests
+import org.jetbrains.compose.resources.stringResource
+import com.codeforcesvisualizer.core.components.BarChartSeries
 import com.codeforcesvisualizer.core.components.CFBarChart
+import com.codeforcesvisualizer.core.components.CFBarChartData
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.getBarChartColorList
 import com.codeforcesvisualizer.shared.domain.entity.UserRating
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
 
 @Composable
 fun ContestsCard(
@@ -65,39 +71,25 @@ private fun ContestsCard(
     handle2: String,
 ) {
 
-    val contestChartEntries = listOf(
-        BarEntry(0f, userRatingList1.size.toFloat()),
-        BarEntry(1f, userRatingList2.size.toFloat()),
+    val palette = getBarChartColorList()
+    val chartData = CFBarChartData(
+        groupLabels = listOf(handle1, handle2),
+        series = listOf(
+            BarChartSeries(
+                label = stringResource(Res.string.contests),
+                values = listOf(userRatingList1.size.toFloat(), userRatingList2.size.toFloat()),
+                color = palette.first()
+            )
+        )
     )
-    val dataSet = BarDataSet(contestChartEntries, handle1)
-    dataSet.color = Color.BLUE
-
-    val data = BarData(dataSet).apply {
-        barWidth = 0.5f
-        setValueFormatter { value, _, _, _ ->
-            return@setValueFormatter value.toInt().toString()
-        }
-    }
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = stringResource(R.string.contests),
-            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
+            text = stringResource(Res.string.contests),
+            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
         CFBarChart(
-            modifier = modifier,
-            data = data,
-            itemCount = 2,
-            xAxisValueFormatter = { value, _ ->
-                if (value >= 0f && value < 1f) {
-                    return@CFBarChart handle1
-                } else if (value >= 1f && value < 2f) {
-                    return@CFBarChart handle2
-                } else {
-                    return@CFBarChart ""
-                }
-            },
-
-            )
+            data = chartData
+        )
     }
 }

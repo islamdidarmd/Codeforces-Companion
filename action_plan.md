@@ -34,10 +34,12 @@ Proposed action plan (prioritized)
 Stabilize the architecture foundation
 
 Replace androidx.navigation with a CMP-friendly navigation solution (e.g., Voyager, Decompose, or PreCompose). Adjust Screen definitions to stop referencing Android R icons and switch to multiplatform ImageVectors or Compose resources.
+------
 
 Introduce a multiplatform ViewModel pattern (KMP-NativeCoroutines + kotlinx.coroutines scopes, Lifecycle from kmp-viewmodel, or koin-core’s own KoinViewModel once Koin 3.5+ is configured). Update DI bindings (viewModelModule) to no longer depend on org.koin.androidx.compose.koinViewModel.
 Move Android-only dependencies out of commonMain in build.gradle.kts. Keep only pure Compose + shared modules there; push Firebase, DataStore Android artifacts, androidx.core, etc., into androidMain or expect/actual wrappers.
 Abstract platform services behind expect/actual layers
+//
 
 Calendar & intents: turn addCalendarEvent and link-opening logic into expect/actual functions (shareCalendarEvent(), openLink()). Provide Android implementations with Intent, and iOS implementations using EventKit + UIApplication.shared.open.
 Analytics/EventLogger: define a multiplatform analytics interface with no Bundle dependency; Android actual can keep Firebase, iOS can be a no-op or hook to another service.
@@ -45,6 +47,7 @@ Rate/Review hooks: wrap the Play Store link in a common “rateApp” use case s
 Rebuild Android-only UI widgets
 
 Replace MPAndroidChart + AndroidView wrappers (CFBarChart, CFPieChart, and compare cards) with Compose-native charts (Canvas-based) or adopt a multiplatform chart library (e.g., koalaplot). This ensures both Android and iOS render the same composables.
+
 Reimplement CFWebView as an expect/actual screen: Android actual can keep WebView/Accompanist (or the new compose.ui.viewinterop.AndroidView), iOS actual can wrap WKWebView via UIKitView.
 Swap com.google.accompanist.flowlayout.FlowRow for androidx.compose.foundation.layout.FlowRow (available in Compose Multiplatform 1.6+) or write a simple custom flow layout.
 Make utility code platform-neutral

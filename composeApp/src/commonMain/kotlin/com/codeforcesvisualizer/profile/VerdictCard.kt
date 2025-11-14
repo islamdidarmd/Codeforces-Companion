@@ -11,13 +11,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import com.codeforcesvisualizer.core.components.CFPieChartData
+import com.codeforcesvisualizer.core.components.PieChartSlice
+import com.codeforcesvisualizer.core.components.getPieChartColorList
 import androidx.compose.ui.unit.dp
 import com.codeforcesvisualizer.core.components.CFPieChart
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
-import com.github.mikephil.charting.data.PieEntry
 
 @Composable
 fun VerdictCard(
@@ -65,12 +66,18 @@ private fun VerdictCard(
         userStatusList.forEach {
             verdictCounterMap[it.verdict] = (verdictCounterMap[it.verdict] ?: 0) + 1
         }
-        val entries = verdictCounterMap.map { PieEntry(it.value.toFloat(), minifyVerdicts(it.key)) }
+        val palette = getPieChartColorList()
+        val slices = verdictCounterMap.entries.mapIndexed { index, entry ->
+            PieChartSlice(
+                label = minifyVerdicts(entry.key),
+                value = entry.value.toFloat(),
+                color = palette[index % palette.size]
+            )
+        }
 
         CFPieChart(
-            entries = entries,
-            itemCount = userStatusList.size,
-            minSizePercentToDrawLabel = 20
+            data = CFPieChartData(slices),
+            minPercentToShowLabel = 20
         )
     }
 }
@@ -91,12 +98,4 @@ private fun minifyVerdicts(verdict: String): String {
     }
 }
 
-@Preview
-@Composable
-private fun Preview() {
-    VerdictCard(
-        userStatusUiState = UserStatusUiState(
-            userStatus = listOf()
-        )
-    )
-}
+// Removed unused Preview function

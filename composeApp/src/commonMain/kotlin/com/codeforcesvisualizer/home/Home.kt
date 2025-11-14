@@ -3,7 +3,7 @@ package com.codeforcesvisualizer.home
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
-import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
@@ -49,6 +49,7 @@ fun Home(
 ) {
     val themeManager = koinInject<ThemeManager>()
     val themeModeUiState by themeManager.themeModeFlow.collectAsState()
+    @Suppress("UNUSED_VARIABLE")
     val isDarkTheme = when (themeModeUiState.themeMode) {
         UiThemeMode.System -> isSystemInDarkTheme()
         UiThemeMode.Dark -> true
@@ -79,7 +80,12 @@ fun BottomNavigationView(navController: NavController) {
 
         bottomNavItems.forEach { screen ->
             NavigationBarItem(
-                icon = screen.icon,
+                icon = {
+                    Icon(
+                        imageVector = screen.icon,
+                        contentDescription = screen.contentDescription
+                    )
+                },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = {
                     EventLogger.logScreenView(screen.route)
@@ -97,7 +103,8 @@ fun BottomNavigationView(navController: NavController) {
                         // Restore state when reselecting a previously selected item
                         restoreState = true
                     }
-                })
+                }
+            )
         }
     }
 }

@@ -30,7 +30,6 @@ lifecycleViewmodelKtxVersion = "2.2.0"
 material = "1.13.0"
 material3 = "1.4.0"
 minSdk = "23"
-mpAndroidChart = "v3.0.3"
 runner = "1.5.2"
 versionCode = "6"
 versionName = "2.0.1"
@@ -59,7 +58,6 @@ navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-co
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidJunit" }
-com-github-mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpAndroidChart" }
 com-google-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "composeAccompanist" }
 com-google-accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "composeAccompanist" }
 com-google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "composeAccompanist" }
