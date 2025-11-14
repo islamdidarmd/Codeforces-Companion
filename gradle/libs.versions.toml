@@ -5,6 +5,7 @@ appcompat = "1.7.1"
 coil = "2.7.0"
 compileSdk = "36"
 composeAccompanist = "0.36.0"
+composeWebView = "0.33.6"
 composeActivity = "1.11.0"
 composeBom = "2025.10.00"
 composeNavigation = "2.9.1"
@@ -61,7 +62,7 @@ androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "a
 com-google-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "composeAccompanist" }
 com-google-accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "composeAccompanist" }
 com-google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "composeAccompanist" }
-com-google-accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "composeAccompanist" }
+compose-webview = { module = "io.github.kevinnzou:compose-webview", version.ref = "composeWebView" }
 com-google-android-material = { module = "com.google.android.material:material", version.ref = "material" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }

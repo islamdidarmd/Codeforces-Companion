@@ -49,6 +49,7 @@ Rebuild Android-only UI widgets
 Replace MPAndroidChart + AndroidView wrappers (CFBarChart, CFPieChart, and compare cards) with Compose-native charts (Canvas-based) or adopt a multiplatform chart library (e.g., koalaplot). This ensures both Android and iOS render the same composables.
 
 Reimplement CFWebView as an expect/actual screen: Android actual can keep WebView/Accompanist (or the new compose.ui.viewinterop.AndroidView), iOS actual can wrap WKWebView via UIKitView.
+
 Swap com.google.accompanist.flowlayout.FlowRow for androidx.compose.foundation.layout.FlowRow (available in Compose Multiplatform 1.6+) or write a simple custom flow layout.
 Make utility code platform-neutral
 
