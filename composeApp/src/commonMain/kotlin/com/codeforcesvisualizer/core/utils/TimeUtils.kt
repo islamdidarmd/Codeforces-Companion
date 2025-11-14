@@ -1,9 +1,13 @@
 package com.codeforcesvisualizer.core.utils
 
 import com.codeforcesvisualizer.core.DefaultAppDateFormat
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
-import java.util.*
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format.DateTimeFormat
+import kotlinx.datetime.format.FormatStringsInDatetimeFormats
+import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.toLocalDateTime
 
 fun Int.convertToDHMS(): String {
     val days = this / (3600 * 24)
@@ -53,7 +57,19 @@ fun Long.convertToHMS(): String {
 }
 
 fun Int.convertTimeStampToDateString(format: String = DefaultAppDateFormat): String {
-    val stamp = Timestamp((this * 1000L))
-    val date = Date(stamp.time)
-    return SimpleDateFormat(format).format(date)
+    val instant = Instant.fromEpochSeconds(this.toLong())
+    val localDateTime = instant.toLocalDateTime(systemTimeZone)
+    return dateTimeFormatter(format).format(localDateTime)
 }
+
+private val systemTimeZone: TimeZone = TimeZone.currentSystemDefault()
+
+@OptIn(FormatStringsInDatetimeFormats::class)
+private fun dateTimeFormatter(pattern: String): DateTimeFormat<LocalDateTime> =
+    formatterCache.getOrPut(pattern) {
+        LocalDateTime.Format {
+            byUnicodePattern(pattern)
+        }
+    }
+
+private val formatterCache: MutableMap<String, DateTimeFormat<LocalDateTime>> = mutableMapOf()

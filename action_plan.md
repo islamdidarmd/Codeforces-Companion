@@ -51,11 +51,16 @@ Replace MPAndroidChart + AndroidView wrappers (CFBarChart, CFPieChart, and compa
 Reimplement CFWebView as an expect/actual screen: Android actual can keep WebView/Accompanist (or the new compose.ui.viewinterop.AndroidView), iOS actual can wrap WKWebView via UIKitView.
 -----------------------------
 Swap com.google.accompanist.flowlayout.FlowRow for androidx.compose.foundation.layout.FlowRow (available in Compose Multiplatform 1.6+) or write a simple custom flow layout.
+
+-----
 Make utility code platform-neutral
 
 Rewrite TimeUtils using kotlinx.datetime.Instant and formatters from kotlinx-datetime or kotlinx.datetime.toLocalDateTime(TimeZone.currentSystemDefault()).
+
+---
 Remove usages of android.graphics.Color in compare cards—prefer Compose Color from androidx.compose.ui.graphics.
 Audit the rest of commonMain for android.*, java.*, or androidx.* imports and move them behind expect/actual as needed (e.g., CountDownTimer in ContestDetailsViewModel can be replaced with a coroutine ticker on Dispatchers.Default).
+---------------------------------
 iOS-specific polish
 
 Extend iosMain with actual implementations for the new expect APIs (DataStore already has one). Ensure MainViewController() initializes Koin the same way Android does (currently KoinApplication is spun up inside App(), but confirm startup order and logging).
