@@ -1,28 +1,38 @@
 package com.codeforcesvisualizer.contest.list
 
-import android.content.Context
-import android.content.Intent
-import android.provider.CalendarContract
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButtonDefaults.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.os.bundleOf
-import com.codeforcesvisualizer.contest.R
+import codeforces_visualizer.composeapp.generated.resources.Res
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.Chip
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.core.utils.convertTimeStampToDateString
 import com.codeforcesvisualizer.core.utils.convertToHMS
 import com.codeforcesvisualizer.shared.domain.entity.Contest
-import com.google.accompanist.flowlayout.FlowRow
+import org.jetbrains.compose.resources.painterResource
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun ContestListItem(
     modifier: Modifier = Modifier,
@@ -30,7 +40,6 @@ internal fun ContestListItem(
     openContestDetails: (Int) -> Unit,
     onOpenWebSite: (Int) -> Unit,
 ) {
-    val context = LocalContext.current
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -40,17 +49,16 @@ internal fun ContestListItem(
                     openContestDetails(contest.id)
                     EventLogger.logScreenView(
                         screen = "Contest Details",
-                        param = bundleOf("ContestId" to contest.id)
+                        param = mapOf("ContestId" to contest.id)
                     )
                 } else {
                     onOpenWebSite(contest.id)
                     EventLogger.logScreenView(
                         screen = "Contest In Webview",
-                        param = bundleOf("ContestId" to contest.id)
+                        param = mapOf("ContestId" to contest.id)
                     )
                 }
             },
-        elevation = 2.dp
     ) {
         Row(
             modifier = Modifier
@@ -60,16 +68,16 @@ internal fun ContestListItem(
             Column(modifier = Modifier.weight(1.0f)) {
                 Text(
                     text = contest.name,
-                    style = MaterialTheme.typography.subtitle1.copy(
-                        color = MaterialTheme.colors.primary,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
                     ),
-                    color = MaterialTheme.colors.primary,
+                    color = MaterialTheme.colorScheme.primary,
                 )
                 HeightSpacer(height = 8.dp)
                 FlowRow(
-                    mainAxisSpacing = 4.dp,
-                    crossAxisSpacing = 4.dp
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Chip(label = contest.type)
                     Chip(label = contest.durationSeconds.convertToHMS())
@@ -81,24 +89,24 @@ internal fun ContestListItem(
                     .fillMaxHeight()
                     .align(alignment = Alignment.CenterVertically),
                 onClick = {
-                    addCalenderEvent(context = context, contest = contest)
+                    //addCalenderEvent(context = context, contest = contest)
                     EventLogger.logEvent(
                         event = "Add To Calender",
-                        param = bundleOf(
+                        param = mapOf(
                             "ContestId" to contest.id
                         )
                     )
                 }) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_event_24),
-                    tint = MaterialTheme.colors.primaryVariant,
-                    contentDescription = "Add Event"
+                    imageVector = Icons.Default.CalendarMonth,
+                    contentDescription = "Add to Calender",
                 )
             }
         }
     }
 }
 
+/*
 internal fun addCalenderEvent(context: Context, contest: Contest) {
     val insertCalendarIntent = Intent(Intent.ACTION_INSERT)
         .setData(CalendarContract.Events.CONTENT_URI)
@@ -113,4 +121,4 @@ internal fun addCalenderEvent(context: Context, contest: Contest) {
         .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
 
     context.startActivity(insertCalendarIntent)
-}
+}*/
