@@ -6,8 +6,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -15,7 +22,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import codeforces_visualizer.composeapp.generated.resources.Res
-import codeforces_visualizer.composeapp.generated.resources.*
+import codeforces_visualizer.composeapp.generated.resources.compare
+import codeforces_visualizer.composeapp.generated.resources.compare_users
+import codeforces_visualizer.composeapp.generated.resources.first_handle
+import codeforces_visualizer.composeapp.generated.resources.hanldles_can_not_be_empty
+import codeforces_visualizer.composeapp.generated.resources.second_handle
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.CFAppBar
 import com.codeforcesvisualizer.core.components.HeightSpacer
@@ -45,7 +56,7 @@ fun CompareScreenHandleInput(
             )
         }
     ) { innerPadding ->
-        val errorMessage = stringResource(Res.string.hanldles_can_not_be_empty)
+    val errorMessage = stringResource(Res.string.hanldles_can_not_be_empty)
         fun onCompare() {
             if (handleOne.isBlank() || handleTwo.isBlank()) {
                 coroutineScope.launch {

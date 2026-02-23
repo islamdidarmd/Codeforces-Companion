@@ -1,18 +1,19 @@
 package com.codeforcesvisualizer.contest.search
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import org.koin.androidx.compose.koinViewModel
-import com.codeforcesvisualizer.contest.R
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.contest_search_placeholder
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.SearchBar
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ContestSearchScreen(
@@ -62,7 +63,7 @@ private fun ContestSearchBar(
 ) {
     SearchBar(
         searchText = searchText,
-        placeholderText = stringResource(id = R.string.contest_search_placeholder),
+    placeholderText = stringResource(Res.string.contest_search_placeholder),
         onSearchTextChanged = onSearchTextChanged,
         onClearText = { onSearchTextChanged("") },
         onNavigateBack = onNavigateBack

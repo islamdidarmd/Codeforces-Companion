@@ -1,24 +1,27 @@
 package com.codeforcesvisualizer.contest.list
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.os.bundleOf
-import com.codeforcesvisualizer.contest.R
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.contests
+import codeforces_visualizer.composeapp.generated.resources.refresh
+import codeforces_visualizer.composeapp.generated.resources.search
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.CFAppBar
 import com.codeforcesvisualizer.core.components.CFLoadingIndicator
 import com.codeforcesvisualizer.core.components.Center
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.google.firebase.analytics.FirebaseAnalytics
-import org.koin.androidx.compose.koinViewModel
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ContestListScreen(
@@ -48,7 +51,6 @@ private fun ContestListScreen(
     openContestDetails: (Int) -> Unit,
     onOpenWebSite: (Int) -> Unit,
 ) {
-    val isRefreshing = rememberSwipeRefreshState(isRefreshing = state.value.refreshing)
 
     Scaffold(
         modifier = modifier,
@@ -65,22 +67,17 @@ private fun ContestListScreen(
                     EventLogger.logEvent("Refresh Contest List")
                 }
             ) {
-                Icon(imageVector = Icons.Default.Refresh, contentDescription = "Refresh")
+                Icon(imageVector = Icons.Default.Refresh, contentDescription = stringResource(Res.string.refresh))
             }
         }
     )
     { innerPadding ->
-        SwipeRefresh(
-            state = isRefreshing,
-            onRefresh = onRefresh
-        ) {
-            ContestListScreen(
-                modifier = modifier.padding(innerPadding),
-                state = state,
-                openContestDetails = openContestDetails,
-                onOpenWebSite = onOpenWebSite
-            )
-        }
+        ContestListScreen(
+            modifier = modifier.padding(innerPadding),
+            state = state,
+            openContestDetails = openContestDetails,
+            onOpenWebSite = onOpenWebSite
+        )
     }
 }
 
@@ -95,11 +92,13 @@ private fun ContestListScreen(
         state.value.loading -> {
             CFLoadingIndicator(modifier = modifier)
         }
+
         state.value.userMessage.isNotBlank() -> {
             Center(modifier = modifier) {
                 Text(text = state.value.userMessage)
             }
         }
+
         else -> {
             ContestList(
                 modifier = modifier,
@@ -114,10 +113,10 @@ private fun ContestListScreen(
 @Composable
 private fun TopBar(openSearch: () -> Unit) {
     CFAppBar(
-        title = stringResource(id = R.string.contests),
+        title = stringResource(resource = Res.string.contests),
         actions = {
             IconButton(onClick = openSearch) {
-                Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+                Icon(imageVector = Icons.Default.Search, contentDescription = stringResource(Res.string.search))
             }
         }
     )

@@ -2,9 +2,16 @@ package com.codeforcesvisualizer.core.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.runtime.Composable
@@ -12,8 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun Chip(
@@ -26,7 +33,7 @@ fun Chip(
         modifier = modifier
             .defaultMinSize(minHeight = 24.dp)
             .clip(shape = CircleShape)
-            .background(color = MaterialTheme.colors.primary.copy(alpha = 0.1f))
+            .background(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
             .clickable(enabled = onClick != null) { onClick?.invoke() }
             .padding(PaddingValues(horizontal = 16.dp, vertical = 4.dp)),
         verticalAlignment = Alignment.CenterVertically
@@ -39,7 +46,7 @@ fun Chip(
             )
         }
         WidthSpacer(width = 4.dp)
-        Text(text = label, style = MaterialTheme.typography.body2)
+        Text(text = label, style = MaterialTheme.typography.bodyMedium)
     }
 }
 

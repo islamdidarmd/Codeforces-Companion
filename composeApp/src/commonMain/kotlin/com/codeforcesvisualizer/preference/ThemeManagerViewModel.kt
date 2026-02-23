@@ -6,6 +6,7 @@ import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
 import com.codeforcesvisualizer.shared.domain.usecase.GetUiThemeModeUseCase
 import com.codeforcesvisualizer.shared.domain.usecase.SetUiThemeModeUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

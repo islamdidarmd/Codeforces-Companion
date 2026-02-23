@@ -2,7 +2,6 @@ package com.codeforcesvisualizer.home
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -25,6 +24,7 @@ import com.codeforcesvisualizer.navigation.AppNavigator
 import com.codeforcesvisualizer.navigation.Screen
 import com.codeforcesvisualizer.preference.ThemeManager
 import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
+import com.codeforcesvisualizer.core.theme.CFTheme
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 
@@ -44,7 +44,7 @@ fun App() {
 }
 
 @Composable
-fun Home(
+private fun Home(
     modifier: Modifier = Modifier
 ) {
     val themeManager = koinInject<ThemeManager>()
@@ -56,13 +56,18 @@ fun Home(
         UiThemeMode.Light -> false
     }
     val navController = rememberNavController()
-    Column(modifier = modifier) {
-        AppNavigator(
-            modifier = Modifier.weight(1f),
-            navController = navController,
-            themeManager = themeManager
-        )
-        BottomNavigationView(navController)
+
+    CFTheme(
+        isDarkTheme = isDarkTheme
+    ) {
+        Column(modifier = modifier) {
+            AppNavigator(
+                modifier = Modifier.weight(1f),
+                navController = navController,
+                themeManager = themeManager
+            )
+            BottomNavigationView(navController)
+        }
     }
 }
 

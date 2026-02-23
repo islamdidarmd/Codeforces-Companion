@@ -85,7 +85,7 @@ private fun ContestsCard(
     Column(modifier = modifier.padding(12.dp)) {
         Text(
             text = stringResource(Res.string.contests),
-            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
         CFBarChart(

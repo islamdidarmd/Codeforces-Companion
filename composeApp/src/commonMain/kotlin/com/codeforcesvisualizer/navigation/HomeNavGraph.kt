@@ -2,6 +2,7 @@ package com.codeforcesvisualizer.navigation
 
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import androidx.savedstate.read
 import com.codeforcesvisualizer.contest.details.ContestDetailsScreen
 import com.codeforcesvisualizer.contest.list.ContestListScreen
 import com.codeforcesvisualizer.contest.search.ContestSearchScreen
@@ -40,7 +41,8 @@ private fun NavGraphBuilder.addContestList(
                 )
             },
             onOpenWebSite = { contestId ->
-                val url = "${_root_ide_package_.com.codeforcesvisualizer.shared.data.config.BASE_URL}/contests/$contestId"
+                val url =
+                    "${_root_ide_package_.com.codeforcesvisualizer.shared.data.config.BASE_URL}/contests/$contestId"
                 navController.navigate(LeafScreen.WebView.createRoute(root = root, link = url))
             },
         )
@@ -59,7 +61,9 @@ private fun NavGraphBuilder.addContestDetails(
             }
         )
     ) { backStackEntry ->
-        val contestId = backStackEntry.arguments?.getInt("contestId") ?: -1
+        val contestId = backStackEntry.arguments?.read {
+            getInt("contestId")
+        } ?: -1
         ContestDetailsScreen(
             contestId = contestId,
             onNavigateBack = { navController.navigateUp() },
@@ -107,7 +111,9 @@ private fun NavGraphBuilder.addWebView(
     ) { backStackEntry ->
         CFWebViewScreen(
             onNavigateBack = { navController.navigateUp() },
-            link = backStackEntry.arguments?.getString("link")!!
+            link = backStackEntry.arguments?.read {
+                getString("link")
+            } ?: ""
         )
     }
 }
