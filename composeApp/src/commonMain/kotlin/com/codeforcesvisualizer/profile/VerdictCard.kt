@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +19,9 @@ import com.codeforcesvisualizer.core.components.CFPieChart
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.verdicts
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun VerdictCard(
@@ -57,8 +60,8 @@ private fun VerdictCard(
 ) {
     Column(modifier = modifier.padding(12.dp)) {
         Text(
-            text = "Verdicts",
-            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
+            text = stringResource(Res.string.verdicts),
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
 

@@ -6,9 +6,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.codeforcesvisualizer.contest.R
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.past
+import codeforces_visualizer.composeapp.generated.resources.upcoming
 import com.codeforcesvisualizer.shared.domain.entity.Contest
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -24,8 +26,8 @@ internal fun ContestList(
     val past = contestList.filter { !it.scheduled }
     val grouped = linkedMapOf<String, List<Contest>>()
 
-    if (upcoming.isNotEmpty()) grouped[stringResource(id = R.string.upcoming)] = upcoming
-    grouped[stringResource(id = R.string.past)] = past
+    if (upcoming.isNotEmpty()) grouped[stringResource(Res.string.upcoming)] = upcoming
+    grouped[stringResource(Res.string.past)] = past
 
     LazyColumn(modifier = modifier, state = state) {
         grouped.forEach { (title, list) ->

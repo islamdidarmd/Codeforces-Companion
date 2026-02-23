@@ -26,7 +26,6 @@ import codeforces_visualizer.composeapp.generated.resources.Res
 import codeforces_visualizer.composeapp.generated.resources.add_to_calender
 import codeforces_visualizer.composeapp.generated.resources.before_start
 import codeforces_visualizer.composeapp.generated.resources.register
-import com.codeforcesvisualizer.contest.list.addCalenderEvent
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.CFAppBar
 import com.codeforcesvisualizer.core.components.CFLoadingIndicator

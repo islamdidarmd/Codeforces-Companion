@@ -1,8 +1,8 @@
 package com.codeforcesvisualizer.core.theme
 
-import androidx.compose.material.Colors
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 
@@ -17,26 +17,24 @@ val Yellow800 = Color(0xFFC49000)
 val White50 = Color(0xFFFFFFFF)
 val Black900 = Color(0xFF000000)
 
-internal val CFLightColors = lightColors(
+internal val CFLightColorScheme = lightColorScheme(
     primary = Blue700,
-    primaryVariant = Blue900,
-    secondary = Yellow700,
-    secondaryVariant = Yellow800,
-
     onPrimary = White50,
-    onSecondary = Black900
-)
-
-internal val CFDarkColors = darkColors(
-    primary = Blue400,
-    primaryVariant = Blue400,
-    secondary = Yellow400,
-    secondaryVariant = Yellow400,
-
-    onPrimary = Black900,
+    secondary = Yellow700,
     onSecondary = Black900,
+    surface = White50,
+    onSurface = Black900
 ).withBrandedSurface()
 
-internal fun Colors.withBrandedSurface() = copy(
-    surface = primary.copy(alpha = 0.08f).compositeOver(this.surface),
+internal val CFDarkColorScheme = darkColorScheme(
+    primary = Blue400,
+    onPrimary = Black900,
+    secondary = Yellow400,
+    onSecondary = Black900,
+    surface = Blue900,
+    onSurface = White50
+).withBrandedSurface()
+
+internal fun ColorScheme.withBrandedSurface() = copy(
+    surface = primary.copy(alpha = 0.08f).compositeOver(surface),
 )

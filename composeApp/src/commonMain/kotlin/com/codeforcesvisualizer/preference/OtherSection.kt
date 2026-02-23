@@ -1,59 +1,61 @@
 package com.codeforcesvisualizer.preference
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.current_version
+import codeforces_visualizer.composeapp.generated.resources.google_play_store_not_found
+import codeforces_visualizer.composeapp.generated.resources.others
+import codeforces_visualizer.composeapp.generated.resources.rate_app
 import com.codeforcesvisualizer.core.components.HeightSpacer
-import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun OtherSection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    rateAppHandler: RateAppHandler
 ) {
-    val context = LocalContext.current
-    val scaffoldState = rememberScaffoldState()
-    val coroutineScope = rememberCoroutineScope()
-
-    val gpNotFoundText = stringResource(R.string.google_play_store_not_found)
+    var showStoreError by remember { mutableStateOf(false) }
 
     Column(modifier.padding(16.dp)) {
-        Text(text = "Others", style = MaterialTheme.typography.subtitle1)
+        Text(text = stringResource(Res.string.others), style = MaterialTheme.typography.titleMedium)
         HeightSpacer(height = 16.dp)
 
         TextButton(onClick = {
-            try {
-                context.startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=com.codeforcesvisualizer")
-                    )
-                )
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-                coroutineScope.launch {
-                    scaffoldState.snackbarHostState.showSnackbar(gpNotFoundText)
-                }
-            }
+            showStoreError = !rateAppHandler.openStore()
         }) {
-            Text(text = "Rate App")
+            Text(text = stringResource(Res.string.rate_app))
+        }
+
+        if (showStoreError) {
+            HeightSpacer(height = 8.dp)
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(Res.string.google_play_store_not_found),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error
+            )
         }
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Current Version: 2.0.0",
+            text = stringResource(Res.string.current_version, rateAppHandler.versionName),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.body2
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
@@ -61,5 +63,12 @@ fun OtherSection(
 @Preview
 @Composable
 private fun Preview() {
-    OtherSection()
+    OtherSection(
+        rateAppHandler = remember {
+            object : RateAppHandler {
+                override val versionName: String = "2.0.0"
+                override fun openStore(): Boolean = false
+            }
+        }
+    )
 }

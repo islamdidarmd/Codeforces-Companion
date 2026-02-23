@@ -9,7 +9,7 @@ import androidx.navigation.compose.navigation
 import com.codeforcesvisualizer.compare.CompareHandlesScreen
 import com.codeforcesvisualizer.compare.CompareHandlesViewModel
 import com.codeforcesvisualizer.compare.CompareScreenHandleInput
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 internal fun NavGraphBuilder.addCompareTopLevel(
     navController: NavController

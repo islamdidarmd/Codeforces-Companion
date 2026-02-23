@@ -15,20 +15,21 @@ fun Int.convertToDHMS(): String {
     val minutes = (this % 3600) / 60
     val seconds = this % 60
     return buildString {
-        if(days > 0) append(String.format("%02d Days ", days))
-        if (hours > 0) append(String.format("%02d hr ", hours))
-        if (minutes > 0) append(String.format("%02d min ", minutes))
-        if (seconds > 0) append(String.format("%02d sec", seconds))
+        if (days > 0) append("${days.toString().padStart(2, '0')} Days ")
+        if (hours > 0) append("${hours.toString().padStart(2, '0')} hr ")
+        if (minutes > 0) append("${minutes.toString().padStart(2, '0')} min ")
+        if (seconds > 0) append("${seconds.toString().padStart(2, '0')} sec")
     }
 }
+
 fun Int.convertToHMS(): String {
     val hours = this / 3600
     val minutes = (this % 3600) / 60
     val seconds = this % 60
     return buildString {
-        if (hours > 0) append(String.format("%02d hr ", hours))
-        if (minutes > 0) append(String.format("%02d min ", minutes))
-        if (seconds > 0) append(String.format("%02d sec", seconds))
+        if (hours > 0) append("${hours.toString().padStart(2, '0')} hr ")
+        if (minutes > 0) append("${minutes.toString().padStart(2, '0')} min ")
+        if (seconds > 0) append("${seconds.toString().padStart(2, '0')} sec")
     }
 }
 
@@ -38,10 +39,10 @@ fun Long.convertToDHMS(): String {
     val minutes = (this % 3600) / 60
     val seconds = this % 60
     return buildString {
-        if(days > 0) append(String.format("%02d Days ", days))
-        if (hours > 0) append(String.format("%02d hr ", hours))
-        if (minutes > 0) append(String.format("%02d min ", minutes))
-        if (seconds > 0) append(String.format("%02d sec", seconds))
+        if (days > 0) append("${days.toString().padStart(2, '0')} Days ")
+        if (hours > 0) append("${hours.toString().padStart(2, '0')} hr ")
+        if (minutes > 0) append("${minutes.toString().padStart(2, '0')} min ")
+        if (seconds > 0) append("${seconds.toString().padStart(2, '0')} sec")
     }
 }
 
@@ -50,9 +51,9 @@ fun Long.convertToHMS(): String {
     val minutes = (this % 3600) / 60
     val seconds = this % 60
     return buildString {
-        if (hours > 0) append(String.format("%02d hr ", hours))
-        if (minutes > 0) append(String.format("%02d min ", minutes))
-        if (seconds > 0) append(String.format("%02d sec", seconds))
+        if (hours > 0) append("${hours.toString().padStart(2, '0')} hr ")
+        if (minutes > 0) append("${minutes.toString().padStart(2, '0')} min ")
+        if (seconds > 0) append("${seconds.toString().padStart(2, '0')} sec")
     }
 }
 

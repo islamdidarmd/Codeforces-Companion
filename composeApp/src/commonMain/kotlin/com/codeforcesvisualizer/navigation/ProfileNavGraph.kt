@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
+import androidx.savedstate.read
 import com.codeforcesvisualizer.profile.ProfileSearchScreen
 import com.codeforcesvisualizer.shared.data.config.BASE_URL
 import com.codeforcesvisualizer.webview.CFWebViewScreen
@@ -55,7 +56,9 @@ private fun NavGraphBuilder.addWebView(
     ) { backStackEntry ->
         CFWebViewScreen(
             onNavigateBack = { navController.navigateUp() },
-            link = backStackEntry.arguments?.getString("link")!!
+            link = backStackEntry.arguments?.read {
+                getString("link")
+            }!!
         )
     }
 }

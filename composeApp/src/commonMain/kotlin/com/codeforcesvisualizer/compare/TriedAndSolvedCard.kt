@@ -4,13 +4,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import codeforces_visualizer.composeapp.generated.resources.Res
@@ -77,13 +76,17 @@ private fun TriedAndSolvedCard(
     userStatusList1.forEach { status ->
         val problemName = status.problem.name
         if (status.verdict == "OK") user1ProblemStatus[problemName] = true
-        else user1ProblemStatus.putIfAbsent(problemName, false)
+        else if(!user1ProblemStatus.containsKey(problemName)) {
+            user1ProblemStatus[problemName] = false
+        }
     }
 
     userStatusList2.forEach { status ->
         val problemName = status.problem.name
         if (status.verdict == "OK") user2ProblemStatus[problemName] = true
-        else user2ProblemStatus.putIfAbsent(problemName, false)
+        else if(!user2ProblemStatus.containsKey(problemName)) {
+            user2ProblemStatus[problemName] = false
+        }
     }
 
     val palette = getBarChartColorList()
@@ -112,7 +115,7 @@ private fun TriedAndSolvedCard(
     Column(modifier = modifier.padding(12.dp)) {
         Text(
             text = stringResource(Res.string.tried_and_solved),
-            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
         )
         HeightSpacer(height = 8.dp)
         CFBarChart(

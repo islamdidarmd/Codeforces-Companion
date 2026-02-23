@@ -4,10 +4,19 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -23,8 +32,8 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -66,7 +75,7 @@ fun SearchBar(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 internal fun SearchBarInputField(
     modifier: Modifier = Modifier,
@@ -95,18 +104,20 @@ internal fun SearchBarInputField(
             onSearchTextChanged(value.text)
         },
         placeholder = { Text(text = placeholderText) },
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor = Color.Transparent,
+            disabledContainerColor = Color.Transparent,
+            errorContainerColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            textColor = contentColorFor(backgroundColor = MaterialTheme.colors.primarySurface),
-            cursorColor = contentColorFor(backgroundColor = MaterialTheme.colors.primarySurface),
-            trailingIconColor = contentColorFor(backgroundColor = MaterialTheme.colors.primarySurface).copy(
-                alpha = TextFieldDefaults.IconOpacity
-            ),
-            placeholderColor = contentColorFor(backgroundColor = MaterialTheme.colors.primarySurface).copy(
-                ContentAlpha.medium
-            )
+            cursorColor = MaterialTheme.colorScheme.primary,
+            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+            focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            focusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
         trailingIcon = {
             SearchBarTrailingIcon(

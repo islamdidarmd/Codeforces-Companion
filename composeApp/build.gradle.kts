@@ -32,6 +32,7 @@ kotlin {
             implementation(libs.androidx.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.compose.webview)
+            implementation(libs.firebase.analytics)
         }
         commonMain.dependencies {
             implementation(project(":shared"))
@@ -52,7 +53,6 @@ kotlin {
             implementation(libs.androidx.datastore.preferences)
 
             implementation(project.dependencies.platform(libs.firebase.bom))
-            implementation(libs.firebase.analytics)
 
             implementation(libs.io.ktor.client.core)
 
@@ -60,7 +60,9 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
+            implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.coil.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

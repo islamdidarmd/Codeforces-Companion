@@ -2,16 +2,17 @@ package com.codeforcesvisualizer.profile
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.core.os.bundleOf
-import org.koin.androidx.compose.koinViewModel
+import codeforces_visualizer.composeapp.generated.resources.Res
+import codeforces_visualizer.composeapp.generated.resources.enter_handle_hint
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.SearchBar
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ProfileSearchScreen(
@@ -40,7 +41,7 @@ fun ProfileSearchScreen(
                     viewModel.getUserRatingByHandle(searchTextState)
                     EventLogger.logEvent(
                         event = "Search User",
-                        param = bundleOf(
+                        param = mapOf(
                             "Handle" to searchTextState
                         )
                     )
@@ -69,7 +70,7 @@ private fun ProfileSearchBar(
     SearchBar(
         modifier = modifier,
         searchText = searchText,
-        placeholderText = stringResource(R.string.enter_handle_hint),
+    placeholderText = stringResource(Res.string.enter_handle_hint),
         onSearchTextChanged = onSearchTextChanged,
         onSearch = onSearch,
         onClearText = { onSearchTextChanged("") },
