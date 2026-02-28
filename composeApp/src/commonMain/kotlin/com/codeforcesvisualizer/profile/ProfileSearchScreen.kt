@@ -70,7 +70,7 @@ private fun ProfileSearchBar(
     SearchBar(
         modifier = modifier,
         searchText = searchText,
-    placeholderText = stringResource(Res.string.enter_handle_hint),
+        placeholderText = stringResource(Res.string.enter_handle_hint),
         onSearchTextChanged = onSearchTextChanged,
         onSearch = onSearch,
         onClearText = { onSearchTextChanged("") },
