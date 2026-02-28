@@ -5,21 +5,20 @@ import com.codeforcesvisualizer.shared.data.config.NETWORK_CONNECT_TIMEOUT
 import com.codeforcesvisualizer.shared.data.config.NETWORK_READ_TIMEOUT
 import com.codeforcesvisualizer.shared.data.config.NETWORK_WRITE_TIMEOUT
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
-import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.http.takeFrom
 import kotlinx.serialization.json.Json
 
 object ApiClient {
     fun getHttpClient(): HttpClient {
-        return HttpClient(CIO) {
+        return HttpClient {
             expectSuccess = false
 
             install(HttpTimeout) {
@@ -36,6 +35,11 @@ object ApiClient {
                         explicitNulls = false
                     }
                 )
+            }
+
+            install(Logging) {
+                logger = Logger.DEFAULT
+                level = LogLevel.BODY
             }
 
             defaultRequest {
