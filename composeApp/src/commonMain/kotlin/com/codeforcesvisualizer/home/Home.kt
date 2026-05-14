@@ -14,6 +14,9 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import coil3.ImageLoader
+import coil3.compose.setSingletonImageLoaderFactory
+import coil3.network.ktor.KtorNetworkFetcherFactory
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.inject.appModule
 import com.codeforcesvisualizer.inject.networkingModule
@@ -30,6 +33,13 @@ import org.koin.compose.koinInject
 
 @Composable
 fun App() {
+    setSingletonImageLoaderFactory { context ->
+        ImageLoader.Builder(context)
+            .components {
+                add(KtorNetworkFetcherFactory())
+            }
+            .build()
+    }
     KoinApplication(application = {
         modules(
             networkingModule,

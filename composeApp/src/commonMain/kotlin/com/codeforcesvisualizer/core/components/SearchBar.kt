@@ -94,7 +94,6 @@ internal fun SearchBarInputField(
 
     TextField(
         modifier = modifier
-            .fillMaxSize()
             .padding(vertical = 2.dp)
             .onFocusChanged { showClearButton = it.isFocused }
             .focusRequester(focusRequester),

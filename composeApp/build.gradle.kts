@@ -29,7 +29,7 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.androidx.compose.ui.tooling.preview)
+            implementation(libs.androidx.compose.ui.tooling)
             implementation(libs.androidx.activity.compose)
             implementation(libs.compose.webview)
             implementation(libs.firebase.analytics)
@@ -63,6 +63,7 @@ kotlin {
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.kotlinx.datetime)
             implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
