@@ -159,7 +159,7 @@ private fun Preview() {
                 lastOnlineTimeSeconds = 0,
                 registrationTimeSeconds = 0,
                 friendOfCount = 0,
-                avatar = "https://userpic.codeforces.org/314660/title/8dde589b372911ff.jpg",
+                avatar = "https://userpic.codeforces.org/314660/avatar/40f7521c050c5727.jpg",
                 titlePhoto = "https://userpic.codeforces.org/314660/title/8dde589b372911ff.jpg"
             )
         )
