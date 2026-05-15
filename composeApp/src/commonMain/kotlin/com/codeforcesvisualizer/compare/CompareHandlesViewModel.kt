@@ -2,17 +2,21 @@ package com.codeforcesvisualizer.compare
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codeforcesvisualizer.core.data.RecentSearchRepository
 import com.codeforcesvisualizer.shared.core.Either
 import com.codeforcesvisualizer.shared.domain.usecase.GetUserRatingsByHandleUseCase
 import com.codeforcesvisualizer.shared.domain.usecase.GetUserStatusByHandleUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class CompareHandlesViewModel(
     private val getUserRatingsByHandleUseCase: GetUserRatingsByHandleUseCase,
-    private val getUserStatusByHandleUseCase: GetUserStatusByHandleUseCase
+    private val getUserStatusByHandleUseCase: GetUserStatusByHandleUseCase,
+    private val recentSearchRepository: RecentSearchRepository
 ) : ViewModel() {
     private val _handle1State = MutableStateFlow("")
     val handle1State: StateFlow<String> = _handle1State
@@ -26,6 +30,9 @@ class CompareHandlesViewModel(
     private val _userStatusState = MutableStateFlow(UserStatusUiState())
     val userStatusState: StateFlow<UserStatusUiState> = _userStatusState
 
+    val recentSearches: StateFlow<List<String>> = recentSearchRepository.recentSearches
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
     fun onHandle1Change(handle1: String){
         _handle1State.value = handle1
     }
@@ -36,8 +43,16 @@ class CompareHandlesViewModel(
 
 
     fun compare(handle1: String, handle2: String) {
+        viewModelScope.launch {
+            recentSearchRepository.addSearch(handle1)
+            recentSearchRepository.addSearch(handle2)
+        }
         getUserRatingByHandle(handle1 = handle1, handle2 = handle2)
         getUserStatusByHandle(handle1 = handle1, handle2 = handle2)
+    }
+
+    fun clearRecentSearches() {
+        viewModelScope.launch { recentSearchRepository.clearAll() }
     }
 
     private fun getUserRatingByHandle(handle1: String, handle2: String) {

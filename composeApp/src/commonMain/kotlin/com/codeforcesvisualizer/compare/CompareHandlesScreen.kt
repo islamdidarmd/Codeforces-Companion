@@ -32,7 +32,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.codeforcesvisualizer.core.components.CFCard
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.HeightSpacer
@@ -46,12 +45,13 @@ import com.codeforcesvisualizer.core.components.WidthSpacer
 import com.codeforcesvisualizer.core.theme.CFThemeColors
 import com.codeforcesvisualizer.shared.domain.entity.UserRating
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun CompareHandlesScreen(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
-    viewModel: CompareHandlesViewModel = viewModel()
+    viewModel: CompareHandlesViewModel = koinViewModel()
 ) {
     val handleOne by viewModel.handle1State.collectAsState()
     val handleTwo by viewModel.handle2State.collectAsState()

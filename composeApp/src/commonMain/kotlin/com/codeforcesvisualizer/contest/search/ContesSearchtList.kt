@@ -30,9 +30,9 @@ internal fun ContestSearchList(
             ContestListItem(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                 contest = contest,
-                isUpcoming = contest.phase == "BEFORE",
+                isUpcoming = contest.scheduled,
                 onOpenContest = { contestId ->
-                    if (contest.phase == "BEFORE") {
+                    if (contest.scheduled) {
                         openContestDetails(contestId)
                     } else {
                         onOpenWebSite(contestId)

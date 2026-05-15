@@ -175,7 +175,7 @@ private fun ContestDetailsContent(
     onAddToCalendar: (Contest) -> Unit,
 ) {
     val colors = CFThemeColors.current
-    val isUpcoming = contest.phase == "BEFORE"
+    val isUpcoming = contest.scheduled
     var showCalendarToast by remember { mutableStateOf(false) }
 
     Box(modifier = modifier) {
@@ -221,10 +221,9 @@ private fun ContestDetailsContent(
                     Chip(text = division, color = colors.blue)
                 }
                 Chip(text = contest.kind ?: "Codeforces", color = colors.dim, subtle = true)
-                val phaseColor = when (contest.phase) {
-                    "BEFORE" -> colors.green
-                    "FINISHED" -> colors.dim
-                    "CODING" -> colors.amber
+                val phaseColor = when {
+                    contest.scheduled -> colors.green
+                    contest.phase.equals("Running", ignoreCase = true) -> colors.amber
                     else -> colors.dim
                 }
                 Chip(text = contest.phase.lowercase(), color = phaseColor)

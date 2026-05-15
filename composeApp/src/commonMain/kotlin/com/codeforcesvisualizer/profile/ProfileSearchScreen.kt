@@ -29,6 +29,7 @@ import codeforces_visualizer.composeapp.generated.resources.Res
 import codeforces_visualizer.composeapp.generated.resources.enter_handle_hint
 import coil3.compose.AsyncImage
 import com.codeforcesvisualizer.core.EventLogger
+import com.codeforcesvisualizer.core.components.RecentSearchesSection
 import com.codeforcesvisualizer.core.components.CFCard
 import com.codeforcesvisualizer.core.components.CFLoadingIndicator
 import com.codeforcesvisualizer.core.components.Chip
@@ -70,8 +71,10 @@ fun ProfileSearchScreen(
     val userInfoUiState by viewModel.userInfoState.collectAsState()
     val userStatusUiState by viewModel.userStatusState.collectAsState()
     val userRatingsUiState by viewModel.userRatingState.collectAsState()
+    val recentSearches by viewModel.recentSearches.collectAsState()
 
     val colors = CFThemeColors.current
+    val showRecent = userInfoUiState.user == null && !userInfoUiState.loading
 
     Column(
         modifier = modifier
@@ -96,6 +99,20 @@ fun ProfileSearchScreen(
             onClearText = { viewModel.onSearchTextChanged("") },
             onNavigateBack = onNavigateBack
         )
+
+        if (showRecent) {
+            RecentSearchesSection(
+                searches = recentSearches,
+                onSearchClick = { handle ->
+                    viewModel.onSearchTextChanged(handle)
+                    viewModel.getUserInfoByHandle(handle)
+                    viewModel.getUserStatusByHandle(handle)
+                    viewModel.getUserRatingByHandle(handle)
+                },
+                onClearAll = { viewModel.clearRecentSearches() },
+                modifier = Modifier.padding(horizontal = 18.dp, vertical = 12.dp),
+            )
+        }
 
         ProfileContent(
             userInfoUiState = userInfoUiState,
@@ -314,20 +331,19 @@ private fun IdentitySection(
 
         WidthSpacer(width = 14.dp)
 
-        Column {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = "${user.firstName} ${user.lastName}".trim().ifBlank { user.handle },
-                    style = TextStyle(
-                        fontFamily = FontFamily.Monospace,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                        color = colors.fg
-                    )
-                )
-                WidthSpacer(width = 8.dp)
-                RankBadge(rating = user.rating, rank = user.rank)
-            }
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = "${user.firstName} ${user.lastName}".trim().ifBlank { user.handle },
+                style = TextStyle(
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = colors.fg
+                ),
+                maxLines = 1
+            )
+            HeightSpacer(height = 4.dp)
+            RankBadge(rating = user.rating, rank = user.rank)
 
             HeightSpacer(height = 4.dp)
 

@@ -2,18 +2,22 @@ package com.codeforcesvisualizer.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.codeforcesvisualizer.core.data.RecentSearchRepository
 import com.codeforcesvisualizer.shared.core.Either
 import com.codeforcesvisualizer.shared.domain.usecase.GetUserInfoByHandleUseCase
 import com.codeforcesvisualizer.shared.domain.usecase.GetUserRatingsByHandleUseCase
 import com.codeforcesvisualizer.shared.domain.usecase.GetUserStatusByHandleUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class ProfileSearchViewModel(
     private val getUserInfoByHandleUseCase: GetUserInfoByHandleUseCase,
     private val getUserStatusByHandleUseCase: GetUserStatusByHandleUseCase,
-    private val getUserRatingByHandleUseCase: GetUserRatingsByHandleUseCase
+    private val getUserRatingByHandleUseCase: GetUserRatingsByHandleUseCase,
+    private val recentSearchRepository: RecentSearchRepository
 ) : ViewModel() {
     private val _searchTextState = MutableStateFlow("")
     val searchTextState: StateFlow<String> = _searchTextState
@@ -27,11 +31,15 @@ class ProfileSearchViewModel(
     private val _userRatingState = MutableStateFlow(UserRatingUiState())
     val userRatingState: StateFlow<UserRatingUiState> = _userRatingState
 
+    val recentSearches: StateFlow<List<String>> = recentSearchRepository.recentSearches
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
     fun onSearchTextChanged(text: String) {
         _searchTextState.value = text
     }
 
     fun getUserInfoByHandle(handle: String) {
+        viewModelScope.launch { recentSearchRepository.addSearch(handle) }
         _userInfoState.value = _userInfoState.value.copy(loading = true)
         viewModelScope.launch {
             when (val data = getUserInfoByHandleUseCase(handle)) {
@@ -98,5 +106,9 @@ class ProfileSearchViewModel(
                 }
             }
         }
+    }
+
+    fun clearRecentSearches() {
+        viewModelScope.launch { recentSearchRepository.clearAll() }
     }
 }

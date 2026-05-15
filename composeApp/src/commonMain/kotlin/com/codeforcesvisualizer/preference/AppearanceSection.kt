@@ -65,6 +65,15 @@ fun AppearanceSection(
             onClick = { onThemeModeChanged(UiThemeMode.Light) },
             modifier = Modifier.weight(1f),
         )
+        ThemePreviewButton(
+            label = "system",
+            isSelected = themeMode == UiThemeMode.System,
+            previewBg = DarkBg,
+            previewSurface = LightSurface,
+            previewBorder = DarkBorder,
+            onClick = { onThemeModeChanged(UiThemeMode.System) },
+            modifier = Modifier.weight(1f),
+        )
     }
 }
 

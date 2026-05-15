@@ -2,6 +2,7 @@ package com.codeforcesvisualizer.core.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,12 +43,13 @@ fun CFCard(
             .then(
                 if (noBorder) Modifier
                 else Modifier.border(width = 1.dp, color = colors.border, shape = shape)
-            )
-            .padding(contentPadding),
+            ),
     ) {
         if (title != null) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 14.dp, end = 14.dp, top = 14.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -73,6 +75,8 @@ fun CFCard(
             HeightSpacer(height = 10.dp)
         }
 
-        content()
+        Box(modifier = Modifier.padding(contentPadding)) {
+            content()
+        }
     }
 }
