@@ -1,9 +1,8 @@
 package com.codeforcesvisualizer.preference
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,19 +10,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,12 +36,14 @@ import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.CFCard
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.core.components.ScreenHeader
-import com.codeforcesvisualizer.core.components.WidthSpacer
+import com.codeforcesvisualizer.core.data.UserSettingsRepository
 import com.codeforcesvisualizer.core.theme.CFThemeColors
 import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -49,6 +56,10 @@ fun PreferenceScreen(
     val themeModeUiState by themeManager.themeModeFlow.collectAsState()
     val rateAppHandler = rememberRateAppHandler()
     var showStoreError by remember { mutableStateOf(false) }
+    val userSettingsRepository = koinInject<UserSettingsRepository>()
+    val savedUsername by userSettingsRepository.username.collectAsState(initial = "")
+    var usernameInput by remember(savedUsername) { mutableStateOf(savedUsername) }
+    val scope = rememberCoroutineScope()
 
     LazyColumn(
         modifier = modifier
@@ -62,6 +73,77 @@ fun PreferenceScreen(
                 title = "Settings",
             )
         }
+
+        // Username setting
+        item {
+            CFCard(title = "account") {
+                Column {
+                    Text(
+                        text = "codeforces handle",
+                        style = TextStyle(
+                            fontFamily = FontFamily.Monospace,
+                            fontSize = 11.sp,
+                            color = colors.dim,
+                        ),
+                    )
+                    HeightSpacer(height = 8.dp)
+                    OutlinedTextField(
+                        value = usernameInput,
+                        onValueChange = { usernameInput = it },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        placeholder = {
+                            Text(
+                                text = "enter handle...",
+                                style = TextStyle(
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 13.sp,
+                                    color = colors.dim.copy(alpha = 0.5f),
+                                ),
+                            )
+                        },
+                        textStyle = TextStyle(
+                            fontFamily = FontFamily.Monospace,
+                            fontSize = 13.sp,
+                            color = colors.fg,
+                        ),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = colors.surface2,
+                            unfocusedContainerColor = colors.surface2,
+                            focusedBorderColor = colors.violet.copy(alpha = 0.5f),
+                            unfocusedBorderColor = colors.border,
+                            cursorColor = colors.violet,
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                scope.launch { userSettingsRepository.setUsername(usernameInput) }
+                            }
+                        ),
+                    )
+                    if (usernameInput != savedUsername && usernameInput.isNotBlank()) {
+                        HeightSpacer(height = 8.dp)
+                        Text(
+                            text = "$ save",
+                            style = TextStyle(
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = colors.violet,
+                            ),
+                            modifier = Modifier
+                                .clickable {
+                                    scope.launch { userSettingsRepository.setUsername(usernameInput) }
+                                }
+                                .padding(vertical = 4.dp),
+                        )
+                    }
+                }
+            }
+        }
+
+        item { HeightSpacer(height = 16.dp) }
 
         // Theme picker
         item {
@@ -138,7 +220,7 @@ fun PreferenceScreen(
 }
 
 @Composable
-private fun PreferenceRow(
+fun PreferenceRow(
     label: String,
     value: String,
     isAction: Boolean = false,
@@ -150,11 +232,7 @@ private fun PreferenceRow(
         modifier = Modifier
             .fillMaxWidth()
             .then(
-                if (onClick != null) Modifier.background(colors.surface)
-                    .let { mod ->
-                        @Suppress("DEPRECATION")
-                        mod
-                    }
+                if (onClick != null) Modifier.clickable { onClick() }
                 else Modifier
             )
             .padding(horizontal = 14.dp, vertical = 14.dp),
@@ -176,17 +254,11 @@ private fun PreferenceRow(
                 fontSize = 12.sp,
                 color = if (isAction) colors.violet else colors.dim,
             ),
-            modifier = if (onClick != null) {
-                Modifier.let { mod ->
-                    @Suppress("DEPRECATION")
-                    mod
-                }
-            } else Modifier,
         )
     }
 }
 
-private fun themeModeLabel(mode: UiThemeMode): String {
+fun themeModeLabel(mode: UiThemeMode): String {
     return when (mode) {
         UiThemeMode.Dark -> "dark"
         UiThemeMode.Light -> "light"
