@@ -1,139 +1,41 @@
 package com.codeforcesvisualizer.profile
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import codeforces_visualizer.composeapp.generated.resources.Res
-import codeforces_visualizer.composeapp.generated.resources.levels
-import com.codeforcesvisualizer.core.components.BarChartSeries
-import com.codeforcesvisualizer.core.components.CFBarChart
-import com.codeforcesvisualizer.core.components.CFBarChartData
-import com.codeforcesvisualizer.core.components.Center
-import com.codeforcesvisualizer.core.components.HeightSpacer
-import com.codeforcesvisualizer.core.components.getBarChartColorList
+import com.codeforcesvisualizer.core.components.CFCard
+import com.codeforcesvisualizer.core.components.DifficultyBucket
+import com.codeforcesvisualizer.core.components.DifficultyHistogram
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LevelsCard(
     modifier: Modifier = Modifier,
-    userStatusUiState: UserStatusUiState
-) {
-    Card(
-        modifier = modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-            .defaultMinSize(minHeight = 100.dp)
-    ) {
-        when {
-            userStatusUiState.loading -> {
-                Center {
-                    CircularProgressIndicator()
-                }
-            }
-
-            userStatusUiState.userMessage.isNotBlank() -> {
-                Center {
-                    Text(text = userStatusUiState.userMessage)
-                }
-            }
-
-            userStatusUiState.userStatus != null ->
-                LevelsCard(userStatusList = userStatusUiState.userStatus)
-        }
-    }
-}
-
-@Composable
-private fun LevelsCard(
-    modifier: Modifier = Modifier,
     userStatusList: List<UserStatus>
 ) {
-    val levelsMap = linkedMapOf<String, Int>()
-    userStatusList.forEach {
-        if (isSupportedIndex(it.problem.index) && minifyVerdicts(it.verdict) == "AC") {
-            levelsMap[it.problem.index] = (levelsMap[it.problem.index] ?: 0) + 1
+    val buckets = remember(userStatusList) {
+        val ratingRanges = listOf(800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000)
+        val counts = mutableMapOf<Int, Int>()
+        ratingRanges.forEach { counts[it] = 0 }
+
+        userStatusList.forEach { status ->
+            if (status.verdict == "OK") {
+                val rating = status.problem.contestId
+                val bucket = ratingRanges.lastOrNull { it <= rating } ?: ratingRanges.first()
+                counts[bucket] = (counts[bucket] ?: 0) + 1
+            }
+        }
+
+        ratingRanges.map { range ->
+            DifficultyBucket(range = range.toString(), count = counts[range] ?: 0)
         }
     }
 
-    val palette = getBarChartColorList()
-    val levelList = levelsMap.keys.toList()
-    val data = CFBarChartData(
-        groupLabels = levelList,
-        series = listOf(
-            BarChartSeries(
-                label = stringResource(Res.string.levels),
-                values = levelsMap.values.map { it.toFloat() },
-                color = palette.first()
-            )
-        )
-    )
-
-    Column(modifier = modifier.padding(12.dp)) {
-        Text(
-            text = stringResource(Res.string.levels),
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-        )
-        HeightSpacer(height = 8.dp)
-
-        CFBarChart(
-            data = data
-        )
+    CFCard(
+        modifier = modifier.fillMaxWidth(),
+        title = "solved by difficulty",
+    ) {
+        DifficultyHistogram(buckets = buckets)
     }
-}
-
-private fun isSupportedIndex(index: String): Boolean {
-    return (index == "A"
-            || index == "B"
-            || index == "C"
-            || index == "D"
-            || index == "E"
-            || index == "F"
-            || index == "G"
-            || index == "H"
-            || index == "I"
-            || index == "J"
-            || index == "K"
-            || index == "L"
-            || index == "M"
-            || index == "O"
-            || index == "Q"
-            || index == "R"
-            )
-}
-
-private fun minifyVerdicts(verdict: String): String {
-    return when (verdict) {
-        "OK" -> "AC"
-        "COMPILATION_ERROR" -> "CE"
-        "RUNTIME_ERROR" -> "RTE"
-        "WRONG_ANSWER" -> "WA"
-        "PRESENTATION_ERROR" -> "PE"
-        "TIME_LIMIT_EXCEEDED" -> "TLE"
-        "MEMORY_LIMIT_EXCEEDED" -> "MLE"
-        "IDLENESS_LIMIT_EXCEEDED" -> "ILE"
-        "SECURITY_VIOLATED" -> "SV"
-        "INPUT_PREPARATION_CRASHED" -> "IPC"
-        else -> verdict
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    VerdictCard(
-        userStatusUiState = UserStatusUiState(
-            userStatus = listOf()
-        )
-    )
 }

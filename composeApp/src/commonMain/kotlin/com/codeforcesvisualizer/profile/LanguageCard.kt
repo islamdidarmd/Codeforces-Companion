@@ -1,88 +1,39 @@
 package com.codeforcesvisualizer.profile
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import codeforces_visualizer.composeapp.generated.resources.Res
-import codeforces_visualizer.composeapp.generated.resources.language
-import com.codeforcesvisualizer.core.components.CFPieChart
-import com.codeforcesvisualizer.core.components.CFPieChartData
-import com.codeforcesvisualizer.core.components.Center
-import com.codeforcesvisualizer.core.components.HeightSpacer
-import com.codeforcesvisualizer.core.components.PieChartSlice
-import com.codeforcesvisualizer.core.components.getPieChartColorList
+import com.codeforcesvisualizer.core.components.CFCard
+import com.codeforcesvisualizer.core.components.LanguageBarChart
+import com.codeforcesvisualizer.core.components.LanguageData
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LanguageCard(
-    modifier: Modifier = Modifier,
-    userStatusUiState: UserStatusUiState
+    userStatusList: List<UserStatus>,
+    modifier: Modifier = Modifier
 ) {
-    Card(
-        modifier = modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-            .defaultMinSize(
-                minHeight = 100.dp
-            )
-    ) {
-        when {
-            userStatusUiState.loading -> {
-                Center {
-                    CircularProgressIndicator()
-                }
-            }
-
-            userStatusUiState.userMessage.isNotBlank() -> {
-                Center {
-                    Text(text = userStatusUiState.userMessage)
-                }
-            }
-
-            userStatusUiState.userStatus != null ->
-                LanguageCard(userStatusList = userStatusUiState.userStatus)
+    val languages = remember(userStatusList) {
+        val countMap = mutableMapOf<String, Int>()
+        userStatusList.forEach { status ->
+            countMap[status.programmingLanguage] =
+                (countMap[status.programmingLanguage] ?: 0) + 1
         }
-    }
-}
-
-@Composable
-private fun LanguageCard(
-    modifier: Modifier = Modifier,
-    userStatusList: List<UserStatus>
-) {
-    val languageCounterMap = mutableMapOf<String, Int>()
-    userStatusList.forEach {
-        languageCounterMap[it.programmingLanguage] =
-            (languageCounterMap[it.programmingLanguage] ?: 0) + 1
-    }
-    val palette = getPieChartColorList()
-    val slices = languageCounterMap.entries.mapIndexed { index, entry ->
-        PieChartSlice(
-            label = entry.key,
-            value = entry.value.toFloat(),
-            color = palette[index % palette.size]
-        )
+        val total = countMap.values.sum().toFloat().coerceAtLeast(1f)
+        countMap.entries
+            .sortedByDescending { it.value }
+            .map { (name, count) ->
+                LanguageData(
+                    name = name,
+                    percentage = (count / total) * 100f
+                )
+            }
     }
 
-    Column(modifier = modifier.padding(12.dp)) {
-        Text(
-            text = stringResource(Res.string.language),
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-        )
-        HeightSpacer(height = 8.dp)
-        CFPieChart(
-            data = CFPieChartData(slices),
-            minPercentToShowLabel = 10
-        )
+    CFCard(
+        title = "languages",
+        modifier = modifier
+    ) {
+        LanguageBarChart(languages = languages)
     }
 }

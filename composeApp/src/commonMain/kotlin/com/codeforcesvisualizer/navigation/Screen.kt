@@ -1,18 +1,22 @@
 package com.codeforcesvisualizer.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.Compare
+import androidx.compose.material.icons.automirrored.outlined.FormatListBulleted
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
 internal sealed class Screen(
     val route: String,
     val contentDescription: String,
+    val label: String,
     val icon: ImageVector
 ) {
-    object Home : Screen("home", "Home", Icons.Default.Home)
-    object Profile : Screen("profile", "Profile", Icons.Default.Face)
-    object Compare : Screen("compare", "Compare", Icons.Default.Person)
-    object More : Screen("more", "More", Icons.Default.Menu)
+    object Home : Screen("home", "Contests", "contests", Icons.AutoMirrored.Outlined.FormatListBulleted)
+    object Profile : Screen("profile", "Profile", "profile", Icons.Outlined.Person)
+    object Compare : Screen("compare", "Compare", "compare", Icons.Outlined.Compare)
+    object More : Screen("more", "Settings", "settings", Icons.Outlined.Settings)
 }
 
 internal sealed class LeafScreen(val route: String) {

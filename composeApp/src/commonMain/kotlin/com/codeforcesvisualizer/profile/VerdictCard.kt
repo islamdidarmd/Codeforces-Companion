@@ -1,95 +1,39 @@
 package com.codeforcesvisualizer.profile
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import com.codeforcesvisualizer.core.components.CFPieChartData
-import com.codeforcesvisualizer.core.components.PieChartSlice
-import com.codeforcesvisualizer.core.components.getPieChartColorList
-import androidx.compose.ui.unit.dp
-import com.codeforcesvisualizer.core.components.CFPieChart
-import com.codeforcesvisualizer.core.components.Center
-import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.CFCard
+import com.codeforcesvisualizer.core.components.VerdictDonut
 import com.codeforcesvisualizer.shared.domain.entity.UserStatus
-import codeforces_visualizer.composeapp.generated.resources.Res
-import codeforces_visualizer.composeapp.generated.resources.verdicts
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun VerdictCard(
-    modifier: Modifier = Modifier,
-    userStatusUiState: UserStatusUiState
+    userStatusList: List<UserStatus>,
+    modifier: Modifier = Modifier
 ) {
-    Card(
+    val verdictMap = remember(userStatusList) {
+        val map = mutableMapOf<String, Int>()
+        userStatusList.forEach { status ->
+            val shortVerdict = minifyVerdict(status.verdict)
+            map[shortVerdict] = (map[shortVerdict] ?: 0) + 1
+        }
+        map.toMap()
+    }
+
+    CFCard(
+        title = "verdicts",
         modifier = modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-            .defaultMinSize(minHeight = 100.dp)
     ) {
-        when {
-            userStatusUiState.loading -> {
-                Center {
-                    CircularProgressIndicator()
-                }
-            }
-
-            userStatusUiState.userMessage.isNotBlank() -> {
-                Center {
-                    Text(text = userStatusUiState.userMessage)
-                }
-            }
-
-            userStatusUiState.userStatus != null ->
-                VerdictCard(userStatusList = userStatusUiState.userStatus)
-        }
+        VerdictDonut(data = verdictMap)
     }
 }
 
-@Composable
-private fun VerdictCard(
-    modifier: Modifier = Modifier,
-    userStatusList: List<UserStatus>
-) {
-    Column(modifier = modifier.padding(12.dp)) {
-        Text(
-            text = stringResource(Res.string.verdicts),
-            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-        )
-        HeightSpacer(height = 8.dp)
-
-        val verdictCounterMap = mutableMapOf<String, Int>()
-        userStatusList.forEach {
-            verdictCounterMap[it.verdict] = (verdictCounterMap[it.verdict] ?: 0) + 1
-        }
-        val palette = getPieChartColorList()
-        val slices = verdictCounterMap.entries.mapIndexed { index, entry ->
-            PieChartSlice(
-                label = minifyVerdicts(entry.key),
-                value = entry.value.toFloat(),
-                color = palette[index % palette.size]
-            )
-        }
-
-        CFPieChart(
-            data = CFPieChartData(slices),
-            minPercentToShowLabel = 20
-        )
-    }
-}
-
-private fun minifyVerdicts(verdict: String): String {
+private fun minifyVerdict(verdict: String): String {
     return when (verdict) {
         "OK" -> "AC"
         "COMPILATION_ERROR" -> "CE"
-        "RUNTIME_ERROR" -> "RTE"
+        "RUNTIME_ERROR" -> "RE"
         "WRONG_ANSWER" -> "WA"
         "PRESENTATION_ERROR" -> "PE"
         "TIME_LIMIT_EXCEEDED" -> "TLE"
@@ -100,5 +44,3 @@ private fun minifyVerdicts(verdict: String): String {
         else -> verdict
     }
 }
-
-// Removed unused Preview function
