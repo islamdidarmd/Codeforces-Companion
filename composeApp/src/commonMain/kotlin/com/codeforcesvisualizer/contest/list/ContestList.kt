@@ -53,10 +53,10 @@ internal fun ContestList(
     var selectedTab by remember { mutableStateOf(ContestTab.UPCOMING) }
 
     val upcoming = remember(contestList) {
-        contestList.filter { it.phase == "BEFORE" }.sortedBy { it.startTimeSeconds }
+        contestList.filter { it.scheduled }.sortedBy { it.startTimeSeconds }
     }
     val past = remember(contestList) {
-        contestList.filter { it.phase != "BEFORE" }
+        contestList.filter { !it.scheduled }
     }
 
     val state = rememberLazyListState()
@@ -195,7 +195,7 @@ private fun HeroContestCard(
     val colors = CFThemeColors.current
     val shape = RoundedCornerShape(12.dp)
     val gradient = Brush.linearGradient(
-        colors = listOf(Color(0xFF1a1530), Color(0xFF0f1115)),
+        colors = listOf(colors.violet.copy(alpha = 0.12f), colors.surface),
     )
 
     Column(

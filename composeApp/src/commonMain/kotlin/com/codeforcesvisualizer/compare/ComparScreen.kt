@@ -33,11 +33,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import codeforces_visualizer.composeapp.generated.resources.Res
 import codeforces_visualizer.composeapp.generated.resources.compare_users
 import codeforces_visualizer.composeapp.generated.resources.hanldles_can_not_be_empty
 import com.codeforcesvisualizer.core.EventLogger
+import com.codeforcesvisualizer.core.components.RecentSearchesSection
 import com.codeforcesvisualizer.core.components.HeightSpacer
 import com.codeforcesvisualizer.core.components.ScreenHeader
 import com.codeforcesvisualizer.core.components.WidthSpacer
@@ -45,13 +45,14 @@ import com.codeforcesvisualizer.core.theme.CFThemeColors
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun CompareScreenHandleInput(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit,
     openCompare: () -> Unit,
-    viewModel: CompareHandlesViewModel = viewModel()
+    viewModel: CompareHandlesViewModel = koinViewModel()
 ) {
     val colors = CFThemeColors.current
     val snackbarHostState = SnackbarHostState()
@@ -59,6 +60,7 @@ fun CompareScreenHandleInput(
 
     val handleOne by viewModel.handle1State.collectAsState()
     val handleTwo by viewModel.handle2State.collectAsState()
+    val recentSearches by viewModel.recentSearches.collectAsState()
 
     val errorMessage = stringResource(Res.string.hanldles_can_not_be_empty)
 
@@ -138,6 +140,21 @@ fun CompareScreenHandleInput(
                     fontSize = 14.sp,
                 ),
                 modifier = Modifier.padding(vertical = 4.dp),
+            )
+        }
+
+        if (handleOne.isBlank() && handleTwo.isBlank()) {
+            HeightSpacer(height = 24.dp)
+            RecentSearchesSection(
+                searches = recentSearches,
+                onSearchClick = { handle ->
+                    if (handleOne.isBlank()) {
+                        viewModel.onHandle1Change(handle)
+                    } else {
+                        viewModel.onHandle2Change(handle)
+                    }
+                },
+                onClearAll = { viewModel.clearRecentSearches() },
             )
         }
     }

@@ -9,14 +9,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,8 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -69,73 +62,6 @@ fun PreferenceScreen(
                 title = "Settings",
             )
         }
-
-        // User card
-        item {
-            CFCard(title = "user") {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    // Avatar placeholder with gradient
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(
-                                Brush.linearGradient(
-                                    colors = listOf(colors.violet, colors.blue)
-                                )
-                            ),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            text = "cf",
-                            style = TextStyle(
-                                fontFamily = FontFamily.Monospace,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                color = colors.bg,
-                            ),
-                        )
-                    }
-
-                    WidthSpacer(width = 12.dp)
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = "@codeforces",
-                            style = TextStyle(
-                                fontFamily = FontFamily.Monospace,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                color = colors.fg,
-                            ),
-                        )
-                        HeightSpacer(height = 2.dp)
-                        Text(
-                            text = "signed in",
-                            style = TextStyle(
-                                fontFamily = FontFamily.Monospace,
-                                fontSize = 10.sp,
-                                color = colors.green,
-                            ),
-                        )
-                    }
-
-                    Text(
-                        text = "edit",
-                        style = TextStyle(
-                            fontFamily = FontFamily.Monospace,
-                            fontSize = 11.sp,
-                            color = colors.violet,
-                        ),
-                    )
-                }
-            }
-        }
-
-        item { HeightSpacer(height = 16.dp) }
 
         // Theme picker
         item {
@@ -192,30 +118,6 @@ fun PreferenceScreen(
         }
 
         item { HeightSpacer(height = 24.dp) }
-
-        // Sign out button
-        item {
-            OutlinedButton(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = { /* sign out action */ },
-                shape = RoundedCornerShape(10.dp),
-                border = ButtonDefaults.outlinedButtonBorder(enabled = true).copy(
-                    brush = Brush.linearGradient(listOf(colors.red, colors.red))
-                ),
-            ) {
-                Text(
-                    text = "sign out",
-                    style = TextStyle(
-                        fontFamily = FontFamily.Monospace,
-                        fontSize = 13.sp,
-                        color = colors.red,
-                    ),
-                    modifier = Modifier.padding(vertical = 4.dp),
-                )
-            }
-        }
-
-        item { HeightSpacer(height = 16.dp) }
 
         // Build info
         item {
