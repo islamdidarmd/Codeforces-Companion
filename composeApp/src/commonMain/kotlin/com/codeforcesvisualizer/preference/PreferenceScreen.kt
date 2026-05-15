@@ -1,21 +1,48 @@
 package com.codeforcesvisualizer.preference
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import codeforces_visualizer.composeapp.generated.resources.Res
-import codeforces_visualizer.composeapp.generated.resources.preferences
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.codeforcesvisualizer.core.EventLogger
-import com.codeforcesvisualizer.core.components.CFAppBar
+import com.codeforcesvisualizer.core.components.CFCard
+import com.codeforcesvisualizer.core.components.HeightSpacer
+import com.codeforcesvisualizer.core.components.ScreenHeader
+import com.codeforcesvisualizer.core.components.WidthSpacer
+import com.codeforcesvisualizer.core.theme.CFThemeColors
 import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -25,20 +52,94 @@ fun PreferenceScreen(
     onNavigateBack: () -> Unit,
     themeManager: ThemeManager = koinViewModel<ThemeManagerViewModel>()
 ) {
+    val colors = CFThemeColors.current
     val themeModeUiState by themeManager.themeModeFlow.collectAsState()
     val rateAppHandler = rememberRateAppHandler()
+    var showStoreError by remember { mutableStateOf(false) }
 
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            CFAppBar(
-                title = stringResource(Res.string.preferences),
-                onNavigateBack = onNavigateBack
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .background(colors.bg)
+            .padding(horizontal = 18.dp),
+    ) {
+        item {
+            ScreenHeader(
+                prompt = "settings",
+                title = "Settings",
             )
         }
-    ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            item {
+
+        // User card
+        item {
+            CFCard(title = "user") {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    // Avatar placeholder with gradient
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(
+                                Brush.linearGradient(
+                                    colors = listOf(colors.violet, colors.blue)
+                                )
+                            ),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = "cf",
+                            style = TextStyle(
+                                fontFamily = FontFamily.Monospace,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp,
+                                color = colors.bg,
+                            ),
+                        )
+                    }
+
+                    WidthSpacer(width = 12.dp)
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "@codeforces",
+                            style = TextStyle(
+                                fontFamily = FontFamily.Monospace,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp,
+                                color = colors.fg,
+                            ),
+                        )
+                        HeightSpacer(height = 2.dp)
+                        Text(
+                            text = "signed in",
+                            style = TextStyle(
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 10.sp,
+                                color = colors.green,
+                            ),
+                        )
+                    }
+
+                    Text(
+                        text = "edit",
+                        style = TextStyle(
+                            fontFamily = FontFamily.Monospace,
+                            fontSize = 11.sp,
+                            color = colors.violet,
+                        ),
+                    )
+                }
+            }
+        }
+
+        item { HeightSpacer(height = 16.dp) }
+
+        // Theme picker
+        item {
+            CFCard(title = "appearance") {
                 AppearanceSection(
                     themeMode = themeModeUiState.themeMode,
                     onThemeModeChanged = { selectedThemeMode ->
@@ -52,13 +153,142 @@ fun PreferenceScreen(
                     }
                 )
             }
-            item {
-                HorizontalDivider()
-            }
-            item {
-                OtherSection(rateAppHandler = rateAppHandler)
+        }
+
+        item { HeightSpacer(height = 16.dp) }
+
+        // Preferences list
+        item {
+            CFCard(title = "preferences", contentPadding = 0.dp) {
+                PreferenceRow(label = "version", value = rateAppHandler.versionName)
+                HorizontalDivider(color = colors.border, thickness = 1.dp)
+                PreferenceRow(
+                    label = "rate app",
+                    value = "open store",
+                    isAction = true,
+                    onClick = {
+                        showStoreError = !rateAppHandler.openStore()
+                    },
+                )
+                if (showStoreError) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 14.dp, vertical = 8.dp),
+                    ) {
+                        Text(
+                            text = "store not found",
+                            style = TextStyle(
+                                fontFamily = FontFamily.Monospace,
+                                fontSize = 10.sp,
+                                color = colors.red,
+                            ),
+                        )
+                    }
+                }
+                HorizontalDivider(color = colors.border, thickness = 1.dp)
+                PreferenceRow(label = "theme mode", value = themeModeLabel(themeModeUiState.themeMode))
             }
         }
+
+        item { HeightSpacer(height = 24.dp) }
+
+        // Sign out button
+        item {
+            OutlinedButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { /* sign out action */ },
+                shape = RoundedCornerShape(10.dp),
+                border = ButtonDefaults.outlinedButtonBorder(enabled = true).copy(
+                    brush = Brush.linearGradient(listOf(colors.red, colors.red))
+                ),
+            ) {
+                Text(
+                    text = "sign out",
+                    style = TextStyle(
+                        fontFamily = FontFamily.Monospace,
+                        fontSize = 13.sp,
+                        color = colors.red,
+                    ),
+                    modifier = Modifier.padding(vertical = 4.dp),
+                )
+            }
+        }
+
+        item { HeightSpacer(height = 16.dp) }
+
+        // Build info
+        item {
+            Text(
+                text = "cf-visualizer v${rateAppHandler.versionName}",
+                modifier = Modifier.fillMaxWidth(),
+                style = TextStyle(
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 10.sp,
+                    color = colors.dim,
+                ),
+                textAlign = TextAlign.Center,
+            )
+        }
+
+        item { HeightSpacer(height = 24.dp) }
+    }
+}
+
+@Composable
+private fun PreferenceRow(
+    label: String,
+    value: String,
+    isAction: Boolean = false,
+    onClick: (() -> Unit)? = null,
+) {
+    val colors = CFThemeColors.current
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(
+                if (onClick != null) Modifier.background(colors.surface)
+                    .let { mod ->
+                        @Suppress("DEPRECATION")
+                        mod
+                    }
+                else Modifier
+            )
+            .padding(horizontal = 14.dp, vertical = 14.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = label,
+            style = TextStyle(
+                fontFamily = FontFamily.Monospace,
+                fontSize = 12.sp,
+                color = colors.fg,
+            ),
+        )
+        Text(
+            text = value,
+            style = TextStyle(
+                fontFamily = FontFamily.Monospace,
+                fontSize = 12.sp,
+                color = if (isAction) colors.violet else colors.dim,
+            ),
+            modifier = if (onClick != null) {
+                Modifier.let { mod ->
+                    @Suppress("DEPRECATION")
+                    mod
+                }
+            } else Modifier,
+        )
+    }
+}
+
+private fun themeModeLabel(mode: UiThemeMode): String {
+    return when (mode) {
+        UiThemeMode.Dark -> "dark"
+        UiThemeMode.Light -> "light"
+        UiThemeMode.System -> "system"
     }
 }
 

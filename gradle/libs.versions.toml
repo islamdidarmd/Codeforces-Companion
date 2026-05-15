@@ -26,7 +26,7 @@ kotlin = "2.2.10"
 kotlinxDatetime = "0.6.1"
 kotlinxSerialization = "1.7.3"
 kspVersion = "2.2.10-2.0.2"
-ktor = "2.3.12"
+ktor = "3.0.0"
 lifecycleExtensions = "2.2.0"
 lifecycleRuntimeKtx = "2.9.4"
 lifecycleViewmodelKtxVersion = "2.2.0"
@@ -70,7 +70,7 @@ com-google-android-material = { module = "com.google.android.material:material",
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 io-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 io-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 io-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }

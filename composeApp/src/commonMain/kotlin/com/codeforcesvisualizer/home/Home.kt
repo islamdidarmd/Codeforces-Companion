@@ -1,14 +1,32 @@
 package com.codeforcesvisualizer.home
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -16,8 +34,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
 import coil3.compose.setSingletonImageLoaderFactory
-import coil3.network.ktor.KtorNetworkFetcherFactory
+import coil3.network.ktor3.KtorNetworkFetcherFactory
 import com.codeforcesvisualizer.core.EventLogger
+import com.codeforcesvisualizer.core.theme.CFTheme
+import com.codeforcesvisualizer.core.theme.CFThemeColors
 import com.codeforcesvisualizer.inject.appModule
 import com.codeforcesvisualizer.inject.networkingModule
 import com.codeforcesvisualizer.inject.preferenceModule
@@ -27,7 +47,6 @@ import com.codeforcesvisualizer.navigation.AppNavigator
 import com.codeforcesvisualizer.navigation.Screen
 import com.codeforcesvisualizer.preference.ThemeManager
 import com.codeforcesvisualizer.shared.domain.entity.UiThemeMode
-import com.codeforcesvisualizer.core.theme.CFTheme
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 
@@ -59,7 +78,6 @@ private fun Home(
 ) {
     val themeManager = koinInject<ThemeManager>()
     val themeModeUiState by themeManager.themeModeFlow.collectAsState()
-    @Suppress("UNUSED_VARIABLE")
     val isDarkTheme = when (themeModeUiState.themeMode) {
         UiThemeMode.System -> isSystemInDarkTheme()
         UiThemeMode.Dark -> true
@@ -70,56 +88,109 @@ private fun Home(
     CFTheme(
         isDarkTheme = isDarkTheme
     ) {
-        Column(modifier = modifier) {
+        val colors = CFThemeColors.current
+
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .background(colors.bg)
+        ) {
             AppNavigator(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 80.dp),
                 navController = navController,
                 themeManager = themeManager
             )
-            BottomNavigationView(navController)
+            FloatingBottomNav(
+                navController = navController,
+                isDarkTheme = isDarkTheme,
+                modifier = Modifier.align(Alignment.BottomCenter)
+            )
         }
     }
 }
 
 @Composable
-fun BottomNavigationView(navController: NavController) {
+fun FloatingBottomNav(
+    navController: NavController,
+    isDarkTheme: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val colors = CFThemeColors.current
     val bottomNavItems = listOf(
         Screen.Home,
         Screen.Profile,
         Screen.Compare,
         Screen.More,
     )
-    NavigationBar {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
 
-        bottomNavItems.forEach { screen ->
-            NavigationBarItem(
-                icon = {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    val navBarBackground = if (isDarkTheme) {
+        Color(0xFF14171D).copy(alpha = 0.86f)
+    } else {
+        Color(0xFFFFFFFF).copy(alpha = 0.82f)
+    }
+
+    val navBarShape = RoundedCornerShape(22.dp)
+    val shadowElevation = if (isDarkTheme) 12.dp else 6.dp
+
+    Box(
+        modifier = modifier
+            .padding(start = 8.dp, end = 8.dp, bottom = 38.dp)
+            .fillMaxWidth()
+            .shadow(elevation = shadowElevation, shape = navBarShape)
+            .clip(navBarShape)
+            .background(navBarBackground)
+            .border(width = 1.dp, color = colors.border, shape = navBarShape)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .padding(horizontal = 8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            bottomNavItems.forEach { screen ->
+                val isSelected =
+                    currentDestination?.hierarchy?.any { it.route == screen.route } == true
+                val itemColor = if (isSelected) colors.violet else colors.dim
+
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable {
+                            EventLogger.logScreenView(screen.route)
+                            navController.navigate(screen.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                        .padding(vertical = 6.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Icon(
                         imageVector = screen.icon,
-                        contentDescription = screen.contentDescription
+                        contentDescription = screen.contentDescription,
+                        tint = itemColor
                     )
-                },
-                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                onClick = {
-                    EventLogger.logScreenView(screen.route)
-
-                    navController.navigate(screen.route) {
-                        // Pop up to the start destination of the graph to
-                        // avoid building up a large stack of destinations
-                        // on the back stack as users select items
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        // Avoid multiple copies of the same destination when
-                        // reselecting the same item
-                        launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
-                        restoreState = true
-                    }
+                    Text(
+                        text = screen.label,
+                        style = TextStyle(
+                            fontFamily = FontFamily.Monospace,
+                            fontSize = 9.sp,
+                            color = itemColor,
+                        ),
+                    )
                 }
-            )
+            }
         }
     }
 }
