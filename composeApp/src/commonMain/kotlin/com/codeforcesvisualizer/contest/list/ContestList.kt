@@ -46,6 +46,7 @@ private enum class ContestTab { UPCOMING, PAST }
 internal fun ContestList(
     modifier: Modifier = Modifier,
     contestList: List<Contest>,
+    username: String,
     openContestDetails: (Int) -> Unit,
     onAddToCalendar: (Contest) -> Unit,
 ) {
@@ -72,6 +73,13 @@ internal fun ContestList(
             )
         }
 
+        // Streak banner (shown when username is set)
+        if (username.isNotBlank()) {
+            item {
+                StreakBanner(username = username)
+            }
+        }
+
         // Hero card for first upcoming contest
         if (selectedTab == ContestTab.UPCOMING && upcoming.isNotEmpty()) {
             item {
@@ -80,11 +88,6 @@ internal fun ContestList(
                     onOpenContest = { openContestDetails(it) },
                     onAddToCalendar = { onAddToCalendar(upcoming.first()) },
                 )
-            }
-
-            // Streak banner
-            item {
-                StreakBanner()
             }
 
             // Remaining upcoming items (skip first since it's the hero)
@@ -322,7 +325,7 @@ private fun ActionButton(
 }
 
 @Composable
-private fun StreakBanner() {
+private fun StreakBanner(username: String) {
     val colors = CFThemeColors.current
     val shape = RoundedCornerShape(10.dp)
 
@@ -341,7 +344,7 @@ private fun StreakBanner() {
             fontSize = 16.sp,
         )
         Text(
-            text = "  5-contest participation streak",
+            text = "  @$username — competitive mode",
             style = TextStyle(
                 fontFamily = FontFamily.Monospace,
                 fontSize = 11.sp,

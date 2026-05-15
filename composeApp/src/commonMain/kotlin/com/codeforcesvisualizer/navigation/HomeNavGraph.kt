@@ -6,6 +6,8 @@ import androidx.savedstate.read
 import com.codeforcesvisualizer.contest.details.ContestDetailsScreen
 import com.codeforcesvisualizer.contest.list.ContestListScreen
 import com.codeforcesvisualizer.contest.search.ContestSearchScreen
+import com.codeforcesvisualizer.core.platform.CalendarEvent
+import com.codeforcesvisualizer.core.platform.rememberCalendarLauncher
 import com.codeforcesvisualizer.shared.data.config.BASE_URL
 import com.codeforcesvisualizer.webview.CFWebViewScreen
 
@@ -28,6 +30,7 @@ private fun NavGraphBuilder.addContestList(
     root: Screen
 ) {
     composable(route = LeafScreen.ContestList.createRoute(root = root)) {
+        val calendarLauncher = rememberCalendarLauncher()
         ContestListScreen(
             openSearch = {
                 navController.navigate(LeafScreen.ContestSearch.createRoute(root = root))
@@ -42,8 +45,18 @@ private fun NavGraphBuilder.addContestList(
             },
             onOpenWebSite = { contestId ->
                 val url =
-                    "${_root_ide_package_.com.codeforcesvisualizer.shared.data.config.BASE_URL}/contests/$contestId"
+                    "${com.codeforcesvisualizer.shared.data.config.BASE_URL}/contests/$contestId"
                 navController.navigate(LeafScreen.WebView.createRoute(root = root, link = url))
+            },
+            onAddToCalendar = { contest ->
+                calendarLauncher(
+                    CalendarEvent(
+                        title = contest.name,
+                        startTimeMillis = contest.startTimeSeconds.toLong() * 1000,
+                        durationMillis = contest.durationSeconds.toLong() * 1000,
+                        description = "Codeforces contest: ${contest.name}",
+                    )
+                )
             },
         )
     }
@@ -64,13 +77,24 @@ private fun NavGraphBuilder.addContestDetails(
         val contestId = backStackEntry.arguments?.read {
             getInt("contestId")
         } ?: -1
+        val calendarLauncher = rememberCalendarLauncher()
         ContestDetailsScreen(
             contestId = contestId,
             onNavigateBack = { navController.navigateUp() },
             onOpenWebSite = {
                 val url = "$BASE_URL/contests/$contestId"
                 navController.navigate(LeafScreen.WebView.createRoute(root = root, link = url))
-            }
+            },
+            onAddToCalendar = { contest ->
+                calendarLauncher(
+                    CalendarEvent(
+                        title = contest.name,
+                        startTimeMillis = contest.startTimeSeconds.toLong() * 1000,
+                        durationMillis = contest.durationSeconds.toLong() * 1000,
+                        description = "Codeforces contest: ${contest.name}",
+                    )
+                )
+            },
         )
     }
 }

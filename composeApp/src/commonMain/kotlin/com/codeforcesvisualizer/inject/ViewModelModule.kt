@@ -1,6 +1,7 @@
 package com.codeforcesvisualizer.inject
 
 import com.codeforcesvisualizer.core.data.RecentSearchRepository
+import com.codeforcesvisualizer.core.data.UserSettingsRepository
 import com.codeforcesvisualizer.compare.CompareHandlesViewModel
 import com.codeforcesvisualizer.contest.details.ContestDetailsViewModel
 import com.codeforcesvisualizer.contest.list.ContestViewModel
@@ -13,6 +14,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     single { RecentSearchRepository(get()) }
+    single { UserSettingsRepository(get()) }
     factory { ContestViewModel(get()) }
     factory { ContestSearchViewModel(get()) }
     factory { ContestDetailsViewModel(get()) }
