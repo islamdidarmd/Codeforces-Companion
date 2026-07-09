@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.codeforcesvisualizer.contest.list.extractDivision
 import com.codeforcesvisualizer.core.EventLogger
 import com.codeforcesvisualizer.core.components.CFCard
+import com.codeforcesvisualizer.core.components.CalendarToast
 import com.codeforcesvisualizer.core.components.CFLoadingIndicator
 import com.codeforcesvisualizer.core.components.Center
 import com.codeforcesvisualizer.core.components.Chip
@@ -392,43 +393,4 @@ private fun OpenWebsiteButton(onClick: () -> Unit) {
     }
 }
 
-@Composable
-private fun CalendarToast(onDismiss: () -> Unit) {
-    val colors = CFThemeColors.current
-    val shape = RoundedCornerShape(10.dp)
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .clickable { onDismiss() },
-        contentAlignment = Alignment.BottomCenter,
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 24.dp, vertical = 32.dp)
-                .clip(shape)
-                .background(colors.surface2)
-                .border(1.dp, colors.green.copy(alpha = 0.3f), shape)
-                .padding(horizontal = 20.dp, vertical = 14.dp),
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = "✓",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        color = colors.green,
-                        fontWeight = FontWeight.Bold,
-                    ),
-                )
-                Text(
-                    text = "  Calendar event created",
-                    style = TextStyle(
-                        fontFamily = FontFamily.Monospace,
-                        fontSize = 12.sp,
-                        color = colors.fg,
-                    ),
-                )
-            }
-        }
-    }
-}

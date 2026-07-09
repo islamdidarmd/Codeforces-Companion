@@ -102,18 +102,20 @@ fun CompareHandlesScreen(
         // Winner hype section
         val ratings1 = userRatingsUiState.userRatings1
         val ratings2 = userRatingsUiState.userRatings2
-        if (ratings1 != null && ratings2 != null && ratings1.isNotEmpty() && ratings2.isNotEmpty()) {
-            item {
-                WinnerHypeSection(
-                    handle1 = handleOne,
-                    handle2 = handleTwo,
-                    ratings1 = ratings1,
-                    ratings2 = ratings2,
-                )
-            }
+        if (ratings1 != null && ratings2 != null) {
+            if (ratings1.isNotEmpty() || ratings2.isNotEmpty()) {
+                item {
+                    WinnerHypeSection(
+                        handle1 = handleOne,
+                        handle2 = handleTwo,
+                        ratings1 = ratings1,
+                        ratings2 = ratings2,
+                    )
+                }
 
-            item {
-                HeightSpacer(height = 16.dp)
+                item {
+                    HeightSpacer(height = 16.dp)
+                }
             }
 
             // Rating chart
@@ -174,8 +176,8 @@ private fun WinnerHypeSection(
     ratings2: List<UserRating>,
 ) {
     val colors = CFThemeColors.current
-    val rating1 = ratings1.last().newRating
-    val rating2 = ratings2.last().newRating
+    val rating1 = ratings1.lastOrNull()?.newRating ?: 0
+    val rating2 = ratings2.lastOrNull()?.newRating ?: 0
     val margin = kotlin.math.abs(rating1 - rating2)
     val winner = if (rating1 >= rating2) handle1 else handle2
     val winnerColor = if (rating1 >= rating2) colors.violet else colors.green
@@ -248,10 +250,23 @@ private fun RatingChartCard(
     }
 
     CFCard(title = "rating.history × 2") {
-        RatingLineChart(
-            series = listOf(series1, series2),
-            modifier = Modifier.fillMaxWidth(),
-        )
+        if (ratings1.size >= 2 || ratings2.size >= 2) {
+            RatingLineChart(
+                series = listOf(series1, series2).filter { it.data.isNotEmpty() },
+                modifier = Modifier.fillMaxWidth(),
+            )
+        } else {
+            Center(modifier = Modifier.padding(vertical = 32.dp)) {
+                Text(
+                    text = "not enough rating history to plot",
+                    style = TextStyle(
+                        fontFamily = FontFamily.Monospace,
+                        fontSize = 11.sp,
+                        color = colors.dim,
+                    ),
+                )
+            }
+        }
 
         HeightSpacer(height = 10.dp)
 
@@ -300,14 +315,14 @@ private fun HeadToHeadCard(
 ) {
     val colors = CFThemeColors.current
 
-    val currentRating1 = ratings1.last().newRating
-    val currentRating2 = ratings2.last().newRating
-    val maxRating1 = ratings1.maxOf { it.newRating }
-    val maxRating2 = ratings2.maxOf { it.newRating }
+    val currentRating1 = ratings1.lastOrNull()?.newRating ?: 0
+    val currentRating2 = ratings2.lastOrNull()?.newRating ?: 0
+    val maxRating1 = ratings1.maxOfOrNull { it.newRating } ?: 0
+    val maxRating2 = ratings2.maxOfOrNull { it.newRating } ?: 0
     val contests1 = ratings1.size
     val contests2 = ratings2.size
-    val bestRank1 = ratings1.minOf { it.rank }
-    val bestRank2 = ratings2.minOf { it.rank }
+    val bestRank1 = ratings1.minOfOrNull { it.rank } ?: 0
+    val bestRank2 = ratings2.minOfOrNull { it.rank } ?: 0
 
     // Calculate solved/ac rate from status
     val solved1 = status1?.count { it.verdict == "OK" } ?: 0

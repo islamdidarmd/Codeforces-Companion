@@ -25,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -60,6 +61,7 @@ fun PreferenceScreen(
     val savedUsername by userSettingsRepository.username.collectAsState(initial = "")
     var usernameInput by remember(savedUsername) { mutableStateOf(savedUsername) }
     val scope = rememberCoroutineScope()
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     LazyColumn(
         modifier = modifier
@@ -118,6 +120,7 @@ fun PreferenceScreen(
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                         keyboardActions = KeyboardActions(
                             onDone = {
+                                keyboardController?.hide()
                                 scope.launch { userSettingsRepository.setUsername(usernameInput) }
                             }
                         ),
@@ -167,35 +170,39 @@ fun PreferenceScreen(
 
         // Preferences list
         item {
-            CFCard(title = "preferences", contentPadding = 0.dp) {
-                PreferenceRow(label = "version", value = rateAppHandler.versionName)
-                HorizontalDivider(color = colors.border, thickness = 1.dp)
-                PreferenceRow(
-                    label = "rate app",
-                    value = "open store",
-                    isAction = true,
-                    onClick = {
-                        showStoreError = !rateAppHandler.openStore()
-                    },
-                )
-                if (showStoreError) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 14.dp, vertical = 8.dp),
-                    ) {
-                        Text(
-                            text = "store not found",
-                            style = TextStyle(
-                                fontFamily = FontFamily.Monospace,
-                                fontSize = 10.sp,
-                                color = colors.red,
-                            ),
-                        )
+            CFCard(title = "other", contentPadding = 0.dp) {
+                Column {
+                    PreferenceRow(
+                        label = "rate app",
+                        value = "open store",
+                        isAction = true,
+                        onClick = {
+                            showStoreError = !rateAppHandler.openStore()
+                        },
+                    )
+                    if (showStoreError) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 14.dp, vertical = 8.dp),
+                        ) {
+                            Text(
+                                text = "store not found",
+                                style = TextStyle(
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 10.sp,
+                                    color = colors.red,
+                                ),
+                            )
+                        }
                     }
+                    HorizontalDivider(color = colors.border, thickness = 1.dp)
+                    PreferenceRow(
+                        label = "theme mode",
+                        value = themeModeLabel(themeModeUiState.themeMode)
+                    )
+
                 }
-                HorizontalDivider(color = colors.border, thickness = 1.dp)
-                PreferenceRow(label = "theme mode", value = themeModeLabel(themeModeUiState.themeMode))
             }
         }
 
@@ -204,7 +211,7 @@ fun PreferenceScreen(
         // Build info
         item {
             Text(
-                text = "cf-visualizer v${rateAppHandler.versionName}",
+                text = "codeforces-visualizer v${rateAppHandler.versionName}",
                 modifier = Modifier.fillMaxWidth(),
                 style = TextStyle(
                     fontFamily = FontFamily.Monospace,
@@ -246,6 +253,7 @@ fun PreferenceRow(
                 fontSize = 12.sp,
                 color = colors.fg,
             ),
+            modifier = Modifier.weight(1f, fill = false),
         )
         Text(
             text = value,
@@ -254,6 +262,7 @@ fun PreferenceRow(
                 fontSize = 12.sp,
                 color = if (isAction) colors.violet else colors.dim,
             ),
+            modifier = Modifier.padding(start = 12.dp),
         )
     }
 }

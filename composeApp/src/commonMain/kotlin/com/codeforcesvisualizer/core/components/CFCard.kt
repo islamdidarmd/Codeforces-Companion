@@ -75,7 +75,7 @@ fun CFCard(
             HeightSpacer(height = 10.dp)
         }
 
-        Box(
+        Column(
             modifier = Modifier
                 .padding(horizontal = contentPadding)
                 .padding(
