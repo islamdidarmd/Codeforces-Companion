@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,6 +32,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.runtime.LaunchedEffect
+import com.codeforcesvisualizer.core.components.CalendarToast
+import kotlinx.coroutines.delay
 import com.codeforcesvisualizer.core.components.Chip
 import com.codeforcesvisualizer.core.components.CountdownTimer
 import com.codeforcesvisualizer.core.components.HeightSpacer
@@ -52,6 +56,7 @@ internal fun ContestList(
 ) {
     val colors = CFThemeColors.current
     var selectedTab by remember { mutableStateOf(ContestTab.UPCOMING) }
+    var showCalendarToast by remember { mutableStateOf(false) }
 
     val upcoming = remember(contestList) {
         contestList.filter { it.scheduled }.sortedBy { it.startTimeSeconds }
@@ -62,60 +67,77 @@ internal fun ContestList(
 
     val state = rememberLazyListState()
 
-    LazyColumn(modifier = modifier, state = state) {
-        // Tab bar
-        item {
-            TabBar(
-                selectedTab = selectedTab,
-                upcomingCount = upcoming.size,
-                pastCount = past.size,
-                onTabSelected = { selectedTab = it },
+    Box(modifier = modifier) {
+        LazyColumn(modifier = Modifier.fillMaxSize(), state = state) {
+            // Tab bar
+            item {
+                TabBar(
+                    selectedTab = selectedTab,
+                    upcomingCount = upcoming.size,
+                    pastCount = past.size,
+                    onTabSelected = { selectedTab = it },
+                )
+            }
+
+            // Streak banner (shown when username is set)
+            if (username.isNotBlank()) {
+                item {
+                    StreakBanner(username = username)
+                }
+            }
+
+            // Hero card for first upcoming contest
+            if (selectedTab == ContestTab.UPCOMING && upcoming.isNotEmpty()) {
+                item {
+                    HeroContestCard(
+                        contest = upcoming.first(),
+                        onOpenContest = { openContestDetails(it) },
+                        onAddToCalendar = {
+                            onAddToCalendar(upcoming.first())
+                            showCalendarToast = true
+                        },
+                    )
+                }
+
+                // Remaining upcoming items (skip first since it's the hero)
+                val remaining = upcoming.drop(1)
+                items(remaining, key = { it.id }) { contest ->
+                    ContestListItem(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                        contest = contest,
+                        isUpcoming = true,
+                        onOpenContest = openContestDetails,
+                    )
+                }
+            }
+
+            if (selectedTab == ContestTab.PAST) {
+                items(past, key = { it.id }) { contest ->
+                    ContestListItem(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                        contest = contest,
+                        isUpcoming = false,
+                        onOpenContest = openContestDetails,
+                    )
+                }
+            }
+
+            // Bottom spacing
+            item {
+                HeightSpacer(height = 80.dp)
+            }
+        }
+
+        // Calendar toast overlay
+        if (showCalendarToast) {
+            CalendarToast(
+                onDismiss = { showCalendarToast = false },
             )
-        }
 
-        // Streak banner (shown when username is set)
-        if (username.isNotBlank()) {
-            item {
-                StreakBanner(username = username)
+            LaunchedEffect(showCalendarToast) {
+                delay(2500)
+                showCalendarToast = false
             }
-        }
-
-        // Hero card for first upcoming contest
-        if (selectedTab == ContestTab.UPCOMING && upcoming.isNotEmpty()) {
-            item {
-                HeroContestCard(
-                    contest = upcoming.first(),
-                    onOpenContest = { openContestDetails(it) },
-                    onAddToCalendar = { onAddToCalendar(upcoming.first()) },
-                )
-            }
-
-            // Remaining upcoming items (skip first since it's the hero)
-            val remaining = upcoming.drop(1)
-            items(remaining, key = { it.id }) { contest ->
-                ContestListItem(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                    contest = contest,
-                    isUpcoming = true,
-                    onOpenContest = openContestDetails,
-                )
-            }
-        }
-
-        if (selectedTab == ContestTab.PAST) {
-            items(past, key = { it.id }) { contest ->
-                ContestListItem(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                    contest = contest,
-                    isUpcoming = false,
-                    onOpenContest = openContestDetails,
-                )
-            }
-        }
-
-        // Bottom spacing
-        item {
-            HeightSpacer(height = 80.dp)
         }
     }
 }

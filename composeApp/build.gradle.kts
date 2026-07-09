@@ -13,7 +13,7 @@ plugins {
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
@@ -77,6 +77,7 @@ android {
     defaultConfig {
         applicationId = "com.codeforcesvisualizer"
         minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = compileSdk
         
         versionCode = libs.versions.versionCode.get().toInt()
         versionName = libs.versions.versionName.get()
@@ -98,8 +99,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {

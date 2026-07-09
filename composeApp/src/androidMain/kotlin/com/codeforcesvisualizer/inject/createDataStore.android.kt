@@ -6,8 +6,10 @@ import androidx.datastore.preferences.core.Preferences
 import com.codeforcesvisualizer.Application
 import okio.Path.Companion.toPath
 
-actual fun createPlatformDataStore(): DataStore<Preferences> {
-    return PreferenceDataStoreFactory.createWithPath {
+private val dataStore: DataStore<Preferences> by lazy {
+    PreferenceDataStoreFactory.createWithPath {
         Application.context.filesDir.resolve(dataStoreFileName).absolutePath.toPath()
     }
 }
+
+actual fun createPlatformDataStore(): DataStore<Preferences> = dataStore
